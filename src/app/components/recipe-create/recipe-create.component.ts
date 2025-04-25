@@ -22,7 +22,8 @@ export class RecipeCreateComponent implements OnInit {
 
   visible: boolean = false;
   submitted: boolean = false;
-  recipe: Recipe = new Recipe();
+  recipe = {} as Recipe;
+  instruction = {} as Instruction;
   validationErrors: {} = {};
 
 
@@ -44,8 +45,8 @@ export class RecipeCreateComponent implements OnInit {
     let id: number = 0
     this.recipeService.createRecipe(this.recipe).subscribe(
       (data: Recipe) => {
-        this.InstructionTemplate.id = data.id;
-        this.instructionService.createInstruction(data.id!, this.InstructionTemplate);
+        this.instruction.id = data.id;
+        this.instructionService.createInstruction(data.id!, this.instruction);
         this.onUploadSuccess(data.id!);
       }, this.onUploadError)
   }
