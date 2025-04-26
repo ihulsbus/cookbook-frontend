@@ -17,7 +17,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { PreparationTime } from '../model/preparationTime';
+import { IngredientAmounts } from '../model/ingredientAmounts';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class PreparationtimeService {
+export class AmountService {
 
     protected basePath = 'https://api-staging.gourmedy.com/api/v2';
     public defaultHeaders = new HttpHeaders();
@@ -91,16 +91,20 @@ export class PreparationtimeService {
     }
 
     /**
-     * Create preparation time
-     * Creates a preparation time
-     * @param preparationTime Creates a preparation time. ID field must be omitted. If presented, field will be ignored
+     * Your DELETE endpoint
+     * Delete ingredient quantities belonging to a recipe. Each provided ingredient reference will be deleted. If you want to delete all ingredients belonging to a recipe, send all.
+     * @param recipeID UUID of a recipe
+     * @param ingredientAmounts Array of ingredientAmounts
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createPreparationtime(preparationTime?: PreparationTime, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PreparationTime>;
-    public createPreparationtime(preparationTime?: PreparationTime, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PreparationTime>>;
-    public createPreparationtime(preparationTime?: PreparationTime, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PreparationTime>>;
-    public createPreparationtime(preparationTime?: PreparationTime, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<string>;
+    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpResponse<string>>;
+    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpEvent<string>>;
+    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling deleteRecipeAmounts.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -114,8 +118,8 @@ export class PreparationtimeService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'application/json',
-                'text/plain'
+                'text/plain',
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -149,11 +153,11 @@ export class PreparationtimeService {
             }
         }
 
-        let localVarPath = `/metadata/preparationtime`;
-        return this.httpClient.request<PreparationTime>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<string>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: preparationTime,
+                body: ingredientAmounts,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -164,19 +168,19 @@ export class PreparationtimeService {
     }
 
     /**
-     * Delete preparation time
-     * Delete a preparation time object
-     * @param preparationTimeID UUID of a PreparationTime
-     * @param body No body
+     * Get recipe ingredient amounts
+     * Get the quantities of the ingredients belonging to a recipe
+     * @param recipeID UUID of a recipe
+     * @param body No body.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePreparationtime(preparationTimeID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any>;
-    public deletePreparationtime(preparationTimeID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deletePreparationtime(preparationTimeID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deletePreparationtime(preparationTimeID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (preparationTimeID === null || preparationTimeID === undefined) {
-            throw new Error('Required parameter preparationTimeID was null or undefined when calling deletePreparationtime.');
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<IngredientAmounts>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<IngredientAmounts>>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<IngredientAmounts>>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling getRecipeAmounts.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -226,8 +230,8 @@ export class PreparationtimeService {
             }
         }
 
-        let localVarPath = `/metadata/preparationtime/${this.configuration.encodeParam({name: "preparationTimeID", value: preparationTimeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<IngredientAmounts>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
@@ -241,169 +245,19 @@ export class PreparationtimeService {
     }
 
     /**
-     * Get all preparation times
-     * Retrieves all preparation times the server knows. Currently, this endpoint does not support pagination. This will be added in the future
-     * @param body No body
+     * Create recipe ingredient amounts
+     * Set the quantities of the ingredients belonging to a recipe
+     * @param recipeID UUID of a recipe
+     * @param ingredientAmounts Array of ingredient amounts that will be linked to the provided recipe UUID in the path
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllPreparationtime(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<PreparationTime>>;
-    public getAllPreparationtime(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<PreparationTime>>>;
-    public getAllPreparationtime(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<PreparationTime>>>;
-    public getAllPreparationtime(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarCredential: string | undefined;
-        // authentication (apiKey_1) required
-        localVarCredential = this.configuration.lookupCredential('apiKey_1');
-        if (localVarCredential) {
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json',
-                'text/plain'
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'text/plain'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/metadata/preparationtime`;
-        return this.httpClient.request<Array<PreparationTime>>('get', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                body: body,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get preparation time
-     * Get a single preparationID
-     * @param preparationTimeID UUID of a PreparationTime
-     * @param body No Body
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getPreparationtime(preparationTimeID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PreparationTime>;
-    public getPreparationtime(preparationTimeID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PreparationTime>>;
-    public getPreparationtime(preparationTimeID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PreparationTime>>;
-    public getPreparationtime(preparationTimeID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (preparationTimeID === null || preparationTimeID === undefined) {
-            throw new Error('Required parameter preparationTimeID was null or undefined when calling getPreparationtime.');
-        }
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarCredential: string | undefined;
-        // authentication (apiKey_1) required
-        localVarCredential = this.configuration.lookupCredential('apiKey_1');
-        if (localVarCredential) {
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json',
-                'text/plain'
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'text/plain'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/metadata/preparationtime/${this.configuration.encodeParam({name: "preparationTimeID", value: preparationTimeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<PreparationTime>('get', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                body: body,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Update preparation time
-     * Update preparation time entry
-     * @param preparationTimeID UUID of a PreparationTime
-     * @param preparationTime Updates a preparation time. ID field must be omitted. If presented, field will be ignored
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public putPreparationtime(preparationTimeID: string, preparationTime?: PreparationTime, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PreparationTime>;
-    public putPreparationtime(preparationTimeID: string, preparationTime?: PreparationTime, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PreparationTime>>;
-    public putPreparationtime(preparationTimeID: string, preparationTime?: PreparationTime, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PreparationTime>>;
-    public putPreparationtime(preparationTimeID: string, preparationTime?: PreparationTime, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (preparationTimeID === null || preparationTimeID === undefined) {
-            throw new Error('Required parameter preparationTimeID was null or undefined when calling putPreparationtime.');
+    public postRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<IngredientAmounts>>;
+    public postRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<IngredientAmounts>>>;
+    public postRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<IngredientAmounts>>>;
+    public postRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling postRecipeAmounts.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -453,11 +307,88 @@ export class PreparationtimeService {
             }
         }
 
-        let localVarPath = `/metadata/preparationtime/${this.configuration.encodeParam({name: "preparationTimeID", value: preparationTimeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<PreparationTime>('put', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<Array<IngredientAmounts>>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: preparationTime,
+                body: ingredientAmounts,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Your PUT endpoint
+     * Update the quantities of the ingredients belonging to a recipe
+     * @param recipeID UUID of a recipe
+     * @param ingredientAmounts Provide one or multiple ingredient amounts linked to the related recipe.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public putRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<IngredientAmounts>>;
+    public putRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<IngredientAmounts>>>;
+    public putRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<IngredientAmounts>>>;
+    public putRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling putRecipeAmounts.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (apiKey_1) required
+        localVarCredential = this.configuration.lookupCredential('apiKey_1');
+        if (localVarCredential) {
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<Array<IngredientAmounts>>('put', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: ingredientAmounts,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

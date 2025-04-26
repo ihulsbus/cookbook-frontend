@@ -4,35 +4,35 @@
       <button pButton class="p-button-rounded p-button-text" icon="pi pi-arrow-left" [routerLink] = "['/app/recipes']"></button>
     </div>
     <div class="flex align-items-center  editButton">
-      <button pButton class="p-button-rounded p-button-text" icon="pi pi-pencil" [routerLink] = "['/app/recipes/'+recipe.ID+'/edit']"></button>
+      <button pButton class="p-button-rounded p-button-text" icon="pi pi-pencil" [routerLink] = "['/app/recipes/'+recipe.id+'/edit']"></button>
     </div>
   </div>
   <div class="grid grid-nogutter surface-section text-800">
     <div class="col-12 md:col-6 pl-4 pt-4text-center md:text-left flex align-items-center ">
       <section>
-        <span class="block text-6xl font-bold mb-1">{{ recipe.RecipeName }}</span>
-        <p class="mt-0 mb-4 text-700 line-height-3">{{ recipe.Description }}</p>
+        <span class="block text-6xl font-bold mb-1">{{ recipe.name }}</span>
+        <p class="mt-0 mb-4 text-700 line-height-3">{{ recipe.description }}</p>
         <div class="p-grid p-formgrid p-fluid mt-0 mb-4 text-700 line-height-3">
           <div>
             <span class="p-row-1">
               <i class="pi pi-clock p-mr-5"></i>
-              {{ recipe.CookTime }} Minutes
+              {{ recipe.serving_count }} Minutes <!-- #TODO fix cookTime -->
             </span>
             <br>
             <span class="p-row-1">
               <i class="pi pi-user p-mr-5"></i>
-              {{ recipe.ServingCount }} persons
+              {{ recipe.serving_count }} persons
             </span>
           </div>
           <div class="mt-8">
-            <span *ngFor="let category of recipe.Categories" class="p-row-1">
-              <p-chip label="{{category.CategoryName}}" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>
-            </span>
+<!--            <span *ngFor="let category of recipe.Categories" class="p-row-1">-->
+<!--              <p-chip label="{{category.CategoryName}}" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>-->
+<!--            </span>-->
           </div>
           <div class="mt-1">
-            <span *ngFor="let tag of recipe.Tags" class="p-row-1 mt-1">
-              <p-tag value="{{tag.TagName}}" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>
-            </span>
+<!--            <span *ngFor="let tag of recipe.Tags" class="p-row-1 mt-1">-->
+<!--              <p-tag value="{{tag.TagName}}" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>-->
+<!--            </span>-->
           </div>
         </div>
       </section>

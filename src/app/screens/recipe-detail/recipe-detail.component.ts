@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { Ingredient, IngredientAmount, Instruction, Recipe, RestService } from 'src/app/lib/api-client/rest.service';
-import { Ingredient, Recipe, Instruction, RecipeService, IngredientService, InstructionService } from '../../lib/api-client';
+import { IngredientAmounts, Recipe, Instruction, RecipeService, IngredientService, InstructionService, ImageService } from '../../lib/api-client';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IngredientListComponent } from 'src/app/components/ingredient-list/ingredient-list.component';
@@ -23,33 +22,32 @@ import { RouterLink } from '@angular/router';
     ]
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Recipe = new Recipe();
-  imgUrl: string = "";
-  amounts:  = [];
-  instructions: Instruction = new Instruction();
+  recipe = {} as Recipe;
+  imgUrl = "";
+  amounts: IngredientAmounts[] = [];
+  instructions = {} as Instruction;
   names = new Map<number, string>();
 
   constructor(
     private recipeService: RecipeService,
     private ingredientService: IngredientService,
     private instructionService: InstructionService,
+    private imageService: ImageService,
     private activatedRoute: ActivatedRoute
-  ) {
-    activatedRoute.params.subscribe(params => {
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
       this.recipeService.getRecipe(params['id']).subscribe((data) => {
         this.recipe = data
       })
-      // then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients);});
+      // .then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients);});
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
         this.instructions = data
       })
       // then((data) => { this.instructions = data});
       // this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data});
     })
-  }
-
-  ngOnInit(): void {
-    // This is intentionally empty
   }
 
   // getIngredientNames(ingredients: Array<Ingredient>) {
@@ -59,10 +57,7 @@ export class RecipeDetailComponent implements OnInit {
 
   // }
 
-  // getImgURL() {
-  //   this.activatedRoute.params.subscribe(params => {
-  //     this.imgUrl = `${environment.cdn}/img/${this.recipe.ImageName}.jpg?d=${(new Date()).getTime()}`;
-  //   })
-  // }
-
+  getImgURL() {
+    this.imageService.searchImage("Recipe", this.recipe.id).subscribe((data) => this.imgUrl = `${environment.cdn}/img/${data.id}.jpg?d=${(new Date()).getTime()}`)
+  }
 }

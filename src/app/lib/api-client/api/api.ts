@@ -1,3 +1,5 @@
+export * from './amount.service';
+import { AmountService } from './amount.service';
 export * from './category.service';
 import { CategoryService } from './category.service';
 export * from './cuisinetype.service';
@@ -22,4 +24,4 @@ export * from './tag.service';
 import { TagService } from './tag.service';
 export * from './unit.service';
 import { UnitService } from './unit.service';
-export const APIS = [CategoryService, CuisinetypeService, DifficultylevelService, ImageService, IngredientService, InstructionService, MetadataService, PreparationtimeService, RecipeService, SearchService, TagService, UnitService];
+export const APIS = [AmountService, CategoryService, CuisinetypeService, DifficultylevelService, ImageService, IngredientService, InstructionService, MetadataService, PreparationtimeService, RecipeService, SearchService, TagService, UnitService];

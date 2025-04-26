@@ -97,10 +97,10 @@ export class DifficultylevelService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<DifficultyLevel>;
-    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DifficultyLevel>>;
-    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DifficultyLevel>>;
-    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<DifficultyLevel>;
+    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<DifficultyLevel>>;
+    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<DifficultyLevel>>;
+    public createDifficultylevel(difficultyLevel?: DifficultyLevel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -126,11 +126,6 @@ export class DifficultylevelService {
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
             localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
         }
 
 
@@ -163,7 +158,6 @@ export class DifficultylevelService {
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
-                transferCache: localVarTransferCache,
                 reportProgress: reportProgress
             }
         );
@@ -177,10 +171,10 @@ export class DifficultylevelService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any>;
+    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deleteDifficultylevel(difficultyLevelID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
         if (difficultyLevelID === null || difficultyLevelID === undefined) {
             throw new Error('Required parameter difficultyLevelID was null or undefined when calling deleteDifficultylevel.');
         }
@@ -209,11 +203,6 @@ export class DifficultylevelService {
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
             localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
         }
 
 
@@ -246,7 +235,6 @@ export class DifficultylevelService {
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
-                transferCache: localVarTransferCache,
                 reportProgress: reportProgress
             }
         );
@@ -259,10 +247,10 @@ export class DifficultylevelService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllDificultylevels(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<Array<DifficultyLevel>>;
-    public getAllDificultylevels(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<DifficultyLevel>>>;
-    public getAllDificultylevels(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<DifficultyLevel>>>;
-    public getAllDificultylevels(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getAllDificultylevels(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<DifficultyLevel>>;
+    public getAllDificultylevels(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<DifficultyLevel>>>;
+    public getAllDificultylevels(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<DifficultyLevel>>>;
+    public getAllDificultylevels(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -288,11 +276,6 @@ export class DifficultylevelService {
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
             localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
         }
 
 
@@ -325,7 +308,6 @@ export class DifficultylevelService {
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
-                transferCache: localVarTransferCache,
                 reportProgress: reportProgress
             }
         );
@@ -339,10 +321,10 @@ export class DifficultylevelService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<DifficultyLevel>;
-    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DifficultyLevel>>;
-    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DifficultyLevel>>;
-    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<DifficultyLevel>;
+    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<DifficultyLevel>>;
+    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<DifficultyLevel>>;
+    public getSingleDifficultylevel(difficultyLevelID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
         if (difficultyLevelID === null || difficultyLevelID === undefined) {
             throw new Error('Required parameter difficultyLevelID was null or undefined when calling getSingleDifficultylevel.');
         }
@@ -371,11 +353,6 @@ export class DifficultylevelService {
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
             localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
         }
 
 
@@ -408,7 +385,6 @@ export class DifficultylevelService {
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
-                transferCache: localVarTransferCache,
                 reportProgress: reportProgress
             }
         );
@@ -422,10 +398,10 @@ export class DifficultylevelService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<DifficultyLevel>;
-    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DifficultyLevel>>;
-    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DifficultyLevel>>;
-    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<DifficultyLevel>;
+    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<DifficultyLevel>>;
+    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<DifficultyLevel>>;
+    public updateDifficultylevel(difficultyLevelID: string, difficultyLevel?: DifficultyLevel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
         if (difficultyLevelID === null || difficultyLevelID === undefined) {
             throw new Error('Required parameter difficultyLevelID was null or undefined when calling updateDifficultylevel.');
         }
@@ -454,11 +430,6 @@ export class DifficultylevelService {
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
             localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
         }
 
 
@@ -491,7 +462,6 @@ export class DifficultylevelService {
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
-                transferCache: localVarTransferCache,
                 reportProgress: reportProgress
             }
         );

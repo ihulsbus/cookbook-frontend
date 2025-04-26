@@ -5,6 +5,7 @@ export * from './globalSearch200Response';
 export * from './globalSearchRequest';
 export * from './imageData';
 export * from './ingredient';
+export * from './ingredientAmounts';
 export * from './instruction';
 export * from './instructionSearch';
 export * from './metadataSearchRequest';

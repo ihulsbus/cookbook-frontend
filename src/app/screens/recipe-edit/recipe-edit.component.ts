@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { RestService, IngredientAmount, Recipe, Instruction, Ingredient, Category, Tag } from '../../lib/api-client/rest.service';
+import {
+  Instruction,
+  Recipe,
+  Category,
+  Tag,
+  IngredientAmounts,
+  RecipeService,
+  IngredientService,
+  AmountService,
+  TagService,
+  CategoryService,
+  MetadataService,
+  InstructionService,
+} from '../../lib/api-client';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { IngredientEditorComponent } from 'src/app/components/ingredient-editor/ingredient-editor.component';
@@ -30,67 +43,70 @@ import { RouterLink } from '@angular/router';
 })
 export class RecipeEditComponent implements OnInit {
 
-  recipe: Recipe = new Recipe;
-  cancelPopup: boolean = false;
-  confirmPopup: boolean = false;
-  fileUpload: boolean = false;
-  api: string = environment.backend;
-  imgUrl: string = "";
-  amounts: Array<IngredientAmount> = [];
-  instructions: Instruction = new(Instruction);
+  recipe = {} as Recipe;
+  cancelPopup = false;
+  confirmPopup = false;
+  fileUpload = false;
+  api = environment.backend;
+  imgUrl = "";
+  amounts: IngredientAmounts[] = [];
+  instructions = {} as Instruction;
   names = new Map<number, string>();
   categories: Category[] = [];
   tags: Tag[] = [];
 
 
-  constructor(private restService: RestService, private messageService: MessageService, private router: Router, private activatedRoute: ActivatedRoute) {
-    activatedRoute.params.subscribe(params => {
-      this.restService.GetSingleRecipe(params['id']).then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients); });
-      this.restService.GetInstructions(params['id']).then((data) => { this.instructions = data });
-      this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data });
-      this.restService.GetAllCategories().then((data) => this.categories = data, () => this.messageService.add({
-        severity: 'error', summary: 'category retrieval failed', detail: 'failed to retrieve list of categories', life: 3000,
-      }));
-      this.restService.GetAllTags().then((data) => this.tags = data, () => this.messageService.add({
-        severity: 'error', summary: 'tag retrieval failed', detail: 'failed to retrieve list of tags', life: 3000,
-      }));
-    })
-  }
+  constructor(
+    private recipeService: RecipeService,
+    private instructionService: InstructionService,
+    private ingredientService: IngredientService,
+    private amountService: AmountService,
+    private tagService: TagService,
+    private categoryService: CategoryService,
+    private metadataService: MetadataService,
+    private messageService: MessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-    // This is intentionally empty
+    this.activatedRoute.params.subscribe(params => {
+      this.recipeService.getRecipe(params['id']).subscribe((data) => this.recipe = data);
+      // then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients); });
+      this.instructionService.getInstruction(params['id']).subscribe((data) => this.instructions = data);
+      // this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data });
+      this.categoryService.getAllCategory().subscribe((data) => this.categories = data);
+      this.tagService.getAllTags().subscribe((data) => this.tags = data);
+    })
   }
 
   getImgURL() {
-    this.activatedRoute.params.subscribe(params => {
-      this.imgUrl = `${environment.cdn}/img/${this.recipe.ImageName}.jpg?d=${(new Date()).getTime()}`;
-    })
+    // this.imgUrl = `${environment.cdn}/img/${this.recipe.ImageName}.jpg?d=${(new Date()).getTime()}`;
   }
 
-  getIngredientNames(ingredients: Array<Ingredient>) {
-    for (var ingredient of ingredients) {
-      this.names.set(ingredient.ID, ingredient.IngredientName);
-    };
+  // getIngredientNames(ingredients: Array<Ingredient>) {
+  //   for (var ingredient of ingredients) {
+  //     this.names.set(ingredient.ID, ingredient.IngredientName);
+  //   };
+  // }
 
+  updateIngredientAmounts(ingredientAmounts: IngredientAmounts[]) {
+    this.amounts = ingredientAmounts;
   }
 
-  updateIngredientAmounts(ingredientamounts: IngredientAmount[]) {
-    this.amounts = ingredientamounts;
-  }
+  // updateCategories(categories: Category[]) {
+  //
+  // }
 
-  updateCategories(categories: Category[]) {
-
-  }
-
-  cancelRecipeUpdate() {
-    this.cancelPopup = true;
-  }
+  // cancelRecipeUpdate() {
+  //   this.cancelPopup = true;
+  // }
 
   fileUploadToggle() {
     this.fileUpload = !this.fileUpload;
   }
   saveRecipeUpdate() {
-    if (this.amounts.length == 0 || this.instructions.Description.length == 0) {
+    if (this.amounts.length == 0 || this.instructions.description.length == 0) {
       this.confirmPopup = true;
     } else {
       this.uploadRecipe();
@@ -99,10 +115,14 @@ export class RecipeEditComponent implements OnInit {
 
   uploadRecipe() {
     this.confirmPopup = false;
-    this.restService.UpdateAmounts(this.recipe.ID, this.amounts);
-    this.restService.UpdateRecipe(this.recipe.ID, this.recipe)
-    this.restService.UpdateInstructions(this.recipe.ID, this.instructions)
-    .then(() => this.saveSuccess(), () => this.saveFailed());
+    this.amountService.putRecipeAmounts(this.recipe.id!, this.amounts);
+    this.recipeService.updateRecipe(this.recipe.id!, this.recipe)
+    this.instructionService
+      .updateInstruction(this.recipe.id!, this.instructions)
+      .subscribe({
+        error: () => this.saveFailed(),
+        complete: () => this.saveSuccess()
+      });
   }
 
   onUploadSuccess() {
@@ -123,7 +143,7 @@ export class RecipeEditComponent implements OnInit {
     this.messageService.add({
       severity: 'success', summary: 'Update successful', detail: 'Recipe updated', life: 3000,
     });
-    this.router.navigate(['app','recipes', this.recipe.ID]);
+    this.router.navigate(['app','recipes', this.recipe.id]);
   }
 
   saveFailed() {

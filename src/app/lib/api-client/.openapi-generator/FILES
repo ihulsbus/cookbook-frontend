@@ -1,6 +1,7 @@
 .gitignore
 README.md
 api.module.ts
+api/amount.service.ts
 api/api.ts
 api/category.service.ts
 api/cuisinetype.service.ts
@@ -25,6 +26,7 @@ model/globalSearch200Response.ts
 model/globalSearchRequest.ts
 model/imageData.ts
 model/ingredient.ts
+model/ingredientAmounts.ts
 model/instruction.ts
 model/instructionSearch.ts
 model/metadataSearchRequest.ts

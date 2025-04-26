@@ -6,7 +6,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "generate:api": "openapi-generator-cli generate -i https://cbhbe.ams3.cdn.digitaloceanspaces.com/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --additional-properties=ngVersion=19.1.5"
+    "download:api-template": "openapi-generator-cli author template -g typescript-angular -o ./openapi-generator-template ",
+    "generate:api": "openapi-generator-cli generate -i https://cbhbe.ams3.cdn.digitaloceanspaces.com/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --template-dir ./openapi-generator-template --additional-properties=ngVersion=19.1.5"
   },
   "name": "cookbook-frontend",
   "version": "0.1.1",
@@ -39,7 +40,7 @@
     "@angular-devkit/build-angular": "^19.1.5",
     "@angular/cli": "^19.1.5",
     "@angular/compiler-cli": "^19.1.4",
-    "@openapitools/openapi-generator-cli": "^2.16.3",
+    "@openapitools/openapi-generator-cli": "^2.19.1",
     "@types/jasmine": "~5.1.5",
     "@types/node": "^22.13.0",
     "angular-eslint": "19.0.2",
