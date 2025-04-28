@@ -1,8 +1,8 @@
-<p-table #ingredientAmounts [value]="ingredientamounts" dataKey="ingredientid" [(selection)]="selectedIngredients" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,25]" responsiveLayout="scroll">
+<p-table #IngredientAmounts [value]="ingredientAmounts" dataKey="ingredientid" [(selection)]="selectedIngredients" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,25]" responsiveLayout="scroll">
   <ng-template pTemplate="caption">
     <div class="table-header flex flex-column md:flex-row md:justiify-content-between">
-      <button pButton label="New" icon="pi pi-plus" class="p-button-outlined p-button-success mr-2" (click)="openNew()"></button>
-      <button pButton label="Delete" icon="pi pi-trash" class="p-button-outlined p-button-danger" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length"></button>
+      <button pButton label="New" icon="pi pi-plus" class="p-button-outlined p-button-success mr-2" (click)="openNew()">New</button>
+      <button pButton label="Delete" icon="pi pi-trash" class="p-button-outlined p-button-danger" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length">Delete</button>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -25,8 +25,8 @@
       <td>{{ingredientamount.Quantity}}</td>
       <td>{{unitNames.get(ingredientamount.UnitID)}}</td>
       <td style="text-align: left">
-        <button pButton icon="pi pi-pencil" class="p-button-outlined p-button-rounded p-button-text" (click)="editIngredient(ingredientamount)"></button>
-        <button pButton icon="pi pi-trash" class="p-button-outlined p-button-rounded p-button-text" (click)="confirmDeleteIngredient(ingredientamount)"></button>
+        <button pButton icon="pi pi-pencil" class="p-button-outlined p-button-rounded p-button-text" (click)="editIngredient(ingredientamount)">Edit</button>
+        <button pButton icon="pi pi-trash" class="p-button-outlined p-button-rounded p-button-text" (click)="confirmDeleteIngredient(ingredientamount)">Confirm</button>
       </td>
     </tr>
   </ng-template>
@@ -34,7 +34,7 @@
 
 <p-dialog [(visible)]="ingredientDialog" [style]="{'width': '450px'}" header="Ingredient Details" [modal]="true" class="p-fluid">
     <label for="ingredientSelect">Ingredient</label>
-    <p-dropdown id="ingredientSelect" appendTo="body" [options]="ingredients" optionLabel="IngredientName" optionValue="ID" placeholder="Select ingredient" [editable]="true" [(ngModel)]="newIngredient.IngredientID" #ingredientSelect="ngModel"></p-dropdown>
+    <p-dropdown id="ingredientSelect" appendTo="body" [options]="ingredients" optionLabel="IngredientName" optionValue="ID" placeholder="Select ingredient" [editable]="true" [(ngModel)]="newIngredient.ingredientID" #ingredientSelect="ngModel"></p-dropdown>
     <div *ngIf="ingredientSelect.invalid && (ingredientSelect.dirty || ingredientSelect.touched)" class="alert">
 
       <div *ngIf="ingredientSelect.errors?.['required']">
@@ -43,7 +43,7 @@
     </div>
 
     <label for="amount">Amount</label>
-    <p-inputNumber id="amount" [showButtons]="true" [(ngModel)]="newIngredient.Quantity" class="form-control" #amount="ngModel"></p-inputNumber>
+    <p-inputNumber id="amount" [showButtons]="true" [(ngModel)]="newIngredient.quantity" class="form-control" #amount="ngModel"></p-inputNumber>
     <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert">
 
       <div *ngIf="amount.errors?.['required']">
@@ -52,7 +52,7 @@
     </div>
 
     <label for="unit">Unit</label>
-    <p-dropdown id="unitSelect" appendTo="body" [options]="units" optionLabel="FullName" optionValue="ID" placeholder="Select unit" [editable]="true" [(ngModel)]="newIngredient.UnitID" #unitSelect="ngModel"></p-dropdown>
+    <p-dropdown id="unitSelect" appendTo="body" [options]="units" optionLabel="FullName" optionValue="ID" placeholder="Select unit" [editable]="true" [(ngModel)]="newIngredient.unitID" #unitSelect="ngModel"></p-dropdown>
     <div *ngIf="unitSelect.invalid && (unitSelect.dirty || unitSelect.touched)" class="alert">
 
       <div *ngIf="unitSelect.errors?.['required']">
@@ -62,8 +62,8 @@
 
   <ng-template pTemplate="footer">
     <app-create-ingredient (createdIngredient)="getIngredients()"></app-create-ingredient>
-    <button pButton label="Cancel" icon="pi pi-times" class="p-button-outlined p-button-text" (click)="hideDialog()"></button>
-    <button pButton label="Save" icon="pi pi-check" class="p-button-outlined p-button-text" (click)="saveIngredient()" [disabled]="ingredientSelect.invalid || amount.invalid || unitSelect.invalid"></button>
+    <button pButton label="Cancel" icon="pi pi-times" class="p-button-outlined p-button-text" (click)="hideDialog()">Hide</button>
+    <button pButton label="Save" icon="pi pi-check" class="p-button-outlined p-button-text" (click)="saveIngredient()" [disabled]="ingredientSelect.invalid || amount.invalid || unitSelect.invalid">Save</button>
   </ng-template>
 </p-dialog>
 
@@ -73,8 +73,8 @@
     <span v-if="ingredient">Are you sure you want to delete <b>{{getIngredientName(newIngredient)}}</b>?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton label="No" icon="pi pi-times" class="p-button-text" (click)="deleteIngredientDialog = false"></button>
-    <button pButton label="Yes" icon="pi pi-check" class="p-button-text" (click)="deleteIngredient()"></button>
+    <button pButton label="No" icon="pi pi-times" class="p-button-text" (click)="deleteIngredientDialog = false">No</button>
+    <button pButton label="Yes" icon="pi pi-check" class="p-button-text" (click)="deleteIngredient()">Yes</button>
   </ng-template>
 </p-dialog>
 
@@ -84,7 +84,7 @@
     <span v-if="selectedIngredients">Are you sure you want to delete the selected ingredients?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton label="No" icon="pi pi-times" class="p-button-outlined p-button-text" (click)="deleteIngredientsDialog = false"></button>
-    <button pButton label="Yes" icon="pi pi-check" class="p-button-outlined p-button-text" (click)="deleteSelectedIngredients()"></button>
+    <button pButton label="No" icon="pi pi-times" class="p-button-outlined p-button-text" (click)="deleteIngredientsDialog = false">No</button>
+    <button pButton label="Yes" icon="pi pi-check" class="p-button-outlined p-button-text" (click)="deleteSelectedIngredients()">Yes</button>
   </ng-template>
 </p-dialog>

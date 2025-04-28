@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Ingredient, Unit } from 'src/app/lib/api-client';
+import { Ingredient, IngredientAmounts } from 'src/app/lib/api-client';
 import { CommonModule } from '@angular/common';
 
-class IngredientAmount {
-  RecipeID: string = "";
-  IngredientID: string = "";
-  Quantity: number = 0;
-  UnitID: string = "";
-  Unit?: Unit;
-}
+// class IngredientAmount {
+//   RecipeID: string = "";
+//   IngredientID: string = "";
+//   Quantity: number = 0;
+//   UnitID: string = "";
+//   Unit?: Unit;
+// }
 
 
 @Component({
@@ -23,14 +23,14 @@ class IngredientAmount {
 export class IngredientListComponent implements OnInit, OnChanges {
 
   @Input() ingredients: Ingredient[] = []
-  @Input() amounts: IngredientAmount[] = []
+  @Input() amounts: IngredientAmounts[] = []
 
   names = new Map<string, string>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    // this.getIngredientNames(this.ingredients);
+    this.getIngredientNames(this.ingredients);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,8 +39,8 @@ export class IngredientListComponent implements OnInit, OnChanges {
     }
   }
 
-  getIngredientNames(ingredients: Array<Ingredient>) {
-    for (var ingredient of ingredients) {
+  getIngredientNames(ingredients: Ingredient[]) {
+    for (const ingredient of ingredients) {
       this.names.set(ingredient.id!, ingredient.name!);
     };
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Ingredient, IngredientService, Unit, UnitService } from '../../lib/api-client';
+import { Ingredient, IngredientService, IngredientAmounts, Unit, UnitService } from '../../lib/api-client';
 import { UntypedFormBuilder } from "@angular/forms";
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
@@ -9,13 +9,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
 
-class IngredientAmount {
-  RecipeID: string = "";
-  IngredientID: string = "";
-  Quantity: number = 0;
-  UnitID: string = "";
-  Unit?: Unit;
-}
+// class IngredientAmount {
+//   RecipeID: string = "";
+//   IngredientID: string = "";
+//   Quantity: number = 0;
+//   UnitID = "";
+//   Unit?: Unit;
+// }
 
 @Component({
     selector: 'app-ingredient-editor',
@@ -33,18 +33,18 @@ class IngredientAmount {
 })
 export class IngredientEditorComponent implements OnInit {
 
-  @Input() ingredientamounts: IngredientAmount[] = []
-  @Output() updateIngredientAmounts = new EventEmitter<IngredientAmount[]>();
+  @Input() ingredientAmounts: IngredientAmounts[] = []
+  @Output() updateIngredientAmounts = new EventEmitter<IngredientAmounts[]>();
 
   // dialog states
-  ingredientDialog: boolean = false;
-  deleteIngredientDialog: boolean = false;
-  deleteIngredientsDialog: boolean = false;
-  submitted: boolean = false;
+  ingredientDialog = false;
+  deleteIngredientDialog = false;
+  deleteIngredientsDialog = false;
+  submitted = false;
 
-  newIngredient: IngredientAmount = new IngredientAmount();
+  newIngredient: IngredientAmounts = {};
   ingredients: Ingredient[] = [];
-  selectedIngredients: IngredientAmount[] = [];
+  selectedIngredients: IngredientAmounts[] = [];
   units: Unit[] = [];
   ingredientNames = new Map<string, string>();
   unitNames = new Map<string, string>();
@@ -62,26 +62,26 @@ export class IngredientEditorComponent implements OnInit {
 
   getUnits() {
     this.unitService.getAlUnits().subscribe((data) => {
-      for (var unit of data) {
+      for (const unit of data) {
         this.unitNames.set(unit.id!, unit.full_name!);
       };
       this.units = data;
     });
   }
 
-  getIngredientNames(ingredients: Array<Ingredient>) {
-    for (var ingredient of ingredients) {
+  getIngredientNames(ingredients: Ingredient[]) {
+    for (const ingredient of ingredients) {
       this.ingredientNames.set(ingredient.id!, ingredient.name!);
     };
 
   }
 
-  getIngredientName(data: IngredientAmount) {
-    return this.ingredients.find(x => x.id === data.IngredientID)?.name
+  getIngredientName(data: IngredientAmounts) {
+    return this.ingredients.find(x => x.id === data.ingredientID)?.name
   }
 
   clearNewIngredient() {
-    this.newIngredient = new IngredientAmount;
+    this.newIngredient = {};
   }
 
   openNew() {
@@ -96,7 +96,7 @@ export class IngredientEditorComponent implements OnInit {
     this.submitted = false;
   }
 
-  confirmDeleteIngredient(ingredientAmount: IngredientAmount) {
+  confirmDeleteIngredient(ingredientAmount: IngredientAmounts) {
     this.newIngredient = ingredientAmount;
     this.deleteIngredientDialog = true;
   }
@@ -105,17 +105,17 @@ export class IngredientEditorComponent implements OnInit {
     this.deleteIngredientsDialog = true;
   }
 
-  editIngredient(ingredient: IngredientAmount) {
+  editIngredient(ingredient: IngredientAmounts) {
     this.newIngredient = { ...ingredient };
     this.ingredientDialog = true;
   }
 
   saveIngredient() {
-    const i = this.ingredientamounts.findIndex(
-      (x: IngredientAmount) => x.IngredientID === this.newIngredient.IngredientID,
+    const i = this.ingredientAmounts.findIndex(
+      (x: IngredientAmounts) => x.ingredientID === this.newIngredient.ingredientID,
       );
-    if (i > -1) this.ingredientamounts[i] = this.newIngredient;
-    else this.ingredientamounts.push(this.newIngredient);
+    if (i > -1) this.ingredientAmounts[i] = this.newIngredient;
+    else this.ingredientAmounts.push(this.newIngredient);
 
     this.submitted = true;
     this.ingredientDialog = false;
@@ -123,13 +123,13 @@ export class IngredientEditorComponent implements OnInit {
   }
 
   deleteIngredient() {
-    this.updateIngredientAmounts.emit(this.ingredientamounts.filter((object: IngredientAmount) => object['IngredientID'] !== this.newIngredient.IngredientID));
+    this.updateIngredientAmounts.emit(this.ingredientAmounts.filter((object: IngredientAmounts) => object['ingredientID'] !== this.newIngredient.ingredientID));
     this.deleteIngredientDialog = false;
     this.clearNewIngredient()
   }
 
   deleteSelectedIngredients() {
-    let newArray = this.ingredientamounts.filter((object: IngredientAmount) => !this.selectedIngredients.includes(object));
+    const newArray = this.ingredientAmounts.filter((object: IngredientAmounts) => !this.selectedIngredients.includes(object));
     this.updateIngredientAmounts.emit(newArray);
     this.deleteIngredientsDialog = false;
     this.selectedIngredients = [];

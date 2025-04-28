@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IngredientAmounts, Recipe, Instruction, RecipeService, IngredientService, InstructionService, ImageService } from '../../lib/api-client';
+import {
+  IngredientAmounts,
+  Recipe,
+  Instruction,
+  RecipeService,
+  Ingredient,
+  InstructionService,
+  ImageService,
+  AmountService
+} from '../../lib/api-client';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IngredientListComponent } from 'src/app/components/ingredient-list/ingredient-list.component';
@@ -27,10 +36,11 @@ export class RecipeDetailComponent implements OnInit {
   amounts: IngredientAmounts[] = [];
   instructions = {} as Instruction;
   names = new Map<number, string>();
+  ingredients: Ingredient[] = []
 
   constructor(
     private recipeService: RecipeService,
-    private ingredientService: IngredientService,
+    private amountService: AmountService,
     private instructionService: InstructionService,
     private imageService: ImageService,
     private activatedRoute: ActivatedRoute
@@ -47,6 +57,9 @@ export class RecipeDetailComponent implements OnInit {
       })
       // then((data) => { this.instructions = data});
       // this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data});
+      this.amountService.getRecipeAmounts(params['id']).subscribe((data) => {
+        this.amounts = data
+      })
     })
   }
 

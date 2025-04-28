@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterLink } from '@angular/router';
+import { EditorModule} from "primeng/editor";
 
 @Component({
     selector: 'app-recipe-edit',
@@ -33,6 +34,7 @@ import { RouterLink } from '@angular/router';
     imports: [
         CommonModule,
         DialogModule,
+        EditorModule,
         FormsModule,
         FileUploadModule,
         IngredientEditorComponent,

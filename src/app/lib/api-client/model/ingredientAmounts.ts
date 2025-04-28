@@ -9,9 +9,9 @@
  */
 
 
-export interface IngredientAmounts { 
-    readonly ingredientID?: string;
-    readonly unitID?: string;
+export interface IngredientAmounts {
+    ingredientID?: string;
+    unitID?: string;
     quantity?: number;
 }
 

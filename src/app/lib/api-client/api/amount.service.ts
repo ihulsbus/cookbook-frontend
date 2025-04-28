@@ -175,9 +175,9 @@ export class AmountService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<IngredientAmounts>;
-    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<IngredientAmounts>>;
-    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<IngredientAmounts>>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<IngredientAmounts>>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<IngredientAmounts>>>;
+    public getRecipeAmounts(recipeID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<IngredientAmounts>>>;
     public getRecipeAmounts(recipeID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
         if (recipeID === null || recipeID === undefined) {
             throw new Error('Required parameter recipeID was null or undefined when calling getRecipeAmounts.');
@@ -231,7 +231,7 @@ export class AmountService {
         }
 
         let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<IngredientAmounts>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<Array<IngredientAmounts>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
