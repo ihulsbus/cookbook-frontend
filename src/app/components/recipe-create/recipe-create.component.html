@@ -1,9 +1,9 @@
-<button pButton class="p-button-outlined" label="New" icon="pi pi-plus" (click)="openDialog()"></button>
+<button pButton class="p-button-outlined" pButtonLabel="New" pButtonIcon="pi pi-plus" (click)="openDialog()">New</button>
 <p-dialog header="New recipe" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [modal]="true" [(visible)]="visible">
   <div class="p-fluid">
     <div class="p-field">
       <label for="recipeTitle">Title</label>
-      <input pInputTextarea #recipeTitle="ngModel" class="form-control" required type="text" id="recipeTitle" type="text" [(ngModel)]="recipe.name" autofocus/>
+      <input pTextarea #recipeTitle="ngModel" class="form-control" required type="text" id="recipeTitle" type="text" [(ngModel)]="recipe.name"/>
       <div *ngIf="recipeTitle.invalid && (recipeTitle.dirty || recipeTitle.touched)" class="alert">
 
         <div *ngIf="recipeTitle.errors?.['required']" class="mb-2">
@@ -15,7 +15,7 @@
     <div class="p-field">
       <label for="recipeDescription">Description</label>
       <br />
-      <textarea pInputTextarea #recipeDescription="ngModel" class="form-control" required id="recipeDescription" type="text"  maxlength="280" [(ngModel)]="recipe.description"></textarea>
+      <textarea pTextarea #recipeDescription="ngModel" class="form-control" required id="recipeDescription" type="text"  maxlength="280" [(ngModel)]="recipe.description"></textarea>
       <div *ngIf="recipeDescription.invalid && (recipeDescription.dirty || recipeDescription.touched)" class="alert">
 
         <div *ngIf="recipeDescription.errors?.['required']" class="mb-2">
@@ -48,6 +48,6 @@
   </div>
 
   <ng-template pTemplate="footer">
-    <button pButton class="p-button-outlined" label="Cancel" icon="pi pi-cross" (click)="closeDialog()"></button>
-    <button pButton class="p-button-outlined" label="Create" icon="pi pi-check" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid ||recipeCookTime.invalid || recipePersons.invalid"></button>
+    <button pButton class="p-button-outlined" pButtonLabel="Cancel" pButtonIcon="pi pi-cross" (click)="closeDialog()">Cancel</button>
+    <button pButton class="p-button-outlined" pButtonLabel="Create" pButtonIcon="pi pi-check" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid ||recipeCookTime.invalid || recipePersons.invalid">Create</button>
   </ng-template>

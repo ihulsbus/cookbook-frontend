@@ -5,17 +5,23 @@ import { FilterService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { FormsModule } from '@angular/forms';
+import {InputText} from "primeng/inputtext";
+import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 
 @Component({
     selector: 'app-filtering-sidebar',
     standalone: true,
     templateUrl: './filtering-sidebar.component.html',
     styleUrls: ['./filtering-sidebar.component.scss'],
-    imports: [
-        DropdownModule,
-        FormsModule,
-        SidebarModule,
-    ]
+  imports: [
+    DropdownModule,
+    FormsModule,
+    SidebarModule,
+    InputText,
+    ButtonDirective,
+    ButtonIcon,
+    ButtonLabel,
+  ]
 })
 export class FilteringSidebarComponent implements OnInit {
 

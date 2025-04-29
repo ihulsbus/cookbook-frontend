@@ -16,19 +16,22 @@ import { TagModule } from 'primeng/tag';
 import { ChipModule } from 'primeng/chip';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {ButtonDirective, ButtonIcon} from "primeng/button";
 
 @Component({
     selector: 'app-recipe-detail',
     standalone: true,
     templateUrl: './recipe-detail.component.html',
     styleUrls: ['./recipe-detail.component.scss'],
-    imports: [
-        CommonModule,
-        RouterLink,
-        IngredientListComponent,
-        TagModule,
-        ChipModule,
-    ]
+  imports: [
+    CommonModule,
+    RouterLink,
+    IngredientListComponent,
+    TagModule,
+    ChipModule,
+    ButtonDirective,
+    ButtonIcon,
+  ]
 })
 export class RecipeDetailComponent implements OnInit {
   recipe = {} as Recipe;

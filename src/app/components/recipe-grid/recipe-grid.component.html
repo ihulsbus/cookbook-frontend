@@ -26,7 +26,7 @@
         <p class="m-0">
           {{recipe.description}}
         </p>
-        <!--<ng-template pTemplate="footer"> 
+        <!--<ng-template pTemplate="footer">
           <div *ngIf="recipe.related?.category_ids?.length; else noCategories">
             <span *ngFor="let category of recipe.related.category_ids?" class="p-row-1">
               <p-chip label="{{category}}" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>
@@ -53,12 +53,12 @@
     No Result
   </div>
 </ng-template>
-<ng-template #noCategories>
+<ng-template>
   <div >
     <p-chip label="No categories" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>
   </div>
 </ng-template>
-<ng-template #noTags>
+<ng-template>
   <div class="mt-1">
     <p-tag value="No tags" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>
   </div>

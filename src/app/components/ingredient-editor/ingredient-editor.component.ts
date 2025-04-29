@@ -8,6 +8,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
+import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 
 // class IngredientAmount {
 //   RecipeID: string = "";
@@ -21,15 +22,18 @@ import { CreateIngredientComponent } from '../create-ingredient/create-ingredien
     selector: 'app-ingredient-editor',
     standalone: true,
     templateUrl: './ingredient-editor.component.html',
-    imports: [
-        CommonModule,
-        FormsModule,
-        TableModule,
-        DialogModule,
-        DropdownModule,
-        InputNumberModule,
-        CreateIngredientComponent,
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    DialogModule,
+    DropdownModule,
+    InputNumberModule,
+    CreateIngredientComponent,
+    ButtonDirective,
+    ButtonLabel,
+    ButtonIcon,
+  ]
 })
 export class IngredientEditorComponent implements OnInit {
 

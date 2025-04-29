@@ -4,12 +4,12 @@
       <div class="flex justify-content-between">
         <span>
           <app-create-ingredient (createdIngredient)="getIngredients()"></app-create-ingredient >
-          <Button pButton type="button" icon="pi pi-trash" label="Delete" class="p-button-outlined p-button-danger mr-2" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length"></Button>
-          <Button pButton type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" (click)="clearFilter(ingredientsTable)"></Button>
+          <Button pButton type="button" pButtonIcon="pi pi-trash" pButtonLabel="Delete" class="p-button-outlined p-button-danger mr-2" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length">Delete</Button>
+          <Button pButton type="button" pButtonIcon="pi pi-filter-slash" pButtonLabel="Clear" class="p-button-outlined" (click)="clearFilter(ingredientsTable)">Clear</Button>
         </span>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-        <Input type="text" pInputText (input)="ingredientsTable.filterGlobal(getEventValue($event), 'contains')" placeholder="Keyword Search" />
+        <Input type="text" pInputText (input)="ingredientsTable.filterGlobal(getEventValue($event), 'contains')" placeholder="Keyword Search">
         </span>
       </div>
     </ng-template>
@@ -28,14 +28,14 @@
           <div class="flex justify-content-between align-items-center">
             ID
             <p-sortIcon field="id"></p-sortIcon>
-            <p-columnFilter type="text" field="id" display="menu" class="ml-auto" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+            <p-columnFilter type="text" field="id" class="ml-auto" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
           </div>
         </th>
         <th id="ingredient-name" pSortableColumn="name">
           <div class="flex justify-content-between align-items-center">
             Name
             <p-sortIcon field="name"></p-sortIcon>
-            <p-columnFilter type="text" field="name" display="menu" class="ml-auto" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+            <p-columnFilter type="text" field="name" class="ml-auto" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
           </div>
         </th>
         <th id="ingredient-action">
@@ -51,15 +51,13 @@
           <p-tableCheckbox [value]="ingredient"></p-tableCheckbox>
         </td>
         <td>
-          <span class="p-column-title">ID</span>
-          {{ingredient.ID}}
+          {{ingredient.id}}
         </td>
         <td>
-          <span class="p-column-title">Name</span>
-          {{ingredient.IngredientName}}
+          {{ingredient.name}}
         </td>
         <td style="min-width:3rem;max-width:3rem">
-          <Button pButton type="button" icon="pi pi-trash" class="p-button-outlined p-button-rounded p-button-text" (click)="confirmDeleteIngredient(ingredient)"></Button>
+          <Button pButton type="button" pButtonIcon="pi pi-trash" class="p-button-outlined p-button-rounded p-button-text" (click)="confirmDeleteIngredient(ingredient)"></Button>
         </td>
       </tr>
     </ng-template>
@@ -76,8 +74,8 @@
       </span>
     </div>
     <ng-template pTemplate="footer">
-      <Button pButton type="button" label="No" icon="pi pi-times" class="p-button-text" (click)="deleteIngredientDialog = false"></Button>
-      <Button pButton type="button" label="Yes" icon="pi pi-check" class="p-button-text" (click)="deleteIngredient()"></Button>
+      <Button pButton type="button" pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="deleteIngredientDialog = false"></Button>
+      <Button pButton type="button" pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" (click)="deleteIngredient()"></Button>
     </ng-template>
   </p-dialog>
 
@@ -89,8 +87,8 @@
       </span>
     </div>
     <ng-template pTemplate="footer">
-      <Button pButton type="button" label="No" icon="pi pi-times" class="p-button-outlined p-button-text" (click)="deleteIngredientsDialog = false"></Button>
-      <Button pButton type="button" label="Yes" icon="pi pi-check" class="p-button-outlined p-button-text" (click)="deleteIngredients()"></Button>
+      <Button pButton type="button" pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-outlined p-button-text" (click)="deleteIngredientsDialog = false"></Button>
+      <Button pButton type="button" pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-outlined p-button-text" (click)="deleteIngredients()"></Button>
     </ng-template>
   </p-dialog>
 </div>

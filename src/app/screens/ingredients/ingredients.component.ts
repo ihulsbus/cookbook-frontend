@@ -4,26 +4,32 @@ import { MessageService } from 'primeng/api';
 import { CreateIngredientComponent } from 'src/app/components/create-ingredient/create-ingredient.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
+import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 import { CommonModule } from '@angular/common';
+import {InputText} from "primeng/inputtext";
 
 @Component({
     selector: 'app-ingredients',
     standalone: true,
     templateUrl: './ingredients.component.html',
-    imports: [
-        CreateIngredientComponent,
-        TableModule,
-        DialogModule,
-        CommonModule,
-    ]
+  imports: [
+    CreateIngredientComponent,
+    TableModule,
+    DialogModule,
+    CommonModule,
+    ButtonDirective,
+    ButtonLabel,
+    ButtonIcon,
+    InputText,
+  ]
 })
 export class IngredientsComponent implements OnInit {
   ingredient: Ingredient = {};
   ingredients: Ingredient[] = [];
-  loading: boolean = true;
+  loading = true;
   filters: object = {};
-  deleteIngredientDialog: boolean = false;
-  deleteIngredientsDialog: boolean = false;
+  deleteIngredientDialog = false;
+  deleteIngredientsDialog = false;
   selectedIngredients: Ingredient[] = [];
 
   constructor(private ingredientService: IngredientService, public messageService: MessageService) { }
@@ -39,6 +45,7 @@ export class IngredientsComponent implements OnInit {
   getIngredients() {
     this.ingredientService.getAllIngredient().subscribe((data) => {
       this.ingredients = data;
+      this.loading = false;
     });
   }
 

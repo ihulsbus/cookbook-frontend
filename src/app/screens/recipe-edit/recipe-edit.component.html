@@ -1,10 +1,10 @@
 <div class="px-4 py-4 md:px-6 lg:px-8">
   <div class="flex flex-row flex-wrap">
     <div class="flex align-items-center cancelButton">
-      <button pButton class="p-button-rounded p-button-text" icon="pi pi-times" (click)="cancelPopup=true">Cancel</button>
+      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-times" (click)="cancelPopup=true">Cancel</button>
     </div>
     <div class="flex align-items-center saveButton">
-      <button pButton class="p-button-rounded p-button-text" icon="pi pi-check" (click)="saveRecipeUpdate()">Save</button>
+      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-check" (click)="saveRecipeUpdate()">Save</button>
     </div>
   </div>
   <div class="grid grid-nogutter surface-section text-800">
@@ -20,7 +20,7 @@
           <div class="description">
             <div class="field">
               <label for="description">Description</label><br />
-              <textarea pInputTextarea id="description" maxlength="280" [(ngModel)]="recipe.description" class="description" style="height: 300px;"></textarea>
+              <textarea pTextarea id="description" maxlength="280" [(ngModel)]="recipe.description" class="description" style="height: 300px;"></textarea>
             </div>
           </div>
           <div class="metadata">
@@ -86,8 +86,8 @@
     <span>Are you sure you want to cancel?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton label="No" icon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
-    <button pButton label="Yes" icon="pi pi-check" class="p-button-text" [routerLink] = "['/app/recipes/'+recipe.id]">Yes</button>
+    <button pButton pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
+    <button pButton pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" [routerLink] = "['/app/recipes/'+recipe.id]">Yes</button>
   </ng-template>
 </p-dialog>
 
@@ -97,7 +97,7 @@
     <span>There are no ingredients or method specified. Are you sure you want to save this?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton label="No" icon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
-    <button pButton label="Yes" icon="pi pi-check" class="p-button-text" (click)="uploadRecipe()">Yes</button>
+    <button pButton pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
+    <button pButton pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" (click)="uploadRecipe()">Yes</button>
   </ng-template>
 </p-dialog>

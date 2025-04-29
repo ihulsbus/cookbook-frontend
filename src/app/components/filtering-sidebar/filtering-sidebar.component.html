@@ -12,7 +12,7 @@
   <div class="input">
     <span class="p-label input">
       <label htmlFor="category">Category</label>
-      <p-dropdown [style]="{'width': '95%'}" id="category" [showClear]="true" [editable]="true" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="CategoryName" 
+      <p-dropdown [style]="{'width': '95%'}" id="category" [showClear]="true" [editable]="true" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="CategoryName"
         placeholder="Select a Category" (onChange)="invokeFilterLogic()"></p-dropdown>
     </span>
   </div>
@@ -26,8 +26,8 @@
 </div>
 
 <div class="show-mobile">
-  <button type="button" class="p-button-text" pButton icon="pi pi-bars" label="Filters" (click)="filtersVisible = true" 
-    aria-haspopup="true" aria-controls="overlay_menu" style="margin-top: -5px;"></button>
+  <button type="button" class="p-button-text" pButton pButtonIcon="pi pi-bars" pButtonLabel="Filters" (click)="filtersVisible = true"
+    aria-haspopup="true" aria-controls="overlay_menu" style="margin-top: -5px;">Filters</button>
   <p-sidebar [(visible)]="filtersVisible" class="h-auto">
     <span class="text-3xl">{{title}}</span>
     <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
@@ -35,7 +35,7 @@
       <p>Search</p>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" [style]="{'width': '95%'}" placeholder="Searchterm" pInputText [(ngModel)]="searchText"
+        <input type="text" [style]="{'width': '95%'}" placeholder="Search term" pInputText [(ngModel)]="searchText"
           (input)="invokeFilterLogic()" />
       </span>
     </div>

@@ -25,23 +25,31 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterLink } from '@angular/router';
 import { EditorModule} from "primeng/editor";
+import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {InputText} from "primeng/inputtext";
+import {Textarea} from "primeng/textarea";
 
 @Component({
     selector: 'app-recipe-edit',
     standalone: true,
     templateUrl: './recipe-edit.component.html',
     styleUrls: ['./recipe-edit.component.scss'],
-    imports: [
-        CommonModule,
-        DialogModule,
-        EditorModule,
-        FormsModule,
-        FileUploadModule,
-        IngredientEditorComponent,
-        InputNumberModule,
-        RouterLink,
-        MultiSelectModule,
-    ]
+  imports: [
+    CommonModule,
+    DialogModule,
+    EditorModule,
+    FormsModule,
+    FileUploadModule,
+    IngredientEditorComponent,
+    InputNumberModule,
+    RouterLink,
+    MultiSelectModule,
+    ButtonDirective,
+    ButtonIcon,
+    InputText,
+    Textarea,
+    ButtonLabel,
+  ]
 })
 export class RecipeEditComponent implements OnInit {
 

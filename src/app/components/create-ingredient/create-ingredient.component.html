@@ -1,4 +1,4 @@
-<button pButton label="New" icon="pi pi-plus" class="p-button-outlined p-button-success mr-2" (click)="openDialog()"></button>
+<button pButton pButtonLabel="New" pButtonIcon="pi pi-plus" class="p-button-outlined p-button-success mr-2" (click)="openDialog()">New</button>
 <p-dialog header="New ingredient" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{ width: '50vw'}"
   [modal]="true" [(visible)]="visible">
   <ng-template pTemplate="header">
@@ -7,7 +7,7 @@
     <div class="p-fluid">
       <div class="p-field">
         <label for="name">Ingredient Name</label>
-        <input id="name" type="text" pInputText [(ngModel)]="ingredient.name" class="form-control" required minlength="4" #name="ngModel" autofocus />
+        <input id="name" type="text" pInputText [(ngModel)]="ingredient.name" class="form-control" required minlength="4" #name="ngModel" />
       </div>
       <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
 
@@ -20,7 +20,7 @@
       </div>
     </div>
   <ng-template pTemplate="footer">
-    <button pButton label="Cancel" icon="pi pi-cross" class="p-button-outlined" (click)="closeDialog()"></button>
-    <button pButton label="Create" icon="pi pi-check" class="p-button-outlined" (click)="createIngredient()" [disabled]="name.invalid"></button>
+    <button pButton pButtonLabel="Cancel" pButtonIcon="pi pi-cross" class="p-button-outlined" (click)="closeDialog()">Cancel</button>
+    <button pButton pButtonLabel="Create" pButtonIcon="pi pi-check" class="p-button-outlined" (click)="createIngredient()" [disabled]="name.invalid">Create</button>
   </ng-template>
 </p-dialog>

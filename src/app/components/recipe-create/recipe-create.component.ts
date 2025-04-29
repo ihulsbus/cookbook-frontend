@@ -6,17 +6,25 @@ import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {InputTextarea} from "primeng/inputtextarea";
+import {Textarea} from "primeng/textarea";
 
 @Component({
     selector: 'app-recipe-create',
     standalone: true,
     templateUrl: './recipe-create.component.html',
-    imports: [
-        CommonModule,
-        DialogModule,
-        FormsModule,
-        InputNumberModule,
-    ]
+  imports: [
+    CommonModule,
+    DialogModule,
+    FormsModule,
+    InputNumberModule,
+    ButtonDirective,
+    ButtonLabel,
+    ButtonIcon,
+    InputTextarea,
+    Textarea,
+  ]
 })
 export class RecipeCreateComponent implements OnInit {
 

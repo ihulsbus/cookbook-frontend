@@ -1,10 +1,10 @@
 <div class="surface-ground px-4 py-4 md:px-6 lg:px-8">
   <div class="flex flex-row flex-wrap">
     <div class="flex align-items-center backButton">
-      <button pButton class="p-button-rounded p-button-text" icon="pi pi-arrow-left" [routerLink] = "['/app/recipes']"></button>
+      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-arrow-left" [routerLink] = "['/app/recipes']">Back</button>
     </div>
     <div class="flex align-items-center  editButton">
-      <button pButton class="p-button-rounded p-button-text" icon="pi pi-pencil" [routerLink] = "['/app/recipes/'+recipe.id+'/edit']"></button>
+      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-pencil" [routerLink] = "['/app/recipes/'+recipe.id+'/edit']">Edit</button>
     </div>
   </div>
   <div class="grid grid-nogutter surface-section text-800">
