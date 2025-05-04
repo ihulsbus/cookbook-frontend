@@ -9,7 +9,7 @@
  */
 
 
-export interface IngredientAmounts {
+export interface IngredientAmounts { 
     ingredientID?: string;
     unitID?: string;
     quantity?: number;

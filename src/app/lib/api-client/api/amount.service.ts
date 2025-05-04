@@ -91,7 +91,7 @@ export class AmountService {
     }
 
     /**
-     * Your DELETE endpoint
+     * Delete recipe ingredient amounts
      * Delete ingredient quantities belonging to a recipe. Each provided ingredient reference will be deleted. If you want to delete all ingredients belonging to a recipe, send all.
      * @param recipeID UUID of a recipe
      * @param ingredientAmounts Array of ingredientAmounts
@@ -153,7 +153,7 @@ export class AmountService {
             }
         }
 
-        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        let localVarPath = `/amount/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
         return this.httpClient.request<string>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -230,7 +230,7 @@ export class AmountService {
             }
         }
 
-        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        let localVarPath = `/amount/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
         return this.httpClient.request<Array<IngredientAmounts>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -307,7 +307,7 @@ export class AmountService {
             }
         }
 
-        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        let localVarPath = `/amount/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
         return this.httpClient.request<Array<IngredientAmounts>>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -322,7 +322,7 @@ export class AmountService {
     }
 
     /**
-     * Your PUT endpoint
+     * Update recipe ingredient amounts
      * Update the quantities of the ingredients belonging to a recipe
      * @param recipeID UUID of a recipe
      * @param ingredientAmounts Provide one or multiple ingredient amounts linked to the related recipe.
@@ -384,7 +384,7 @@ export class AmountService {
             }
         }
 
-        let localVarPath = `/amount${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        let localVarPath = `/amount/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
         return this.httpClient.request<Array<IngredientAmounts>>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
