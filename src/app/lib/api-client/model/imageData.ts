@@ -16,22 +16,22 @@ export interface ImageData {
     /**
      * ID of the requested media resource
      */
-    id?: string;
+    id: string;
     /**
      * type of entity associated to the media file
      */
-    entity_type?: string;
+    entity_type: string;
     /**
      * ID of the entity associated to the media file
      */
-    entity_id?: string;
+    entity_id: string;
     /**
      * size of the media file
      */
-    size?: number;
+    size: number;
     /**
      * type of media
      */
-    type?: string;
+    type: string;
 }
 

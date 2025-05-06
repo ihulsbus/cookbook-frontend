@@ -16,14 +16,14 @@ export interface Unit {
     /**
      * ID of the unit
      */
-    id?: string;
+    id: string;
     /**
      * Full name of the unit
      */
-    full_name?: string;
+    full_name: string;
     /**
      * Abbreviation of the unit
      */
-    short_name?: string;
+    short_name: string;
 }
 

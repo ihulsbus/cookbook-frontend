@@ -24,7 +24,7 @@ import {InputText} from "primeng/inputtext";
   ]
 })
 export class IngredientsComponent implements OnInit {
-  ingredient: Ingredient = {};
+  ingredient = {} as Ingredient;
   ingredients: Ingredient[] = [];
   loading = true;
   filters: object = {};

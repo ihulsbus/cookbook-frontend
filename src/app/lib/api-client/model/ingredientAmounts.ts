@@ -10,8 +10,8 @@
 
 
 export interface IngredientAmounts { 
-    ingredientID?: string;
-    unitID?: string;
-    quantity?: number;
+    ingredientID: string;
+    unitID: string;
+    quantity: number;
 }
 

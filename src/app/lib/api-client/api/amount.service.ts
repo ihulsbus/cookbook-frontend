@@ -94,14 +94,14 @@ export class AmountService {
      * Delete recipe ingredient amounts
      * Delete ingredient quantities belonging to a recipe. Each provided ingredient reference will be deleted. If you want to delete all ingredients belonging to a recipe, send all.
      * @param recipeID UUID of a recipe
-     * @param ingredientAmounts Array of ingredientAmounts
+     * @param body No body required. Delete deletes all ingredient amounts linked to a recipe
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<string>;
-    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpResponse<string>>;
-    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpEvent<string>>;
-    public deleteRecipeAmounts(recipeID: string, ingredientAmounts?: Array<IngredientAmounts>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<any> {
+    public deleteRecipeAmounts(recipeID: string, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<string>;
+    public deleteRecipeAmounts(recipeID: string, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpResponse<string>>;
+    public deleteRecipeAmounts(recipeID: string, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<HttpEvent<string>>;
+    public deleteRecipeAmounts(recipeID: string, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json', context?: HttpContext}): Observable<any> {
         if (recipeID === null || recipeID === undefined) {
             throw new Error('Required parameter recipeID was null or undefined when calling deleteRecipeAmounts.');
         }
@@ -157,7 +157,7 @@ export class AmountService {
         return this.httpClient.request<string>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: ingredientAmounts,
+                body: body,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -16,6 +16,6 @@ export interface ModelError {
     /**
      * field specifying the error that the API encountered
      */
-    error?: string;
+    error: string;
 }
 

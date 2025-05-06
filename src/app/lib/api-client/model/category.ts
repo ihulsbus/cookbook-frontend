@@ -16,10 +16,10 @@ export interface Category {
     /**
      * ID of a category
      */
-    id?: string;
+    id: string;
     /**
      * Name of a category
      */
-    name?: string;
+    name: string;
 }
 

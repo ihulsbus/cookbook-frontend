@@ -16,10 +16,10 @@ export interface Tag {
     /**
      * ID of the tag
      */
-    id?: string;
+    id: string;
     /**
      * Name of the tag
      */
-    name?: string;
+    name: string;
 }
 

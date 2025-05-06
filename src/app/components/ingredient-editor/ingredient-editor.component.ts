@@ -46,7 +46,7 @@ export class IngredientEditorComponent implements OnInit {
   deleteIngredientsDialog = false;
   submitted = false;
 
-  newIngredient: IngredientAmounts = {};
+  newIngredient = {} as IngredientAmounts;
   ingredients: Ingredient[] = [];
   selectedIngredients: IngredientAmounts[] = [];
   units: Unit[] = [];
@@ -65,7 +65,7 @@ export class IngredientEditorComponent implements OnInit {
   }
 
   getUnits() {
-    this.unitService.getAlUnits().subscribe((data) => {
+    this.unitService.getAllUnits().subscribe((data) => {
       for (const unit of data) {
         this.unitNames.set(unit.id!, unit.full_name!);
       };
@@ -85,7 +85,7 @@ export class IngredientEditorComponent implements OnInit {
   }
 
   clearNewIngredient() {
-    this.newIngredient = {};
+    this.newIngredient = {} as IngredientAmounts;
   }
 
   openNew() {

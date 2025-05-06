@@ -16,10 +16,10 @@ export interface DifficultyLevel {
     /**
      * ID of a Dificulty Level
      */
-    id?: string;
+    id: string;
     /**
      * name of a Dificulty Level
      */
-    level?: number;
+    level: number;
 }
 

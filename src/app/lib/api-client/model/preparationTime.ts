@@ -16,10 +16,10 @@ export interface PreparationTime {
     /**
      * ID of a Peparation Time 
      */
-    id?: string;
+    id: string;
     /**
      * name of a Peparation Time
      */
-    duration?: number;
+    duration: number;
 }
 

@@ -16,10 +16,10 @@ export interface Ingredient {
     /**
      * ID of the ingredient
      */
-    id?: string;
+    id: string;
     /**
      * Name of the ingredient
      */
-    name?: string;
+    name: string;
 }
 

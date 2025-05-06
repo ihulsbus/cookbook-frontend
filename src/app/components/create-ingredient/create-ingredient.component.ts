@@ -25,10 +25,10 @@ export class CreateIngredientComponent implements OnInit {
 
   @Output() createdIngredient = new EventEmitter<boolean>();
 
-  visible: boolean = false;
-  ingredient: Ingredient = {};
-  validationErrors: Object = {};
-  isFormValid: boolean = false;
+  visible = false;
+  ingredient = {} as Ingredient;
+  validationErrors = {};
+  isFormValid = false;
 
   constructor(private restService: IngredientService, public messageService: MessageService) { }
 

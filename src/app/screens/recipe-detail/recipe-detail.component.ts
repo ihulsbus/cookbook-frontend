@@ -54,24 +54,17 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeService.getRecipe(params['id']).subscribe((data) => {
         this.recipe = data
       })
-      // .then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients);});
+
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
         this.instructions = data
       })
-      // then((data) => { this.instructions = data});
-      // this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data});
+
       this.amountService.getRecipeAmounts(params['id']).subscribe((data) => {
         this.amounts = data
       })
     })
   }
 
-  // getIngredientNames(ingredients: Array<Ingredient>) {
-  //   for (var ingredient of ingredients) {
-  //     this.names.set(ingredient.ID, ingredient.IngredientName);
-  //   };
-
-  // }
 
   getImgURL() {
     this.imageService.searchImage("Recipe", this.recipe.id).subscribe((data) => this.imgUrl = `${environment.cdn}/img/${data.id}.jpg?d=${(new Date()).getTime()}`)

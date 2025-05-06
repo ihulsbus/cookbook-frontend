@@ -16,10 +16,10 @@ export interface CuisineType {
     /**
      * ID of a cuisine type
      */
-    id?: string;
+    id: string;
     /**
      * name of a cuisine type
      */
-    name?: string;
+    name: string;
 }
 

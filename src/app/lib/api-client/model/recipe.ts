@@ -16,7 +16,7 @@ export interface Recipe {
     /**
      * ID of a recipe
      */
-    id?: string;
+    id: string;
     /**
      * Name of a recipe
      */

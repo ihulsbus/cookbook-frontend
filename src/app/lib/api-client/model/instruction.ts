@@ -16,7 +16,7 @@ export interface Instruction {
     /**
      * ID of the instruction
      */
-    id?: string;
+    id: string;
     /**
      * Sequence position of the instruction
      */
