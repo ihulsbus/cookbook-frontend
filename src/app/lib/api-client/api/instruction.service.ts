@@ -94,18 +94,18 @@ export class InstructionService {
 
     /**
      * Create instruction
-     * Creates an instruction for a recipe.
-     * @param recipeID UUID of a recipe
-     * @param instruction Body specifies the instruction information. ID is omitted when creating the instruction as it is generated on creation.  If an ID is provided, it will be overruled internally
+     * Creates an instruction for an entity.
+     * @param entityID UUID of a entity
+     * @param instruction Body specifies the instruction information. Entity ID is taken from the path and forced on each instruction object.  Currently the entityType is forced to &#x60;recipe&#x60;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createInstruction(recipeID: string, instruction?: Instruction, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Instruction>;
-    public createInstruction(recipeID: string, instruction?: Instruction, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Instruction>>;
-    public createInstruction(recipeID: string, instruction?: Instruction, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Instruction>>;
-    public createInstruction(recipeID: string, instruction?: Instruction, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (recipeID === null || recipeID === undefined) {
-            throw new Error('Required parameter recipeID was null or undefined when calling createInstruction.');
+    public createInstruction(entityID: string, instruction?: Instruction, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Instruction>>;
+    public createInstruction(entityID: string, instruction?: Instruction, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Instruction>>>;
+    public createInstruction(entityID: string, instruction?: Instruction, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Instruction>>>;
+    public createInstruction(entityID: string, instruction?: Instruction, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (entityID === null || entityID === undefined) {
+            throw new Error('Required parameter entityID was null or undefined when calling createInstruction.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -155,8 +155,8 @@ export class InstructionService {
             }
         }
 
-        let localVarPath = `/instruction/recipe/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<Instruction>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "entityID", value: entityID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<Array<Instruction>>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: instruction,
@@ -172,17 +172,17 @@ export class InstructionService {
     /**
      * Delete instruction
      * Deletes an instruction
-     * @param instructionID ID of an instruction
+     * @param entityID UUID of a entity
      * @param body No body on this request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteInstruction(instructionID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any>;
-    public deleteInstruction(instructionID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public deleteInstruction(instructionID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public deleteInstruction(instructionID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (instructionID === null || instructionID === undefined) {
-            throw new Error('Required parameter instructionID was null or undefined when calling deleteInstruction.');
+    public deleteInstruction(entityID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any>;
+    public deleteInstruction(entityID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deleteInstruction(entityID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deleteInstruction(entityID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (entityID === null || entityID === undefined) {
+            throw new Error('Required parameter entityID was null or undefined when calling deleteInstruction.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -232,7 +232,7 @@ export class InstructionService {
             }
         }
 
-        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "instructionID", value: instructionID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "entityID", value: entityID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -248,18 +248,18 @@ export class InstructionService {
 
     /**
      * Get instruction
-     * Retrieve an instruction via it\&#39;s ID
-     * @param instructionID ID of an instruction
+     * Retrieve an instruction via it\&#39;s entity ID
+     * @param entityID UUID of a entity
      * @param body No Request body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getInstruction(instructionID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Instruction>;
-    public getInstruction(instructionID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Instruction>>;
-    public getInstruction(instructionID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Instruction>>;
-    public getInstruction(instructionID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (instructionID === null || instructionID === undefined) {
-            throw new Error('Required parameter instructionID was null or undefined when calling getInstruction.');
+    public getInstruction(entityID: string, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Instruction>>;
+    public getInstruction(entityID: string, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Instruction>>>;
+    public getInstruction(entityID: string, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Instruction>>>;
+    public getInstruction(entityID: string, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (entityID === null || entityID === undefined) {
+            throw new Error('Required parameter entityID was null or undefined when calling getInstruction.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -309,8 +309,8 @@ export class InstructionService {
             }
         }
 
-        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "instructionID", value: instructionID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<Instruction>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "entityID", value: entityID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<Array<Instruction>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
@@ -409,18 +409,18 @@ export class InstructionService {
 
     /**
      * Update instruction
-     * Update an instruction
-     * @param instructionID ID of an instruction
+     * Update an entity\&#39;s instruction via the entityID
+     * @param entityID UUID of a entity
      * @param instruction Object to update an instruction. ID in the body must be omitted as it will be overwritten with the path parameter.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateInstruction(instructionID: string, instruction?: Instruction, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Instruction>;
-    public updateInstruction(instructionID: string, instruction?: Instruction, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Instruction>>;
-    public updateInstruction(instructionID: string, instruction?: Instruction, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Instruction>>;
-    public updateInstruction(instructionID: string, instruction?: Instruction, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
-        if (instructionID === null || instructionID === undefined) {
-            throw new Error('Required parameter instructionID was null or undefined when calling updateInstruction.');
+    public updateInstruction(entityID: string, instruction?: Array<Instruction>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Instruction>>;
+    public updateInstruction(entityID: string, instruction?: Array<Instruction>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Instruction>>>;
+    public updateInstruction(entityID: string, instruction?: Array<Instruction>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Instruction>>>;
+    public updateInstruction(entityID: string, instruction?: Array<Instruction>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (entityID === null || entityID === undefined) {
+            throw new Error('Required parameter entityID was null or undefined when calling updateInstruction.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -470,8 +470,8 @@ export class InstructionService {
             }
         }
 
-        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "instructionID", value: instructionID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
-        return this.httpClient.request<Instruction>('put', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/instruction/${this.configuration.encodeParam({name: "entityID", value: entityID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        return this.httpClient.request<Array<Instruction>>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: instruction,

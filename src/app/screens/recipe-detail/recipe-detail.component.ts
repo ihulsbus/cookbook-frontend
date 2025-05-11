@@ -16,7 +16,7 @@ import { TagModule } from 'primeng/tag';
 import { ChipModule } from 'primeng/chip';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import {ButtonDirective, ButtonIcon} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon} from "primeng/button";
 
 @Component({
     selector: 'app-recipe-detail',
@@ -31,13 +31,14 @@ import {ButtonDirective, ButtonIcon} from "primeng/button";
     ChipModule,
     ButtonDirective,
     ButtonIcon,
+    Button,
   ]
 })
 export class RecipeDetailComponent implements OnInit {
   recipe = {} as Recipe;
   imgUrl = "";
   amounts: IngredientAmounts[] = [];
-  instructions = {} as Instruction;
+  instructions: Instruction[] = [];
   names = new Map<number, string>();
   ingredients: Ingredient[] = []
 
@@ -53,7 +54,11 @@ export class RecipeDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.recipeService.getRecipe(params['id']).subscribe((data) => {
         this.recipe = data
-      })
+      });
+
+      this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
+        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`
+      });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
         this.instructions = data

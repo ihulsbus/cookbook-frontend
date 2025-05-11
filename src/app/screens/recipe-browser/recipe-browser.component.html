@@ -1,3 +1,6 @@
+  all: {{ allRecipes | json }}<br>
+  filtered: {{ filteredRecipes | json }}<br>
+  metadata: {{ recipeMetadata | json }}<br>
 <div class="flex flex-grow-1 flex-shrink-1 h-full">
   <app-filtering-sidebar class="flex-shrink-0 flex flex-column sidebar h-full" [inputRecipes]="allRecipes" (outputRecipes)="passRecipes($event)"></app-filtering-sidebar>
   <app-recipe-grid class="flex-grow-1 flex-shrink-1 flex flex-column recipes" [recipes]="filteredRecipes" [recipeMetadata]="recipeMetadata"></app-recipe-grid>

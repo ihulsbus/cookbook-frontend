@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
-import {InputTextarea} from "primeng/inputtextarea";
 import {Textarea} from "primeng/textarea";
 
 @Component({
@@ -22,7 +21,6 @@ import {Textarea} from "primeng/textarea";
     ButtonDirective,
     ButtonLabel,
     ButtonIcon,
-    InputTextarea,
     Textarea,
   ]
 })

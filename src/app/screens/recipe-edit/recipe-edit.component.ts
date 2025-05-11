@@ -60,7 +60,7 @@ export class RecipeEditComponent implements OnInit {
   api = environment.backend;
   imgUrl = "";
   amounts: IngredientAmounts[] = [];
-  instructions = {} as Instruction;
+  instructions = [] as Instruction[];
   names = new Map<number, string>();
   categories: Category[] = [];
   tags: Tag[] = [];
@@ -116,11 +116,11 @@ export class RecipeEditComponent implements OnInit {
     this.fileUpload = !this.fileUpload;
   }
   saveRecipeUpdate() {
-    if (this.amounts.length == 0 || this.instructions.description.length == 0) {
-      this.confirmPopup = true;
-    } else {
-      this.uploadRecipe();
-    }
+    // if (this.amounts.length == 0 || this.instructions.description.length == 0) {
+    //   this.confirmPopup = true;
+    // } else {
+    //   this.uploadRecipe();
+    // }
   }
 
   uploadRecipe() {
