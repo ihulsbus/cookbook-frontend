@@ -12,14 +12,14 @@
   <div class="input">
     <span class="p-label input">
       <label htmlFor="category">Category</label>
-      <p-dropdown [style]="{'width': '95%'}" id="category" [showClear]="true" [editable]="true" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="CategoryName"
+      <p-dropdown [style]="{'width': '95%'}" id="category" [showClear]="true" [editable]="true" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="name"
         placeholder="Select a Category" (onChange)="invokeFilterLogic()"></p-dropdown>
     </span>
   </div>
   <div class="input">
     <span class="p-label input">
       <label htmlFor="tag">Tag</label>
-      <p-dropdown [style]="{'width': '95%'}" id="tag" [showClear]="true" [editable]="true" [options]="tags" [(ngModel)]="selectedTag" optionLabel="TagName"
+      <p-dropdown [style]="{'width': '95%'}" id="tag" [showClear]="true" [editable]="true" [options]="tags" [(ngModel)]="selectedTag" optionLabel="name"
         placeholder="Select a Tag" (onChange)="invokeFilterLogic()"></p-dropdown>
     </span>
   </div>
