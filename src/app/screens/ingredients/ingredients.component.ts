@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { CreateIngredientComponent } from 'src/app/components/create-ingredient/create-ingredient.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 import { CommonModule } from '@angular/common';
 import {InputText} from "primeng/inputtext";
 
@@ -21,6 +21,7 @@ import {InputText} from "primeng/inputtext";
     ButtonLabel,
     ButtonIcon,
     InputText,
+    Button,
   ]
 })
 export class IngredientsComponent implements OnInit {

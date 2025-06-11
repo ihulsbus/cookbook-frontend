@@ -1,0 +1,14 @@
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-buttons {
+  flex: 1;
+}
+
+.right-buttons {
+  display: flex;
+  gap: 8px; /* Adjust spacing between the Cancel and Save buttons */
+}

@@ -7,7 +7,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "download:api-template": "openapi-generator-cli author template -g typescript-angular -o ./openapi-generator-template ",
-    "generate:api": "openapi-generator-cli generate -i https://cbhbe.ams3.cdn.digitaloceanspaces.com/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --template-dir ./openapi-generator-template --additional-properties=ngVersion=19.1.5"
+    "generate:api": "openapi-generator-cli generate -i https://cbhbe.ams3.digitaloceanspaces.com/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --template-dir ./openapi-generator-template --additional-properties=ngVersion=19.1.5"
   },
   "name": "cookbook-frontend",
   "version": "0.1.1",
@@ -27,12 +27,16 @@
     "@angular/platform-browser-dynamic": "^19.1.4",
     "@angular/router": "^19.1.4",
     "@primeng/themes": "^19.0.5",
+    "@tailwindcss/postcss": "^4.1.7",
     "angular-auth-oidc-client": "^19.0.0",
+    "postcss": "^8.5.3",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.5",
     "quill": "^2.0.3",
     "rxjs": "~7.8.1",
+    "tailwindcss": "^4.1.7",
+    "tailwindcss-primeui": "^0.6.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

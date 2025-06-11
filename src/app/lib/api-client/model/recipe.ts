@@ -25,9 +25,5 @@ export interface Recipe {
      * Short description of the recipe  
      */
     description: string;
-    /**
-     * amount of servings a recipe makes
-     */
-    serving_count: number;
 }
 

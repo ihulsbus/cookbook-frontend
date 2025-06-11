@@ -35,6 +35,7 @@ model/modelError.ts
 model/models.ts
 model/preparationTime.ts
 model/recipe.ts
+model/recipeMetadata.ts
 model/tag.ts
 model/unit.ts
 param.ts

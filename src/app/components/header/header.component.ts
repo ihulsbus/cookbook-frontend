@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { TabsModule } from 'primeng/tabs';
 import { Router, NavigationEnd } from '@angular/router';
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 
 @Component({
     selector: 'app-header',
@@ -29,6 +29,7 @@ import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     ButtonDirective,
     ButtonIcon,
     ButtonLabel,
+    Button,
   ]
 })
 

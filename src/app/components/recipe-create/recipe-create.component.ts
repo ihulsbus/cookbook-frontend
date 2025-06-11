@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { RecipeService, Recipe, InstructionService, Instruction } from '../../lib/api-client/';
+import { Component } from '@angular/core';
+import { RecipeService, Recipe, InstructionService, Instruction, MetadataService, RecipeMetadata } from '../../lib/api-client/';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 import {Textarea} from "primeng/textarea";
 
 @Component({
@@ -22,24 +22,25 @@ import {Textarea} from "primeng/textarea";
     ButtonLabel,
     ButtonIcon,
     Textarea,
+    Button,
   ]
 })
-export class RecipeCreateComponent implements OnInit {
+export class RecipeCreateComponent {
 
   visible: boolean = false;
   submitted: boolean = false;
   recipe = {} as Recipe;
+  metadata = {} as RecipeMetadata;
   instruction = {} as Instruction;
   validationErrors: {} = {};
 
 
-  constructor(private recipeService: RecipeService, private instructionService: InstructionService, private router: Router, private messageService: MessageService) {
-
-  }
-
-  ngOnInit(): void {
-    // This is intentionally empty
-  }
+  constructor(
+    private recipeService: RecipeService,
+    private instructionService: InstructionService,
+    private metadataService: MetadataService,
+    private router: Router,
+    private messageService: MessageService) {}
 
   openDialog() {
     this.visible = true

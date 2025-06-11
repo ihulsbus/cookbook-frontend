@@ -1,10 +1,13 @@
 <p-card>
   <ng-template #header>
-    <img src={{logo}} alt="Logo Image" height="130" class="mb-3 logo">
+    <img [src]="cdn + '/logo/logo_blk.svg'" alt="Logo Image" height="130" class="m-3 logo">
   </ng-template>
   <ng-template #title> Welcome </ng-template>
-  <ng-template #subtitle> This site is currently invite only. </ng-template>
+  <ng-template #subtitle> This site is currently invite only.</ng-template>
   <ng-template #footer>
-    <app-login-button></app-login-button>
+    <div class="flex justify-content-between align-items-center mb-1">
+      <p-button [pTooltip]="registrationTooltip" tooltipPosition="bottom" label="Register" icon="pi pi-user-plus" [rounded]="true" [raised]="true" [disabled]="true"></p-button>
+      <app-login-button></app-login-button>
+    </div>
   </ng-template>
 </p-card>

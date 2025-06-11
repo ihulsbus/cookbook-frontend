@@ -7,25 +7,27 @@ import {
   Tag,
   IngredientAmounts,
   RecipeService,
-  IngredientService,
   AmountService,
   TagService,
   CategoryService,
+  CuisinetypeService,
   MetadataService,
-  InstructionService,
+  ImageService,
+  InstructionService, RecipeMetadata, CuisineType,
 } from '../../lib/api-client';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { IngredientEditorComponent } from 'src/app/components/ingredient-editor/ingredient-editor.component';
 import { CommonModule } from '@angular/common';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectModule } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterLink } from '@angular/router';
 import { EditorModule} from "primeng/editor";
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 import {InputText} from "primeng/inputtext";
 import {Textarea} from "primeng/textarea";
 
@@ -43,12 +45,14 @@ import {Textarea} from "primeng/textarea";
     IngredientEditorComponent,
     InputNumberModule,
     RouterLink,
+    SelectModule,
     MultiSelectModule,
     ButtonDirective,
     ButtonIcon,
     InputText,
     Textarea,
     ButtonLabel,
+    Button,
   ]
 })
 export class RecipeEditComponent implements OnInit {
@@ -64,16 +68,19 @@ export class RecipeEditComponent implements OnInit {
   names = new Map<number, string>();
   categories: Category[] = [];
   tags: Tag[] = [];
+  cuisineTypes: CuisineType[] = [];
+  metadata = {} as RecipeMetadata;
 
 
   constructor(
     private recipeService: RecipeService,
     private instructionService: InstructionService,
-    private ingredientService: IngredientService,
     private amountService: AmountService,
     private tagService: TagService,
     private categoryService: CategoryService,
     private metadataService: MetadataService,
+    private cuisineTypeService: CuisinetypeService,
+    private imageService: ImageService,
     private messageService: MessageService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -81,12 +88,37 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.recipeService.getRecipe(params['id']).subscribe((data) => this.recipe = data);
-      // then((data) => { this.recipe = data; this.getImgURL(); this.getIngredientNames(this.recipe.Ingredients); });
-      this.instructionService.getInstruction(params['id']).subscribe((data) => this.instructions = data);
-      // this.restService.GetAmounts(params['id']).then((data) => { this.amounts = data });
-      this.categoryService.getAllCategory().subscribe((data) => this.categories = data);
-      this.tagService.getAllTags().subscribe((data) => this.tags = data);
+      this.recipeService.getRecipe(params['id']).subscribe((data) => {
+        this.recipe = data;
+      });
+
+      this.metadataService.getRecipeMetadata(params['id']).subscribe((data) => {
+        this.metadata = data;
+      })
+
+      this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
+        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`;
+      });
+
+      this.instructionService.getInstruction(params['id']).subscribe((data) => {
+        this.instructions = data;
+      })
+
+      this.amountService.getRecipeAmounts(params['id']).subscribe((data) => {
+        this.amounts = data;
+      })
+
+      this.tagService.getAllTags().subscribe((data) => {
+        this.tags = data;
+      })
+
+      this.categoryService.getAllCategory().subscribe((data) => {
+        this.categories = data;
+      })
+
+      this.cuisineTypeService.getAllCuisinetype().subscribe((data) => {
+        this.cuisineTypes = data;
+      })
     })
   }
 
@@ -159,6 +191,27 @@ export class RecipeEditComponent implements OnInit {
   saveFailed() {
     this.messageService.add({
       severity: 'error', summary: 'Update failed', detail: 'Recipe update failed', life: 3000,
+    });
+  }
+
+  addInstruction(): void {
+    // Determine the next sequence
+    const nextSequence = this.instructions.length + 1;
+
+    // Push a new instruction step with default values
+    this.instructions.push({
+      sequence: nextSequence,
+      description: '',
+    } as Instruction);
+  }
+
+  deleteInstruction(index: number): void {
+    // Remove the step from the array
+    this.instructions.splice(index, 1);
+
+    // Recalculate sequences
+    this.instructions.forEach((step, i) => {
+      step.sequence = i + 1;
     });
   }
 

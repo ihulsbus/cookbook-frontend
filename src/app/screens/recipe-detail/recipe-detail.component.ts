@@ -7,7 +7,9 @@ import {
   Ingredient,
   InstructionService,
   ImageService,
-  AmountService
+  AmountService,
+  MetadataService,
+  RecipeMetadata
 } from '../../lib/api-client';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -16,7 +18,8 @@ import { TagModule } from 'primeng/tag';
 import { ChipModule } from 'primeng/chip';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import {Button, ButtonDirective, ButtonIcon} from "primeng/button";
+import {Button, ButtonModule} from "primeng/button";
+import { ButtonGroupModule } from 'primeng/buttongroup';
 
 @Component({
     selector: 'app-recipe-detail',
@@ -29,9 +32,9 @@ import {Button, ButtonDirective, ButtonIcon} from "primeng/button";
     IngredientListComponent,
     TagModule,
     ChipModule,
-    ButtonDirective,
-    ButtonIcon,
+    ButtonModule,
     Button,
+    ButtonGroupModule,
   ]
 })
 export class RecipeDetailComponent implements OnInit {
@@ -41,31 +44,37 @@ export class RecipeDetailComponent implements OnInit {
   instructions: Instruction[] = [];
   names = new Map<number, string>();
   ingredients: Ingredient[] = []
+  metadata = {} as RecipeMetadata;
 
   constructor(
     private recipeService: RecipeService,
     private amountService: AmountService,
     private instructionService: InstructionService,
     private imageService: ImageService,
+    private metadataService: MetadataService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.recipeService.getRecipe(params['id']).subscribe((data) => {
-        this.recipe = data
+        this.recipe = data;
       });
 
+      this.metadataService.getRecipeMetadata(params['id']).subscribe((data) => {
+        this.metadata = data;
+      })
+
       this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
-        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`
+        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`;
       });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
-        this.instructions = data
+        this.instructions = data;
       })
 
       this.amountService.getRecipeAmounts(params['id']).subscribe((data) => {
-        this.amounts = data
+        this.amounts = data;
       })
     })
   }

@@ -1,4 +1,4 @@
-<button pButton class="p-button-outlined" pButtonLabel="New" pButtonIcon="pi pi-plus" (click)="openDialog()">New</button>
+<p-button class="p-button-outlined" label="New" icon="pi pi-plus" [rounded]="true" [raised]="true" [outlined]="true" (click)="openDialog()"></p-button>
 <p-dialog header="New recipe" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [modal]="true" [(visible)]="visible">
   <div class="p-fluid">
     <div class="p-field">
@@ -26,7 +26,7 @@
 
     <div class="p-field">
       <label for="recipeCookTime">Cooking duration in minutes</label>
-      <p-inputNumber #recipeCookTime="ngModel" class="form-control"  id="recipeCookTime" [(ngModel)]="recipe.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber> <!-- TODO: fix cook_time -->
+      <p-inputNumber #recipeCookTime="ngModel" class="form-control"  id="recipeCookTime" [(ngModel)]="metadata.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber> <!-- TODO: fix cook_time -->
       <div *ngIf="recipeCookTime.invalid && (recipeCookTime.dirty || recipeCookTime.touched)" class="alert">
 
         <div *ngIf="recipeCookTime.errors?.['required']" class="mb-2">
@@ -37,7 +37,7 @@
 
     <div class="p-field">
       <label for="recipePersons">Servings</label>
-      <p-inputNumber #recipePersons="ngModel" class="form-control" id="recipePersons" [(ngModel)]="recipe.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber>
+      <p-inputNumber #recipePersons="ngModel" class="form-control" id="recipePersons" [(ngModel)]="metadata.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber>
       <div *ngIf="recipePersons.invalid && (recipePersons.dirty || recipePersons.touched)" class="alert">
 
         <div *ngIf="recipePersons.errors?.['required']" class="mb-2">
@@ -48,6 +48,6 @@
   </div>
 
   <ng-template pTemplate="footer">
-    <button pButton class="p-button-outlined" pButtonLabel="Cancel" pButtonIcon="pi pi-cross" (click)="closeDialog()">Cancel</button>
-    <button pButton class="p-button-outlined" pButtonLabel="Create" pButtonIcon="pi pi-check" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid ||recipeCookTime.invalid || recipePersons.invalid">Create</button>
+    <p-button class="p-button-outlined" label="Cancel" icon="pi pi-cross" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="closeDialog()"></p-button>
+    <p-button class="p-button-outlined" label="Create" icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true" severity="success" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid ||recipeCookTime.invalid || recipePersons.invalid"></p-button>
   </ng-template>

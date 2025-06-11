@@ -5,7 +5,7 @@
         <img src={{logo}} alt="Logo Image" class="p-2 logo">
       </div>
       <div class="flex align-self-center mobileMenu">
-        <button type="button" class="p-button-text" pButton pButtonIcon="pi pi-bars" pButtonLabel="Menu" (click)="mobileMenu.toggle($event)" aria-haspopup="true" aria-controls="overlay_menu" style="margin-top: -5px;">Menu</button>
+        <p-button type="button" class="mt-5"  icon="pi pi-bars" label="Menu" (click)="mobileMenu.toggle($event)" aria-haspopup="true" aria-controls="overlay_menu">Menu</p-button>
         <p-menu #mobileMenu [popup]="true" id="overlay_menu" [model]="mobileMenuOptions"></p-menu>
       </div>
     </div>

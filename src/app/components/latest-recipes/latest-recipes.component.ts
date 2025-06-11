@@ -4,6 +4,8 @@ import { CarouselModule } from 'primeng/carousel';
 import { RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { ImageService, Recipe, ImageData } from 'src/app/lib/api-client';
+import {map} from "rxjs/operators";
+import {forkJoin} from "rxjs";
 
 @Component({
     selector: 'app-latest-recipes',
@@ -37,15 +39,16 @@ export class LatestRecipesComponent implements OnChanges {
       numScroll: 2
     }
   ];
-  cdn: string = environment.cdn
-  images: {[recipeId: string]: ImageData} = {}
+  cdn = environment.cdn
+  loading = false;
+  imageMap: Record<string, ImageData> = {};
 
   constructor(public imageService: ImageService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['recipes']) {
       console.log(this.recipes)
-      // this.recipes.sort(this.sortByDateDesc)
+      this.recipes.sort(this.sortByDateDesc)
       this.recipes.splice(6)
       this.loadImages()
     }
@@ -55,16 +58,22 @@ export class LatestRecipesComponent implements OnChanges {
     return new Date(b.CreatedAt).valueOf() - new Date(a.CreatedAt).valueOf();
   }
 
-  loadImages() {
-    this.recipes.forEach(recipe => {
-      console.log(recipe)
-      this.imageService.searchImage('recipe', recipe.id).subscribe((data) => {
-        console.log(data);
-        this.images[recipe.id!] = data;
-      });
-    });
+  loadImages(): void {
+    this.imageMap = {}
+    const imageObservables = this.recipes.map(recipe =>
+      this.imageService.searchImage('recipe', recipe.id).pipe(
+        map(image => ({ recipeId: recipe.id, image }))
+      )
+    );
 
-    console.log(this.images)
+    forkJoin(imageObservables).subscribe(imageResults => {
+      this.imageMap = imageResults.reduce((acc, { recipeId, image }) => {
+        acc[recipeId] = image;
+        return acc;
+      }, {} as Record<string, ImageData>);
+
+      this.loading = false;
+    });
   }
 
 }

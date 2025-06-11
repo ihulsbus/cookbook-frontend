@@ -25,7 +25,10 @@ export const appConfig: ApplicationConfig = {
                 options: {
                   prefix: 'p',
                   darkModeSelector: false || 'none',
-                  cssLayer: false
+                  cssLayer: {
+                    name: 'primeng',
+                    order: 'theme, base, primeng'
+                  }
                 }
             }
         }),

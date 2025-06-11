@@ -1,10 +1,10 @@
-<div class="surface-ground px-4 py-4 md:px-6 lg:px-8">
+<div class=" px-4 py-4 md:px-6 lg:px-8">
   <div class="flex flex-row flex-wrap">
-    <div class="flex align-items-center backButton">
-      <p-button class="p-button-rounded p-button-text" label="Back" icon="pi pi-arrow-left" [routerLink] = "['/app/recipes']"></p-button>
-    </div>
-    <div class="flex align-items-center editButton">
-      <p-button class="p-button-rounded p-button-text" label="Edit" icon="pi pi-pencil" [routerLink] = "['/app/recipes/'+recipe.id+'/edit']"></p-button>
+    <div>
+      <p-buttongroup>
+      <p-button [rounded]="true" [raised]="true" [outlined]="true" label="Back" icon="pi pi-arrow-left" severity="primary" [routerLink] = "['/app/recipes']"></p-button>
+      <p-button [rounded]="true" [raised]="true" [outlined]="true" label="Edit" icon="pi pi-pencil" severity="secondary" [routerLink] = "['/app/recipes/'+recipe.id+'/edit']"></p-button>
+      </p-buttongroup>
     </div>
   </div>
   <div class="grid grid-nogutter surface-section text-800">
@@ -16,23 +16,23 @@
           <div>
             <span class="p-row-1">
               <i class="pi pi-clock p-mr-5"></i>
-              {{ recipe.serving_count }} Minutes <!-- #TODO fix cookTime -->
+              {{ metadata.preparation_time }} Minutes <!-- #TODO fix cookTime -->
             </span>
             <br>
             <span class="p-row-1">
               <i class="pi pi-user p-mr-5"></i>
-              {{ recipe.serving_count }} persons
+              {{ metadata.serving_count }} persons
             </span>
           </div>
           <div class="mt-8">
-<!--            <span *ngFor="let category of recipe.Categories" class="p-row-1">-->
-<!--              <p-chip label="{{category.CategoryName}}" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>-->
-<!--            </span>-->
+            <span *ngFor="let category of metadata.categories" class="p-row-1">
+              <p-chip label="{{category.name}}" [style]="{'margin-right': '0.5rem'}"></p-chip>
+            </span>
           </div>
           <div class="mt-1">
-<!--            <span *ngFor="let tag of recipe.Tags" class="p-row-1 mt-1">-->
-<!--              <p-tag value="{{tag.TagName}}" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>-->
-<!--            </span>-->
+            <span *ngFor="let tag of metadata.tags" class="p-row-1 mt-1">
+              <p-tag value="{{tag.name}}" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>
+            </span>
           </div>
         </div>
       </section>

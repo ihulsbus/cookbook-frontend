@@ -1,47 +1,74 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Recipe, MetadataSearchResponse } from '../../lib/api-client';
-import { Router } from '@angular/router';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {Recipe, RecipeMetadata, ImageService, ImageData} from '../../lib/api-client';
+import {Router, RouterLink} from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CardModule } from 'primeng/card';
-import { JsonPipe } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
 import { RecipeCreateComponent } from '../recipe-create/recipe-create.component';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
+import { map } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+
+export interface FullRecipe extends Recipe, RecipeMetadata {}
 
 @Component({
     selector: 'app-recipe-grid',
     standalone: true,
     templateUrl: './recipe-grid.component.html',
     styleUrls: ['./recipe-grid.component.scss'],
-    imports: [
-        JsonPipe,
-        CardModule,
-        ChipModule,
-        CommonModule,
-        RecipeCreateComponent,
-        RouterLink,
-        TagModule,
-    ]
+  imports: [
+    CardModule,
+    ChipModule,
+    CommonModule,
+    RecipeCreateComponent,
+    ButtonModule,
+    TagModule,
+    PaginatorModule,
+    FormsModule,
+    RouterLink,
+  ]
 })
-export class RecipesGridComponent implements OnInit {
+export class RecipesGridComponent implements OnChanges {
 
-  @Input() recipes: Recipe[] = []
-  @Input() recipeMetadata: MetadataSearchResponse[] = []
+  @Input() recipes: FullRecipe[] = []
+  api = environment.backend
+  cdn = environment.cdn
+  loading = false;
+  imageMap: Record<string, ImageData> = {};
 
-  searchText?: String
-  combinedRecipes = this.recipes.map((recipe) => ({
-    ...recipe,
-    related: this.recipeMetadata.find((metadata) => metadata.recipe_id === recipe.id),
-    ImageName: ""
-  }));
+  layout: "list" | "grid" = "list";
+  options: string[] = ["list", "grid"];
 
-  api: string = environment.backend
-  cdn: string = environment.cdn
+  constructor(
+    public router: Router,
+    private imageService: ImageService,
+  ) { }
 
-  constructor(public router: Router) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['recipes']) {
+      this.loadImages()
+    }
+  }
 
-  ngOnInit(): void {
+  loadImages(): void {
+    this.imageMap = {}
+    const imageObservables = this.recipes.map(recipe =>
+      this.imageService.searchImage('recipe', recipe.id).pipe(
+        map(image => ({ recipeId: recipe.id, image }))
+      )
+    );
+
+    forkJoin(imageObservables).subscribe(imageResults => {
+      this.imageMap = imageResults.reduce((acc, { recipeId, image }) => {
+        acc[recipeId] = image;
+        return acc;
+      }, {} as Record<string, ImageData>);
+
+      this.loading = false;
+    });
   }
 }

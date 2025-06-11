@@ -13,5 +13,6 @@ export * from './metadataSearchResponse';
 export * from './modelError';
 export * from './preparationTime';
 export * from './recipe';
+export * from './recipeMetadata';
 export * from './tag';
 export * from './unit';

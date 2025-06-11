@@ -4,8 +4,8 @@ import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {InputText} from "primeng/inputtext";
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import { InputText } from "primeng/inputtext";
+import { Button } from "primeng/button";
 
 @Component({
     selector: 'app-create-ingredient',
@@ -16,9 +16,7 @@ import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     DialogModule,
     FormsModule,
     InputText,
-    ButtonDirective,
-    ButtonLabel,
-    ButtonIcon,
+    Button,
   ]
 })
 export class CreateIngredientComponent implements OnInit {

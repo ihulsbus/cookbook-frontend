@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { RecipeService, Recipe, MetadataService, MetadataSearchRequest, MetadataSearchResponse } from '../../lib/api-client';
+import {
+  RecipeService,
+  Recipe,
+  MetadataService,
+  RecipeMetadata,
+} from '../../lib/api-client';
 import { RecipesGridComponent } from 'src/app/components/recipe-grid/recipe-grid.component';
 import { FilteringSidebarComponent } from 'src/app/components/filtering-sidebar/filtering-sidebar.component';
-import {JsonPipe} from "@angular/common";
+import { forkJoin } from 'rxjs';
+
+export interface FullRecipe extends Recipe, RecipeMetadata {}
 
 @Component({
     selector: 'app-recipe-browser',
@@ -14,35 +21,37 @@ import {JsonPipe} from "@angular/common";
   imports: [
     RecipesGridComponent,
     FilteringSidebarComponent,
-    JsonPipe,
   ]
 })
 export class RecipeBrowserComponent implements OnInit {
 
-  allRecipes: Recipe[] = [];
-  filteredRecipes: Recipe[] = [];
-  recipeMetadata: MetadataSearchResponse[] = [];
+  filteredRecipes: FullRecipe[] = [];
+  fullRecipes: FullRecipe[] = [];
+
   api: string = environment.backend
   cdn: string = environment.cdn
 
   constructor(public router: Router, private recipeService: RecipeService, private metadataService: MetadataService) { }
 
   ngOnInit(): void {
-    this.recipeService.getAllRecipes().subscribe((data) => {
-      this.filteredRecipes = data;
-      this.allRecipes = data;
+    forkJoin({
+      recipes: this.recipeService.getAllRecipes(),
+      metadata: this.metadataService.getAllRecipeMetadata()
+    }).subscribe(({recipes,metadata}) => {
+      const metadataMap = new Map(metadata.map(m => [m.recipe_id, m]));
+
+      this.fullRecipes = recipes.filter(r => metadataMap.has(r.id))
+      .map(r => ({
+        ...r,
+        ...metadataMap.get(r.id)!
+      }));
     });
-    for (const recipe of this.allRecipes) {
-      const searchRequest: MetadataSearchRequest = {recipe_id: recipe.id};
-      this.metadataService.searchMetadata(searchRequest).subscribe((data) => {
-        this.recipeMetadata.push(data);
-      })
-    }
   }
 
-  passRecipes(r: Recipe[]) {
+
+  passRecipes(r: FullRecipe[]) {
     this.filteredRecipes.length = 0
-    this.filteredRecipes.push(...r)
+    this.filteredRecipes = [...r]
   }
 
 }

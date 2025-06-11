@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Recipe, Category, Tag, TagService, CategoryService } from '../../lib/api-client';
-// import { RestService } from '../../lib/api-client/rest.service';
+import {Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Recipe, Category, Tag, TagService, CategoryService, RecipeMetadata} from '../../lib/api-client';
 import { FilterService } from 'primeng/api';
-import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule  } from 'primeng/multiselect';
 import { SidebarModule } from 'primeng/sidebar';
 import { FormsModule } from '@angular/forms';
 import {InputText} from "primeng/inputtext";
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button"
+
+export interface FullRecipe extends Recipe, RecipeMetadata {}
 
 @Component({
     selector: 'app-filtering-sidebar',
@@ -14,102 +15,78 @@ import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     templateUrl: './filtering-sidebar.component.html',
     styleUrls: ['./filtering-sidebar.component.scss'],
   imports: [
-    DropdownModule,
+    MultiSelectModule,
     FormsModule,
     SidebarModule,
     InputText,
     ButtonDirective,
     ButtonIcon,
     ButtonLabel,
+    Button,
   ]
 })
-export class FilteringSidebarComponent implements OnInit {
 
-  @Input() inputRecipes: Recipe[] = [];
-  @Output() outputRecipes = new EventEmitter<Recipe[]>();
+export class FilteringSidebarComponent implements OnInit, OnChanges {
 
-  constructor(private tagService: TagService, private categoryService: CategoryService, private filterService: FilterService) { };
+  @Input() inputRecipes: FullRecipe[] = [];
+  @Output() outputRecipes = new EventEmitter<FullRecipe[]>();
+
+  constructor(
+    private tagService: TagService,
+    private categoryService: CategoryService,
+    private filterService: FilterService
+  ) {};
 
   ngOnInit(): void {
     this.tagService.getAllTags().subscribe((data) => {
+      data.sort((a, b) => a.name.localeCompare(b.name));
       this.tags = data;
     });
 
     this.categoryService.getAllCategory().subscribe((data) => {
-      this.categories = data
+      data.sort((a, b) => a.name.localeCompare(b.name));
+      this.categories = data;
     });
+    this.outputRecipes.emit(this.inputRecipes);
+
   }
 
-  title: String = 'Filtering';
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['inputRecipes']) {
+      this.filterRecipes()
+    }
+  }
 
-  filtersVisible: boolean = false;
+  filtersVisible = false;
   tags: Tag[] = [];
   categories: Category[] = [];
-  searchText?: String;
-  selectedCategory?: Category;
-  selectedTag?: Tag;
+  searchText = "";
+  selectedCategories: Category[] = [];
+  selectedTags: Tag[] = [];
+  filteredRecipes: FullRecipe[] = [];
 
-  filteredRecipes: Recipe[] = [];
+  filterRecipes() {
+    this.filteredRecipes = this.inputRecipes.filter(recipe => {
+      const matchesTitle = this.filterService.filters['contains'](recipe.name, this.searchText, {});
 
-  invokeFilterLogic() {
-    let intermediateResult: Recipe[] = [];
-    intermediateResult.length = 0;
+      const matchesCategories = this.selectedCategories.length > 0
+        ? this.selectedCategories.some(selCat =>
+          recipe.categories.some(cat =>
+            this.filterService.filters['equals'](cat.id, selCat.id, {})
+          )
+        )
+        : true;
 
-    this.filteredRecipes.splice(0);
+      const matchesTags = this.selectedTags.length > 0
+        ? this.selectedTags.some(selTag =>
+          recipe.tags.some(tag =>
+            this.filterService.filters['equals'](tag.id, selTag.id, {})
+          )
+        )
+        : true;
 
-    intermediateResult = this.textFiltered(this.inputRecipes);
-    intermediateResult = this.categoryFiltered(intermediateResult);
-    intermediateResult = this.tagsFiltered(intermediateResult);
-
-    this.outputRecipes.emit(intermediateResult);
-  }
-
-  categoryFiltered(recipes: Recipe[]): Recipe[] {
-    let result: Recipe[] = [];
-
-    // if (this.selectedCategory === undefined || this.selectedCategory === null) {
-    //   return recipes;
-    // };
-
-    // recipes.find((recipe) => {
-    //   if (Categories.some((category) => {
-    //     return category.CategoryName === this.selectedCategory?.CategoryName;
-    //   })) {
-    //     result.push(recipe);
-    //   };
-    // });
-
-    return recipes;
-  }
-
-  tagsFiltered(recipes: Recipe[]): Recipe[] {
-    let result: Recipe[] = [];
-
-    // if (this.selectedTag === undefined || this.selectedTag === null) {
-    //   return recipes;
-    // };
-
-    // recipes.find((recipe) => {
-    //   if (recipe.Tags?.some((tag) => {
-    //     return tag.TagName === this.selectedTag?.TagName;
-    //   })) {
-    //     result.push(recipe);
-    //   };
-    // });
-
-    return recipes;
-  }
-
-  textFiltered(recipes: Recipe[]): Recipe[] {
-    let result: Recipe[] = [];
-
-    // recipes.find((recipe) => {
-    //   if (this.filterService.filters.contains(recipe.RecipeName, this.searchText) || this.filterService.filters.contains(recipe.Description, this.searchText)) {
-    //     result.push(recipe)
-    //   };
-
-    // });
-
-    return recipes;
+      return matchesTitle && matchesCategories && matchesTags;
+    });
+    this.outputRecipes.emit(this.filteredRecipes);
   }
 }

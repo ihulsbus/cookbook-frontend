@@ -8,7 +8,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
-import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 
 // class IngredientAmount {
 //   RecipeID: string = "";
@@ -33,6 +33,7 @@ import {ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     ButtonDirective,
     ButtonLabel,
     ButtonIcon,
+    Button,
   ]
 })
 export class IngredientEditorComponent implements OnInit {
@@ -56,26 +57,22 @@ export class IngredientEditorComponent implements OnInit {
   constructor(public fb: UntypedFormBuilder, private ingredientService: IngredientService, private unitService: UnitService) {}
 
   ngOnInit(): void {
-    this.getIngredients()
-    this.getUnits()
+     this.getIngredients()
+     this.unitService.getAllUnits().subscribe((data) => {
+       this.units = data;
+       for (const unit of data) {
+         this.unitNames.set(unit.id, unit.full_name);
+       }
+     });
   }
 
   getIngredients() {
     this.ingredientService.getAllIngredient().subscribe((data) => { this.ingredients = data; this.getIngredientNames(data); })
   }
 
-  getUnits() {
-    this.unitService.getAllUnits().subscribe((data) => {
-      for (const unit of data) {
-        this.unitNames.set(unit.id!, unit.full_name!);
-      };
-      this.units = data;
-    });
-  }
-
   getIngredientNames(ingredients: Ingredient[]) {
     for (const ingredient of ingredients) {
-      this.ingredientNames.set(ingredient.id!, ingredient.name!);
+      this.ingredientNames.set(ingredient.id, ingredient.name);
     };
 
   }

@@ -3,9 +3,9 @@
     <ng-template pTemplate="caption">
       <div class="flex justify-content-between">
         <span>
-          <app-create-ingredient (createdIngredient)="getIngredients()"></app-create-ingredient >
-          <Button pButton type="button" pButtonIcon="pi pi-trash" pButtonLabel="Delete" class="p-button-outlined p-button-danger mr-2" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length">Delete</Button>
-          <Button pButton type="button" pButtonIcon="pi pi-filter-slash" pButtonLabel="Clear" class="p-button-outlined" (click)="clearFilter(ingredientsTable)">Clear</Button>
+          <app-create-ingredient (createdIngredient)="getIngredients()" class="mr-2"></app-create-ingredient >
+          <p-button size="small" icon="pi pi-trash" label="Delete" class="mr-2" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="confirmDeleteSelected()" [disabled]="!selectedIngredients || !selectedIngredients.length"></p-button>
+          <p-button size="small" icon="pi pi-filter-slash" label="Clear" [rounded]="true" [raised]="true" [outlined]="true" severity="secondary" (click)="clearFilter(ingredientsTable)"></p-button>
         </span>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
@@ -57,7 +57,7 @@
           {{ingredient.name}}
         </td>
         <td style="min-width:3rem;max-width:3rem">
-          <Button pButton type="button" pButtonIcon="pi pi-trash" class="p-button-outlined p-button-rounded p-button-text" (click)="confirmDeleteIngredient(ingredient)"></Button>
+          <p-button icon="pi pi-trash" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="confirmDeleteIngredient(ingredient)"></p-button>
         </td>
       </tr>
     </ng-template>
@@ -74,8 +74,8 @@
       </span>
     </div>
     <ng-template pTemplate="footer">
-      <Button pButton type="button" pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="deleteIngredientDialog = false"></Button>
-      <Button pButton type="button" pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" (click)="deleteIngredient()"></Button>
+      <p-button label="No" icon="pi pi-times" class="p-button-text" [rounded]="true" [raised]="true" [outlined]="true" (click)="deleteIngredientDialog = false"></p-button>
+      <p-button label="Yes" icon="pi pi-trash" class="p-button-text" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="deleteIngredient()"></p-button>
     </ng-template>
   </p-dialog>
 
@@ -87,8 +87,8 @@
       </span>
     </div>
     <ng-template pTemplate="footer">
-      <Button pButton type="button" pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-outlined p-button-text" (click)="deleteIngredientsDialog = false"></Button>
-      <Button pButton type="button" pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-outlined p-button-text" (click)="deleteIngredients()"></Button>
+      <p-button size="small" label="No" icon="pi pi-times" class="p-button-outlined p-button-text" [rounded]="true" [raised]="true" [outlined]="true" (click)="deleteIngredientsDialog = false"></p-button>
+      <p-button size="small" label="Yes" icon="pi pi-trash" class="p-button-outlined p-button-text" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="deleteIngredients()"></p-button>
     </ng-template>
   </p-dialog>
 </div>

@@ -9,7 +9,7 @@
     transform: translate(-50%, -30%);
     transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
     opacity: 0;
-    
+
   }
   &:hover {
     .coverImageButton {
@@ -24,4 +24,3 @@
   height: 100%;
   display: block;
 }
-

@@ -1,4 +1,4 @@
-<button pButton pButtonLabel="New" pButtonIcon="pi pi-plus" class="p-button-outlined p-button-success mr-2" (click)="openDialog()">New</button>
+<p-button size="small" label="New" icon="pi pi-plus" [rounded]="true" [outlined]="true" [raised]="true" (click)="openDialog()"></p-button>
 <p-dialog header="New ingredient" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{ width: '50vw'}"
   [modal]="true" [(visible)]="visible">
   <ng-template pTemplate="header">
@@ -20,7 +20,7 @@
       </div>
     </div>
   <ng-template pTemplate="footer">
-    <button pButton pButtonLabel="Cancel" pButtonIcon="pi pi-cross" class="p-button-outlined" (click)="closeDialog()">Cancel</button>
-    <button pButton pButtonLabel="Create" pButtonIcon="pi pi-check" class="p-button-outlined" (click)="createIngredient()" [disabled]="name.invalid">Create</button>
+    <p-button size="small" label="Cancel" icon="pi pi-times" severity="danger" [rounded]="true" [outlined]="true" [raised]="true" (click)="closeDialog()"></p-button>
+    <p-button size="small" label="Create" icon="pi pi-check" severity="success" [rounded]="true" [outlined]="true" [raised]="true" (click)="createIngredient()" [disabled]="name.invalid"></p-button>
   </ng-template>
 </p-dialog>

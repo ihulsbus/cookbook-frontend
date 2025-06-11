@@ -1,10 +1,10 @@
 <div class="px-4 py-4 md:px-6 lg:px-8">
   <div class="flex flex-row flex-wrap">
     <div class="flex align-items-center cancelButton">
-      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-times" (click)="cancelPopup=true">Cancel</button>
+      <p-button class="mr-2" icon="pi pi-times" label="Cancel" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="cancelPopup=true"></p-button>
     </div>
     <div class="flex align-items-center saveButton">
-      <button pButton class="p-button-rounded p-button-text" pButtonIcon="pi pi-check" (click)="saveRecipeUpdate()">Save</button>
+      <p-button icon="pi pi-check" label="Save" [rounded]="true" [raised]="true" [outlined]="true" severity="success" (click)="saveRecipeUpdate()"></p-button>
     </div>
   </div>
   <div class="grid grid-nogutter surface-section text-800">
@@ -27,34 +27,40 @@
             <div class="field">
               <i class="pi pi-clock" style="margin-right: 10px"></i>
               <p-inputNumber class="p-inputnumber-sm" placeholder="Cooking time" [showButtons]="true" suffix=" Minutes"
-                [(ngModel)]="recipe.serving_count"></p-inputNumber> <!-- Cooktime -->
+                [(ngModel)]="metadata.serving_count"></p-inputNumber> <!-- Cooktime -->
             </div>
             <div class="field">
               <i class="pi pi-user" style="margin-right: 10px"></i>
               <p-inputNumber class="p-inputnumber-sm" placeholder="Servings" [showButtons]="true" suffix=" Persons"
-                [(ngModel)]="recipe.serving_count"></p-inputNumber>
+                [(ngModel)]="metadata.serving_count"></p-inputNumber>
             </div>
-<!--            <div class="mb-2">-->
-<!--              <p-multiSelect [options]="categories" [(ngModel)]="recipe.Categories" defaultLabel="Select a Category"-->
-<!--                optionLabel="CategoryName" display="chip"></p-multiSelect>-->
-<!--            </div>-->
-<!--            <div class="">-->
-<!--              <p-multiSelect [options]="tags" [(ngModel)]="recipe.Tags" defaultLabel="Select a tag" optionLabel="TagName"-->
-<!--                display="chip"></p-multiSelect>-->
-<!--            </div>-->
+            <div class="mb-2">
+              Categories <p-multiSelect [options]="categories" [(ngModel)]="metadata.categories" placeholder="Select a Category"
+                optionLabel="name" display="chip"></p-multiSelect>
+            </div>
+            <div class="mb-2">
+              Tags <p-multiSelect [options]="tags" [(ngModel)]="metadata.tags" placeholder="Select a tag" optionLabel="name"
+                display="chip"></p-multiSelect>
+            </div>
+            <div class="mb-2">
+              CuisineType <p-select [options]="cuisineTypes" [(ngModel)]="metadata.cuisine_type" placeholder="Select a quisine type"
+                optionLabel="name"></p-select>
+            </div>
           </div>
         </div>
     </div>
     <div class="col-12 md:col-6 overflow-hidden coverImageContainer">
       <img src="{{imgUrl}}" onerror="this.src='assets/images/placeholder.png';" alt="Image" class="md:ml-auto block md:h-full cover-image" style="max-height: 458px; clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
-      <button pButton icon="pi pi-upload" (click)="fileUploadToggle()" class="coverImageButton">Upload image</button>
+      <p-button icon="pi pi-upload" label="Upload image" [rounded]="true" [raised]="true" (click)="fileUploadToggle()" class="coverImageButton"></p-button>
     </div>
   </div>
   <div class="grid">
     <div class="col-12 lg:col-6">
       <div class="pt-3 h-full">
         <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
-          <div class="text-900 font-medium text-xl mb-2">Ingredients</div>
+          <div class="flex justify-content-between align-items-center mb-2">
+            <div class="text-900 font-medium text-xl">Ingredients</div>
+          </div>
           <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
           <app-ingredient-editor [ingredientAmounts]="amounts" (updateIngredientAmounts)="updateIngredientAmounts($event)" class="ingredienteditor"></app-ingredient-editor>
         </div>
@@ -64,9 +70,18 @@
     <div class="col-12 lg:col-6">
       <div class="pt-3 h-full">
         <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
-          <div class="text-900 font-medium text-xl mb-2">Method</div>
+          <div class="flex justify-content-between align-items-center mb-1">
+            <div class="text-900 font-medium text-xl">Method</div>
+            <p-button size="small" icon="pi pi-plus" severity="success" label="Add Step" [rounded]="true" [raised]="true" [outlined]="true" (click)="addInstruction()"> </p-button>
+          </div>
           <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-<!--          <p-editor [(ngModel)]="instructions.description" [style]="{'height': '100%'}"></p-editor>-->
+          <div *ngFor="let step of instructions; let i = index" class="mb-3">
+            <div class="flex align-items-center justify-content-between">
+              <div class="text-900 font-semibold mb-1">Step {{ step.sequence }}</div>
+              <p-button class="mb-2" size="small" icon="pi pi-trash" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="deleteInstruction(i)"></p-button>
+            </div>
+            <p-editor [(ngModel)]="step.description" [style]="{'height': '100%'}"></p-editor>
+          </div>
         </div>
       </div>
     </div>
@@ -86,8 +101,8 @@
     <span>Are you sure you want to cancel?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
-    <button pButton pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" [routerLink] = "['/app/recipes/'+recipe.id]">Yes</button>
+    <p-button label="No" icon="pi pi-times" [rounded]="true" [raised]="true" [outlined]="true" (click)="cancelPopup = false"></p-button>
+    <p-button label="Yes" icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" [routerLink] = "['/app/recipes/'+recipe.id]"></p-button>
   </ng-template>
 </p-dialog>
 
@@ -97,7 +112,7 @@
     <span>There are no ingredients or method specified. Are you sure you want to save this?</span>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pButtonLabel="No" pButtonIcon="pi pi-times" class="p-button-text" (click)="cancelPopup = false">No</button>
-    <button pButton pButtonLabel="Yes" pButtonIcon="pi pi-check" class="p-button-text" (click)="uploadRecipe()">Yes</button>
+    <p-button label="No" icon="pi pi-times" [rounded]="true" [raised]="true" [outlined]="true" (click)="cancelPopup = false">No</p-button>
+    <p-button label="Yes" icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true" (click)="uploadRecipe()">Yes</p-button>
   </ng-template>
 </p-dialog>
