@@ -126,11 +126,6 @@ export class RecipeEditComponent implements OnInit {
     // this.imgUrl = `${environment.cdn}/img/${this.recipe.ImageName}.jpg?d=${(new Date()).getTime()}`;
   }
 
-  // getIngredientNames(ingredients: Array<Ingredient>) {
-  //   for (var ingredient of ingredients) {
-  //     this.names.set(ingredient.ID, ingredient.IngredientName);
-  //   };
-  // }
 
   updateIngredientAmounts(ingredientAmounts: IngredientAmounts[]) {
     this.amounts = ingredientAmounts;
