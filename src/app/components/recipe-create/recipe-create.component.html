@@ -25,19 +25,8 @@
     </div>
 
     <div class="p-field">
-      <label for="recipeCookTime">Cooking duration in minutes</label>
-      <p-inputNumber #recipeCookTime="ngModel" class="form-control"  id="recipeCookTime" [(ngModel)]="metadata.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber> <!-- TODO: fix cook_time -->
-      <div *ngIf="recipeCookTime.invalid && (recipeCookTime.dirty || recipeCookTime.touched)" class="alert">
-
-        <div *ngIf="recipeCookTime.errors?.['required']" class="mb-2">
-          Cook time is required.
-        </div>
-      </div>
-    </div>
-
-    <div class="p-field">
       <label for="recipePersons">Servings</label>
-      <p-inputNumber #recipePersons="ngModel" class="form-control" id="recipePersons" [(ngModel)]="metadata.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber>
+      <p-inputNumber #recipePersons="ngModel" class="form-control" id="recipePersons" [(ngModel)]="recipe.serving_count" mode="decimal" [min]="0" [showButtons]="true"></p-inputNumber>
       <div *ngIf="recipePersons.invalid && (recipePersons.dirty || recipePersons.touched)" class="alert">
 
         <div *ngIf="recipePersons.errors?.['required']" class="mb-2">
@@ -49,5 +38,6 @@
 
   <ng-template pTemplate="footer">
     <p-button class="p-button-outlined" label="Cancel" icon="pi pi-cross" [rounded]="true" [raised]="true" [outlined]="true" severity="danger" (click)="closeDialog()"></p-button>
-    <p-button class="p-button-outlined" label="Create" icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true" severity="success" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid ||recipeCookTime.invalid || recipePersons.invalid"></p-button>
+    <p-button class="p-button-outlined" label="Create" icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true" severity="success" (click)="createRecipe()" [disabled]="recipeTitle.invalid || recipeDescription.invalid || recipePersons.invalid"></p-button>
   </ng-template>
+</p-dialog>

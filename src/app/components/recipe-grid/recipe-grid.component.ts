@@ -45,7 +45,7 @@ export class RecipesGridComponent implements OnChanges {
 
   constructor(
     public router: Router,
-    private imageService: ImageService,
+    private readonly imageService: ImageService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {

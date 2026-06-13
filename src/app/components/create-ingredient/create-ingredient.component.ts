@@ -19,7 +19,7 @@ import { Button } from "primeng/button";
     Button,
   ]
 })
-export class CreateIngredientComponent implements OnInit {
+export class CreateIngredientComponent {
 
   @Output() createdIngredient = new EventEmitter<boolean>();
 
@@ -28,11 +28,7 @@ export class CreateIngredientComponent implements OnInit {
   validationErrors = {};
   isFormValid = false;
 
-  constructor(private restService: IngredientService, public messageService: MessageService) { }
-
-  ngOnInit(): void {
-    // This is intentionally empty
-  }
+  constructor(private readonly restService: IngredientService, public messageService: MessageService) { }
 
   openDialog() {
     this.visible = true;
@@ -45,9 +41,11 @@ export class CreateIngredientComponent implements OnInit {
 
   createIngredient() {
     this.visible = false;
-    this.restService.createIngredient(this.ingredient);
-    // .then((data) => this.createSuccess(data))
-    // .catch((data) => this.createFailed(data));
+    this.restService.createIngredient(this.ingredient).subscribe({
+      next: (v) => this.createSuccess(v),
+      error: (e) => this.createFailed(e),
+
+    })
     this.ingredient.name = ""
   }
 

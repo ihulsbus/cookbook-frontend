@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RecipeService, Recipe, InstructionService, Instruction, MetadataService, RecipeMetadata } from '../../lib/api-client/';
+import { RecipeService, Recipe} from '../../lib/api-client/';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button} from "primeng/button";
 import {Textarea} from "primeng/textarea";
 
 @Component({
@@ -18,29 +18,19 @@ import {Textarea} from "primeng/textarea";
     DialogModule,
     FormsModule,
     InputNumberModule,
-    ButtonDirective,
-    ButtonLabel,
-    ButtonIcon,
     Textarea,
     Button,
   ]
 })
 export class RecipeCreateComponent {
 
-  visible: boolean = false;
-  submitted: boolean = false;
+  visible = false;
   recipe = {} as Recipe;
-  metadata = {} as RecipeMetadata;
-  instruction = {} as Instruction;
-  validationErrors: {} = {};
-
 
   constructor(
-    private recipeService: RecipeService,
-    private instructionService: InstructionService,
-    private metadataService: MetadataService,
-    private router: Router,
-    private messageService: MessageService) {}
+    private readonly recipeService: RecipeService,
+    private readonly router: Router,
+    private readonly messageService: MessageService) {}
 
   openDialog() {
     this.visible = true
@@ -49,26 +39,22 @@ export class RecipeCreateComponent {
     this.visible = false
   }
   createRecipe() {
-    let id: number = 0
-    this.recipeService.createRecipe(this.recipe).subscribe(
-      (data: Recipe) => {
-        this.instruction.id = data.id;
-        this.instructionService.createInstruction(data.id!, this.instruction);
-        this.onUploadSuccess(data.id!);
-      }, this.onUploadError)
+    this.recipeService.createRecipe(this.recipe).subscribe({
+      next: (v) => this.onUploadSuccess(v.id),
+      error: (e) => this.onUploadError(e)
+    })
   }
 
   onUploadSuccess(id: string) {
-
     this.messageService.add({
       severity: 'success', summary: 'Success', detail: 'Recipe created', life: 3000,
     });
     this.router.navigate(['app', 'recipes', id, 'edit'])
   }
 
-  onUploadError() {
+  onUploadError(e: any) {
     this.messageService.add({
-      severity: 'error', summary: 'Error', detail: 'Recipe creation failed', life: 3000,
+      severity: 'error', summary: 'Error', detail: 'Recipe creation failed:' + e, life: 3000,
     });
   }
 
