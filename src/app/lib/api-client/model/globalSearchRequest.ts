@@ -10,8 +10,8 @@
 
 
 export interface GlobalSearchRequest { 
-    query?: string;
-    limit?: string;
-    page?: string;
+    query: string;
+    limit?: number;
+    page?: number;
 }
 

@@ -15,6 +15,7 @@ import {
   ImageService,
   InstructionService, RecipeMetadata, CuisineType,
 } from '../../lib/api-client';
+import { fetchAllPages } from '../../lib/pagination';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { IngredientEditorComponent } from 'src/app/components/ingredient-editor/ingredient-editor.component';
@@ -108,16 +109,16 @@ export class RecipeEditComponent implements OnInit {
         this.amounts = data;
       })
 
-      this.tagService.getAllTags().subscribe((data) => {
-        this.tags = data;
+      fetchAllPages<Tag>((page, limit) => this.tagService.getAllTags(page, limit)).subscribe((tags) => {
+        this.tags = tags;
       })
 
-      this.categoryService.getAllCategory().subscribe((data) => {
-        this.categories = data;
+      fetchAllPages<Category>((page, limit) => this.categoryService.getAllCategory(page, limit)).subscribe((categories) => {
+        this.categories = categories;
       })
 
-      this.cuisineTypeService.getAllCuisinetype().subscribe((data) => {
-        this.cuisineTypes = data;
+      fetchAllPages<CuisineType>((page, limit) => this.cuisineTypeService.getAllCuisinetype(page, limit)).subscribe((cuisineTypes) => {
+        this.cuisineTypes = cuisineTypes;
       })
     })
   }

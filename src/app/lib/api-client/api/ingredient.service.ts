@@ -18,6 +18,8 @@ import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
 import { Ingredient } from '../model/ingredient';
+// @ts-ignore
+import { PaginatedIngredientResponse } from '../model/paginatedIngredientResponse';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -242,15 +244,27 @@ export class IngredientService {
 
     /**
      * Get all ingredients
-     * Get all ingredients known to the API. Currently, this endpoint does not support pagination. This will be added in the future
+     * Get all ingredients known to the API in a paginated format
+     * @param page Page number (1-indexed)
+     * @param limit Number of items per page (max 100)
      * @param body No body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllIngredient(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Ingredient>>;
-    public getAllIngredient(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Ingredient>>>;
-    public getAllIngredient(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Ingredient>>>;
-    public getAllIngredient(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+    public getAllIngredient(page?: number, limit?: number, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PaginatedIngredientResponse>;
+    public getAllIngredient(page?: number, limit?: number, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PaginatedIngredientResponse>>;
+    public getAllIngredient(page?: number, limit?: number, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PaginatedIngredientResponse>>;
+    public getAllIngredient(page?: number, limit?: number, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (limit !== undefined && limit !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>limit, 'limit');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -300,10 +314,11 @@ export class IngredientService {
         }
 
         let localVarPath = `/ingredient`;
-        return this.httpClient.request<Array<Ingredient>>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<PaginatedIngredientResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

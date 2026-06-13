@@ -33,6 +33,17 @@ model/metadataSearchRequest.ts
 model/metadataSearchResponse.ts
 model/modelError.ts
 model/models.ts
+model/paginatedCategoryResponse.ts
+model/paginatedCuisineTypeResponse.ts
+model/paginatedDifficultyLevelResponse.ts
+model/paginatedImageResponse.ts
+model/paginatedIngredientResponse.ts
+model/paginatedPreparationTimeResponse.ts
+model/paginatedRecipeMetadataResponse.ts
+model/paginatedRecipeResponse.ts
+model/paginatedTagResponse.ts
+model/paginatedUnitResponse.ts
+model/paginationMetadata.ts
 model/preparationTime.ts
 model/recipe.ts
 model/recipeMetadata.ts

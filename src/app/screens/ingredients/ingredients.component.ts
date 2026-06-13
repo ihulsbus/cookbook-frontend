@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IngredientService, Ingredient } from '../../lib/api-client';
+import { fetchAllPages } from '../../lib/pagination';
 import { MessageService } from 'primeng/api';
 import { CreateIngredientComponent } from 'src/app/components/create-ingredient/create-ingredient.component';
 import { TableModule } from 'primeng/table';
@@ -44,8 +45,8 @@ export class IngredientsComponent implements OnInit {
   }
 
   getIngredients() {
-    this.ingredientService.getAllIngredient().subscribe((data) => {
-      this.ingredients = data;
+    fetchAllPages<Ingredient>((page, limit) => this.ingredientService.getAllIngredient(page, limit)).subscribe((ingredients) => {
+      this.ingredients = ingredients;
       this.loading = false;
     });
   }

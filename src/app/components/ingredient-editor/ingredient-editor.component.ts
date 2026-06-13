@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Ingredient, IngredientService, IngredientAmounts, Unit, UnitService } from '../../lib/api-client';
+import { fetchAllPages } from '../../lib/pagination';
 import { UntypedFormBuilder } from "@angular/forms";
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
@@ -58,16 +59,19 @@ export class IngredientEditorComponent implements OnInit {
 
   ngOnInit(): void {
      this.getIngredients()
-     this.unitService.getAllUnits().subscribe((data) => {
-       this.units = data;
-       for (const unit of data) {
+     fetchAllPages<Unit>((page, limit) => this.unitService.getAllUnits(page, limit)).subscribe((units) => {
+       this.units = units;
+       for (const unit of units) {
          this.unitNames.set(unit.id, unit.full_name);
        }
      });
   }
 
   getIngredients() {
-    this.ingredientService.getAllIngredient().subscribe((data) => { this.ingredients = data; this.getIngredientNames(data); })
+    fetchAllPages<Ingredient>((page, limit) => this.ingredientService.getAllIngredient(page, limit)).subscribe((ingredients) => {
+      this.ingredients = ingredients;
+      this.getIngredientNames(ingredients);
+    })
   }
 
   getIngredientNames(ingredients: Ingredient[]) {

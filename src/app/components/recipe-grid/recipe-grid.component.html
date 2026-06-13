@@ -12,7 +12,7 @@
     <div class="grid" *ngIf="recipes.length; else noThings">
       <p-card *ngFor="let recipe of recipes" header="{{recipe.name}}" routerLink="/app/recipes/{{recipe.id}}" class="card">
         <ng-template pTemplate="header">
-          <img alt="Header image" [src]="cdn + '/img/' + imageMap[recipe.id]?.id + '.jpg'" onerror="this.src='assets/images/placeholder.png';" style="height: 228.17px; object-fit: cover;">
+          <img alt="Header" [src]="cdn + '/img/' + imageMap[recipe.id]?.id + '.jpg'" onerror="this.src='assets/images/placeholder.png';" style="height: 228.17px; object-fit: cover;">
         </ng-template>
         <ng-template pTemplate="subtitle">
           <span class="p-row-1">
@@ -28,12 +28,12 @@
           {{ recipe.description }}
         </p>
         <ng-template pTemplate="footer">
-          <div *ngIf="recipe.categories.length; else noCategories">
+          <div *ngIf="recipe.categories?.length; else noCategories">
             <span *ngFor="let category of recipe.categories" class="p-row-1">
               <p-chip label="{{category.name}}" [style]="{'margin-right': '0.5rem'}"></p-chip>
             </span>
           </div>
-          <div class="mt-1" *ngIf="recipe.tags.length; else noTags">
+          <div class="mt-1" *ngIf="recipe.tags?.length; else noTags">
             <span *ngFor="let tag of recipe.tags" class="p-row-1 mt-1">
               <p-tag value="{{tag.name}}" severity="secondary" [rounded]="false" [style]="{'margin-right': '0.5rem'}"></p-tag>
             </span>

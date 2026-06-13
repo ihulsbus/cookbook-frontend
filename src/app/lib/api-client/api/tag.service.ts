@@ -17,6 +17,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { PaginatedTagResponse } from '../model/paginatedTagResponse';
+// @ts-ignore
 import { Tag } from '../model/tag';
 
 // @ts-ignore
@@ -242,15 +244,27 @@ export class TagService {
 
     /**
      * Get all tags
-     * Retrieves all tags known in the system. Currently, this endpoint does not support pagination. This will be added in the future
+     * Retrieves tags known in the system in a paginated format
+     * @param page Page number (1-indexed)
+     * @param limit Number of items per page (max 100)
      * @param body No body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllTags(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Tag>>;
-    public getAllTags(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Tag>>>;
-    public getAllTags(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Tag>>>;
-    public getAllTags(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+    public getAllTags(page?: number, limit?: number, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PaginatedTagResponse>;
+    public getAllTags(page?: number, limit?: number, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PaginatedTagResponse>>;
+    public getAllTags(page?: number, limit?: number, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PaginatedTagResponse>>;
+    public getAllTags(page?: number, limit?: number, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (limit !== undefined && limit !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>limit, 'limit');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -300,10 +314,11 @@ export class TagService {
         }
 
         let localVarPath = `/metadata/tag`;
-        return this.httpClient.request<Array<Tag>>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<PaginatedTagResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

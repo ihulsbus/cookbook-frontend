@@ -17,12 +17,12 @@ import { Tag } from './tag';
  * Model of metadata associated to a recipe
  */
 export interface RecipeMetadata { 
-    recipe_id: string;
-    categories: Array<Category>;
-    cuisine_type: CuisineType;
-    tags: Array<Tag>;
-    difficulty_level: DifficultyLevel;
-    preparation_time: number;
-    serving_count: number;
+    recipe_id?: string;
+    categories?: Array<Category>;
+    cuisine_type?: CuisineType;
+    tags?: Array<Tag>;
+    difficulty_level?: DifficultyLevel;
+    preparation_time?: number;
+    serving_count?: number;
 }
 

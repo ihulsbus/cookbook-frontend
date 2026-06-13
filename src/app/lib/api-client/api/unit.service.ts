@@ -17,6 +17,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { PaginatedUnitResponse } from '../model/paginatedUnitResponse';
+// @ts-ignore
 import { Unit } from '../model/unit';
 
 // @ts-ignore
@@ -242,15 +244,27 @@ export class UnitService {
 
     /**
      * Get all units
-     * Retrieve all units known to the API. Currently, this endpoint does not support pagination. This will be added in the future
+     * Retrieve all units known to the API in a paginated format
+     * @param page Page number (1-indexed)
+     * @param limit Number of items per page (max 100)
      * @param body No body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllUnits(body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<Unit>>;
-    public getAllUnits(body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<Unit>>>;
-    public getAllUnits(body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<Unit>>>;
-    public getAllUnits(body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+    public getAllUnits(page?: number, limit?: number, body?: object, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PaginatedUnitResponse>;
+    public getAllUnits(page?: number, limit?: number, body?: object, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PaginatedUnitResponse>>;
+    public getAllUnits(page?: number, limit?: number, body?: object, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PaginatedUnitResponse>>;
+    public getAllUnits(page?: number, limit?: number, body?: object, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (limit !== undefined && limit !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>limit, 'limit');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -300,10 +314,11 @@ export class UnitService {
         }
 
         let localVarPath = `/unit`;
-        return this.httpClient.request<Array<Unit>>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<PaginatedUnitResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: body,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

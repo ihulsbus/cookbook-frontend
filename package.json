@@ -7,7 +7,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "download:api-template": "openapi-generator-cli author template -g typescript-angular -o ./openapi-generator-template ",
-    "generate:api": "openapi-generator-cli generate -i https://cbhbe.ams3.digitaloceanspaces.com/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --template-dir ./openapi-generator-template --additional-properties=ngVersion=19.1.5"
+    "generate:api": "openapi-generator-cli generate -i https://s3.gourmedy.com/cbhbe/docs/openapi.yaml -g typescript-angular -o src/app/lib/api-client --template-dir ./openapi-generator-template --additional-properties=ngVersion=19.1.5"
   },
   "name": "cookbook-frontend",
   "version": "0.1.1",

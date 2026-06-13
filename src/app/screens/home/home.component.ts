@@ -21,14 +21,14 @@ export class HomeComponent implements OnInit {
   allRecipes: Recipe[] = [];
   user$!: Observable<User | null>;
 
-  constructor(private restService: RecipeService, private messageService: MessageService, private authService: AuthService) {}
+  constructor(private readonly restService: RecipeService, private readonly messageService: MessageService, private readonly authService: AuthService) {}
 
-  welcomeText: string = ""
+  welcomeText = ""
 
   ngOnInit(): void {
     this.user$ = this.authService.getUserData();
-    this.restService.getAllRecipes().subscribe((data) => {
-      this.allRecipes = data;
+    this.restService.getAllRecipes(1, 6).subscribe((response) => {
+      this.allRecipes = response.data ?? [];
     });
     // , () => {
     //   this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Unable to retrieve recipes' });
@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
   }
 
   welcome() {
-    let welcomeTypes: string[] = ['Good morning', 'Good afternoon', 'Good evening'];
-    let hour = new Date().getHours();
+    const welcomeTypes = ['Good morning', 'Good afternoon', 'Good evening'];
+    const hour = new Date().getHours();
 
     if (hour < 12) this.welcomeText = welcomeTypes[0];
     else if (hour < 18) this.welcomeText = welcomeTypes[1];

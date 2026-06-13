@@ -92,7 +92,7 @@ export class AmountService {
 
     /**
      * Delete recipe ingredient amounts
-     * Delete ingredient quantities belonging to a recipe. Each provided ingredient reference will be deleted. If you want to delete all ingredients belonging to a recipe, send all.
+     * Delete ingredient quantities belonging to a recipe.  Each provided ingredient reference will be deleted. If you want to delete all ingredients belonging to a recipe, send all. 
      * @param recipeID UUID of a recipe
      * @param body No body required. Delete deletes all ingredient amounts linked to a recipe
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

@@ -10,8 +10,9 @@ import {
 import { RecipesGridComponent } from 'src/app/components/recipe-grid/recipe-grid.component';
 import { FilteringSidebarComponent } from 'src/app/components/filtering-sidebar/filtering-sidebar.component';
 import { forkJoin } from 'rxjs';
+import { fetchAllPages } from 'src/app/lib/pagination';
 
-export interface FullRecipe extends Recipe, RecipeMetadata {}
+export type FullRecipe = Recipe & RecipeMetadata;
 
 @Component({
     selector: 'app-recipe-browser',
@@ -35,8 +36,8 @@ export class RecipeBrowserComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      recipes: this.recipeService.getAllRecipes(),
-      metadata: this.metadataService.getAllRecipeMetadata()
+      recipes: fetchAllPages<Recipe>((page, limit) => this.recipeService.getAllRecipes(page, limit)),
+      metadata: fetchAllPages<RecipeMetadata>((page, limit) => this.metadataService.getAllRecipeMetadata(page, limit))
     }).subscribe(({recipes,metadata}) => {
       const metadataMap = new Map(metadata.map(m => [m.recipe_id, m]));
 

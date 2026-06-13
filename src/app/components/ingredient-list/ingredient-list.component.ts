@@ -3,6 +3,7 @@ import { AmountService, IngredientService, UnitService, IngredientAmounts, Ingre
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { fetchAllPages } from 'src/app/lib/pagination';
 import { SkeletonModule } from 'primeng/skeleton';
 
 interface HydratedIngredientAmount {
@@ -52,7 +53,7 @@ export class IngredientListComponent implements OnChanges {
   }
 
   hydrateIngredientAmounts(amounts: IngredientAmounts[]) {
-    this.unitService.getAllUnits().pipe(
+    fetchAllPages<Unit>((page, limit) => this.unitService.getAllUnits(page, limit)).pipe(
       switchMap((units: Unit[]) => {
         const uniqueIngredientIDs = [...new Set(amounts.map(a => a.ingredientID))];
 

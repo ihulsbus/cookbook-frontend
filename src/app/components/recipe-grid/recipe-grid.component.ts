@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 
-export interface FullRecipe extends Recipe, RecipeMetadata {}
+export type FullRecipe = Recipe & RecipeMetadata;
 
 @Component({
     selector: 'app-recipe-grid',

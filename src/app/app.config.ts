@@ -7,7 +7,7 @@ import { environment as env } from '../environments/environment';
 import { AppRoutingModule } from './app.routes';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './lib/auth/auth.interceptor';
-import { ApiModule } from './lib/api-client';
+import { ApiModule, BASE_PATH } from './lib/api-client';
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
@@ -55,6 +55,7 @@ export const appConfig: ApplicationConfig = {
             ApiModule
         ),
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: BASE_PATH, useValue: `${env.backend}/api/v2` },
         provideHttpClient(), // Provides HttpClient globally
     ]
 };
