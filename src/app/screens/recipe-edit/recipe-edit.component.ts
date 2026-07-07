@@ -109,15 +109,15 @@ export class RecipeEditComponent implements OnInit {
         this.amounts = data;
       })
 
-      fetchAllPages<Tag>((page, limit) => this.tagService.getAllTags(page, limit)).subscribe((tags) => {
+      fetchAllPages<Tag>((page: number, limit: number) => this.tagService.getAllTags(page, limit)).subscribe((tags: Tag[]) => {
         this.tags = tags;
       })
 
-      fetchAllPages<Category>((page, limit) => this.categoryService.getAllCategory(page, limit)).subscribe((categories) => {
+      fetchAllPages<Category>((page: number, limit: number) => this.categoryService.getAllCategory(page, limit)).subscribe((categories: Category[]) => {
         this.categories = categories;
       })
 
-      fetchAllPages<CuisineType>((page, limit) => this.cuisineTypeService.getAllCuisinetype(page, limit)).subscribe((cuisineTypes) => {
+      fetchAllPages<CuisineType>((page: number, limit: number) => this.cuisineTypeService.getAllCuisinetype(page, limit)).subscribe((cuisineTypes: CuisineType[]) => {
         this.cuisineTypes = cuisineTypes;
       })
     })
