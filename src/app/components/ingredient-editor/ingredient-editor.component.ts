@@ -1,62 +1,89 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { RestService, Ingredient, IngredientAmount, Unit } from '../../lib/rest/rest.service';
+import { Ingredient, IngredientService, IngredientAmounts, Unit, UnitService } from '../../lib/api-client';
+import { fetchAllPages } from '../../lib/pagination';
 import { UntypedFormBuilder } from "@angular/forms";
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
+import { Button } from "primeng/button";
+
+// class IngredientAmount {
+//   RecipeID: string = "";
+//   IngredientID: string = "";
+//   Quantity: number = 0;
+//   UnitID = "";
+//   Unit?: Unit;
+// }
 
 @Component({
-  selector: 'app-ingredient-editor',
-  templateUrl: './ingredient-editor.component.html',
+    selector: 'app-ingredient-editor',
+    standalone: true,
+    templateUrl: './ingredient-editor.component.html',
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    DialogModule,
+    DropdownModule,
+    InputNumberModule,
+    CreateIngredientComponent,
+    Button,
+  ]
 })
 export class IngredientEditorComponent implements OnInit {
 
-  @Input() ingredientamounts: IngredientAmount[] = []
-  @Output() updateIngredientAmounts = new EventEmitter<IngredientAmount[]>();
+  @Input() ingredientAmounts: IngredientAmounts[] = []
+  @Output() updateIngredientAmounts = new EventEmitter<IngredientAmounts[]>();
 
   // dialog states
-  ingredientDialog: boolean = false;
-  deleteIngredientDialog: boolean = false;
-  deleteIngredientsDialog: boolean = false;
-  submitted: boolean = false;
+  ingredientDialog = false;
+  deleteIngredientDialog = false;
+  deleteIngredientsDialog = false;
+  submitted = false;
 
-  newIngredient: IngredientAmount = new IngredientAmount();
+  newIngredient = {} as IngredientAmounts;
   ingredients: Ingredient[] = [];
-  selectedIngredients: IngredientAmount[] = [];
+  selectedIngredients: IngredientAmounts[] = [];
   units: Unit[] = [];
-  ingredientNames = new Map<number, string>();
-  unitNames = new Map<number, string>();
+  ingredientNames = new Map<string, string>();
+  unitNames = new Map<string, string>();
 
-  constructor(public fb: UntypedFormBuilder, private restService: RestService) { }
+  constructor(public fb: UntypedFormBuilder, private ingredientService: IngredientService, private unitService: UnitService) {}
 
   ngOnInit(): void {
-    this.getIngredients()
-    this.getUnits()
+     this.getIngredients()
+     fetchAllPages<Unit>((page, limit) => this.unitService.getAllUnits(page, limit)).subscribe((units) => {
+       this.units = units;
+       for (const unit of units) {
+         this.unitNames.set(unit.id, unit.full_name);
+       }
+     });
   }
 
   getIngredients() {
-    this.restService.GetAllIngredients().then((data) => { this.ingredients = data; this.getIngredientNames(data); })
+    fetchAllPages<Ingredient>((page, limit) => this.ingredientService.getAllIngredient(page, limit)).subscribe((ingredients) => {
+      this.ingredients = ingredients;
+      this.getIngredientNames(ingredients);
+    })
   }
 
-  getUnits() {
-    this.restService.GetUnits().then((data) => {
-      for (var unit of data) {
-        this.unitNames.set(unit.ID, unit.FullName);
-      };
-      this.units = data;
-    });
-  }
-
-  getIngredientNames(ingredients: Array<Ingredient>) {
-    for (var ingredient of ingredients) {
-      this.ingredientNames.set(ingredient.ID, ingredient.IngredientName);
+  getIngredientNames(ingredients: Ingredient[]) {
+    for (const ingredient of ingredients) {
+      this.ingredientNames.set(ingredient.id, ingredient.name);
     };
 
   }
 
-  getIngredientName(data: IngredientAmount) {
-    return this.ingredients.find(x => x.ID === data.IngredientID)?.IngredientName
+  getIngredientName(data: IngredientAmounts) {
+    return this.ingredients.find(x => x.id === data.ingredientID)?.name
   }
 
   clearNewIngredient() {
-    this.newIngredient = new IngredientAmount;
+    this.newIngredient = {} as IngredientAmounts;
   }
 
   openNew() {
@@ -71,7 +98,7 @@ export class IngredientEditorComponent implements OnInit {
     this.submitted = false;
   }
 
-  confirmDeleteIngredient(ingredientAmount: IngredientAmount) {
+  confirmDeleteIngredient(ingredientAmount: IngredientAmounts) {
     this.newIngredient = ingredientAmount;
     this.deleteIngredientDialog = true;
   }
@@ -80,33 +107,31 @@ export class IngredientEditorComponent implements OnInit {
     this.deleteIngredientsDialog = true;
   }
 
-  editIngredient(ingredient: IngredientAmount) {
+  editIngredient(ingredient: IngredientAmounts) {
     this.newIngredient = { ...ingredient };
     this.ingredientDialog = true;
   }
 
   saveIngredient() {
-    const i = this.ingredientamounts.findIndex(
-      (x: IngredientAmount) => x.IngredientID === this.newIngredient.IngredientID,
+    const i = this.ingredientAmounts.findIndex(
+      (x: IngredientAmounts) => x.ingredientID === this.newIngredient.ingredientID,
       );
-      console.log(i)
-    if (i > -1) this.ingredientamounts[i] = this.newIngredient;
-    else this.ingredientamounts.push(this.newIngredient);
-      
+    if (i > -1) this.ingredientAmounts[i] = this.newIngredient;
+    else this.ingredientAmounts.push(this.newIngredient);
+
     this.submitted = true;
     this.ingredientDialog = false;
     this.clearNewIngredient()
-    console.log(this.ingredientamounts)
   }
 
   deleteIngredient() {
-    this.updateIngredientAmounts.emit(this.ingredientamounts.filter((object: IngredientAmount) => object['IngredientID'] !== this.newIngredient.IngredientID));
+    this.updateIngredientAmounts.emit(this.ingredientAmounts.filter((object: IngredientAmounts) => object['ingredientID'] !== this.newIngredient.ingredientID));
     this.deleteIngredientDialog = false;
     this.clearNewIngredient()
   }
 
   deleteSelectedIngredients() {
-    let newArray = this.ingredientamounts.filter((object: IngredientAmount) => !this.selectedIngredients.includes(object));
+    const newArray = this.ingredientAmounts.filter((object: IngredientAmounts) => !this.selectedIngredients.includes(object));
     this.updateIngredientAmounts.emit(newArray);
     this.deleteIngredientsDialog = false;
     this.selectedIngredients = [];

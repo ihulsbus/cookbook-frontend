@@ -10,29 +10,32 @@
   <hr class="my-3 mx-0 border-top-1 border-none surface-border flex flex-row" />
   <div class="container">
     <div class="grid" *ngIf="recipes.length; else noThings">
-      <p-card *ngFor="let recipe of recipes" header="{{recipe.RecipeName}}" routerLink="/app/recipes/{{recipe.ID}}" class="card">
+      <p-card *ngFor="let recipe of recipes" header="{{recipe.name}}" routerLink="/app/recipes/{{recipe.id}}" class="card">
         <ng-template pTemplate="header">
-          <img alt="Header image" src="{{cdn}}/img/{{recipe.ImageName}}.jpg" onerror="this.src='assets/images/placeholder.png';"
-            style="height: 228.17px; object-fit: cover;">
+          <img #img alt="Header" [src]="cdn + '/img/' + imageMap[recipe.id].id + '.jpg'" (error)="img.src='assets/images/placeholder.png'" style="height: 228.17px; object-fit: cover;">
         </ng-template>
         <ng-template pTemplate="subtitle">
           <span class="p-row-1">
             <i class="pi pi-clock p-mr-5"></i>
-            {{ recipe.CookTime }} Minutes
+            {{ recipe.preparation_time }} Minutes
+          </span>
+          <span class="p-row-1">
+            <i class="pi pi-user p-mr-5"></i>
+            {{ recipe.serving_count }}
           </span>
         </ng-template>
-        <p class="m-0">
-          {{recipe.Description}}
+        <p class="text-sm text-700 mb-2 truncate" style="max-height: 3rem; overflow: hidden; text-overflow: ellipsis;">
+          {{ recipe.description }}
         </p>
         <ng-template pTemplate="footer">
-          <div *ngIf="recipe.Categories.length; else noCategories">
-            <span *ngFor="let category of recipe.Categories" class="p-row-1">
-              <p-chip label="{{category.CategoryName}}" styleClass="bg-blue-100" [style]="{'margin-right': '0.5rem'}"></p-chip>
+          <div *ngIf="recipe.categories?.length; else noCategories">
+            <span *ngFor="let category of recipe.categories" class="p-row-1">
+              <p-chip label="{{category.name}}" [style]="{'margin-right': '0.5rem'}"></p-chip>
             </span>
           </div>
-          <div class="mt-1" *ngIf="recipe.Categories.length; else noTags">
-            <span *ngFor="let tag of recipe.Tags" class="p-row-1 mt-1">
-              <p-tag value="{{tag.TagName}}" [rounded]="true" [style]="{'margin-right': '0.5rem'}"></p-tag>
+          <div class="mt-1" *ngIf="recipe.tags?.length; else noTags">
+            <span *ngFor="let tag of recipe.tags" class="p-row-1 mt-1">
+              <p-tag value="{{tag.name}}" severity="secondary" [rounded]="false" [style]="{'margin-right': '0.5rem'}"></p-tag>
             </span>
           </div>
         </ng-template>

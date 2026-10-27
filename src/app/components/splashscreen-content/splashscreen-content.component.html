@@ -1,12 +1,13 @@
-<div class="surface-card p-4 shadow-2 border-round">
-  <span class="text-center">
-    <h1>Welcome to</h1>
-  </span>
-  <div class="text-center mb-5">
-    <img src={{logo}} alt="Logo Image" height="130" class="mb-3 logo">
-    <h4 class="mb-5">This site is currently invite only.</h4>
-  </div>
-  <div>
-    <app-login-button></app-login-button>
-  </div>
-</div>
+<p-card>
+  <ng-template #header>
+    <img [src]="cdn + '/logo/logo_blk.svg'" alt="Logo Image" height="130" class="m-3 logo">
+  </ng-template>
+  <ng-template #title> Welcome </ng-template>
+  <ng-template #subtitle> This site is currently invite only.</ng-template>
+  <ng-template #footer>
+    <div class="flex justify-content-between align-items-center mb-1">
+      <p-button [pTooltip]="registrationTooltip" tooltipPosition="bottom" label="Register" icon="pi pi-user-plus" [rounded]="true" [raised]="true" [disabled]="true"></p-button>
+      <app-login-button></app-login-button>
+    </div>
+  </ng-template>
+</p-card>

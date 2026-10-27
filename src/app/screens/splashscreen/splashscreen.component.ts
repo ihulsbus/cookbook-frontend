@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { SplashscreenContentComponent } from '../../components/splashscreen-content/splashscreen-content.component';
+import { CommonModule } from '@angular/common';
 
 interface SplashFiles {
   filename: string
@@ -7,10 +9,15 @@ interface SplashFiles {
 }
 
 @Component({
-  selector: 'app-splashscreen',
-  templateUrl: './splashscreen.component.html',
-  styleUrls: ['./splashscreen.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-splashscreen',
+    standalone: true,
+    templateUrl: './splashscreen.component.html',
+    styleUrls: ['./splashscreen.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [
+        CommonModule,
+        SplashscreenContentComponent,
+    ]
 })
 export class SplashscreenComponent {
 

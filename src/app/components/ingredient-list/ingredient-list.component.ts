@@ -1,35 +1,84 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Ingredient, IngredientAmount } from 'src/app/lib/rest/rest.service';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AmountService, IngredientService, UnitService, IngredientAmounts, Ingredient, Unit} from 'src/app/lib/api-client';
+import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { fetchAllPages } from 'src/app/lib/pagination';
+import { SkeletonModule } from 'primeng/skeleton';
+
+interface HydratedIngredientAmount {
+  ingredient: Ingredient;
+  quantity: number;
+  unit: Unit;
+}
 
 @Component({
-  selector: 'app-ingredient-list',
-  templateUrl: './ingredient-list.component.html',
-  styleUrls: ['./ingredient-list.component.scss']
+    selector: 'app-ingredient-list',
+    standalone: true,
+    templateUrl: './ingredient-list.component.html',
+    styleUrls: ['./ingredient-list.component.css'],
+    imports: [
+        CommonModule,
+        SkeletonModule,
+    ]
 })
-export class IngredientListComponent implements OnInit, OnChanges {
 
-  @Input() ingredients: Ingredient[] = []
-  @Input() amounts: IngredientAmount[] = []
+export class IngredientListComponent implements OnChanges {
+  amounts: IngredientAmounts[] = [];
+  hydratedIngredientAmounts: HydratedIngredientAmount[] = [];
+  names = new Map<string, string>();
+  loading = true;
 
-  names = new Map<number, string>();
+  @Input() recipeID = "";
 
-  constructor() { }
 
-  ngOnInit(): void {
-    // this.getIngredientNames(this.ingredients);
-  }
+  constructor(
+    private amountService: AmountService,
+    private ingredientService: IngredientService,
+    private unitService: UnitService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['ingredients']) {
-      this.getIngredientNames(this.ingredients);
+    if (changes['recipeID'] && this.recipeID != null) {
+        this.getAmounts(this.recipeID);
     }
   }
 
-  getIngredientNames(ingredients: Array<Ingredient>) {
-    for (var ingredient of ingredients) {
-      this.names.set(ingredient.ID, ingredient.IngredientName);
-    };
+  getAmounts(recipeID: string) {
+    this.amountService.getRecipeAmounts(recipeID).subscribe((data) => {
+      this.amounts = data
+      this.hydrateIngredientAmounts(this.amounts)
+      this.loading = false
+    })
+  }
 
+  hydrateIngredientAmounts(amounts: IngredientAmounts[]) {
+    fetchAllPages<Unit>((page, limit) => this.unitService.getAllUnits(page, limit)).pipe(
+      switchMap((units: Unit[]) => {
+        const uniqueIngredientIDs = [...new Set(amounts.map(a => a.ingredientID))];
+
+        const ingredientObservables = uniqueIngredientIDs.map(id =>
+          this.ingredientService.getIngredient(id)
+        );
+
+        return forkJoin(ingredientObservables).pipe(
+          map((ingredients: Ingredient[]) => {
+            const ingredientMap = new Map(ingredients.map(i => [i.id, i]));
+            const unitMap = new Map(units.map(u => [u.id, u]));
+
+            const hydrated: HydratedIngredientAmount[] = amounts.map(a => ({
+              ingredient: ingredientMap.get(a.ingredientID)!,
+              quantity: a.quantity,
+              unit: unitMap.get(a.unitID)!
+            }));
+
+            return hydrated;
+          })
+        );
+      })
+    ).subscribe((hydratedAmounts: HydratedIngredientAmount[]) => {
+      this.hydratedIngredientAmounts = hydratedAmounts;
+    });
   }
 
 }

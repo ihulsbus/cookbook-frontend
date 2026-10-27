@@ -1,0 +1,92 @@
+
+.buttons {
+  margin-left: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-gap: 1rem;
+
+  .card {
+    &:hover {
+      img {
+        transform: scale(1.1);
+        filter: blur(0px);
+      }
+    }
+
+    cursor: pointer;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    /* border: 0px solid #ccc; */
+    box-sizing: border-box;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+
+    img {
+      transition: transform 0.25s ease-in-out, filter 0.25s ease-in-out;
+      filter: blur(3px);
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    span.title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 100%;
+      padding: 1rem;
+      /* color: #fff; */
+      font-size: 1.7rem;
+      text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.9);
+      box-sizing: border-box;
+    }
+  }
+}
+
+.container {
+  margin-top: 30px;
+}
+
+@media (min-width: 480px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 600px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1024px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

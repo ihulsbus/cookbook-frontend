@@ -1,10 +1,10 @@
 <div class="profile flex flex-row justify-content-center mt-5">
   <p-card header="Profile">
-    <div *ngIf="authenticationService.user$ | async as profile">
-        <p>Nickname: {{profile.nickname?.charAt(0)?.toUpperCase()}}{{profile.nickname?.slice(1)}}</p>
+    <div *ngIf="user$ | async as profile">
+        <p>Nickname: {{profile['name']?.charAt(0)?.toUpperCase()}}{{profile['name']?.slice(1)}}</p>
         <p>Name: {{profile.name}}</p>
         <p>Email: {{ profile.email}}</p>
-        <p>Email verified: {{profile.email_verified}}</p>
+        <p>Email verified: {{profile['email_verified']}}</p>
         <p>Roles: {{profile['cookbookroles']}}</p>
       </div>
     </p-card>

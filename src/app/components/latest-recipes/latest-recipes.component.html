@@ -3,15 +3,14 @@
     <p class="font-semibold text-2xl">Latest recipes</p>
   </div>
   <div class="carousel flex flex-row">
-    <p-carousel [value]="inputRecipes" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoPlayInterval="3000">
+    <p-carousel [value]="recipes" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoPlayInterval="3000">
       <ng-template let-recipe pTemplate="item">
         <div class="m-2 text-center py-1 px-1" routerLink="/app/recipes/{{recipe.ID}}">
           <div class="mb-3">
-            <img src="{{cdn}}/img/{{recipe.ImageName}}.jpg" [alt]="recipe.RecipeName"
-              class="w-6 shadow-2" />
+            <img [src]="cdn + '/img/' + imageMap[recipe.id].id" [alt]="recipe.name" class="w-6 shadow-2">
           </div>
           <div>
-            <h4 class="mb-1">{{ recipe.RecipeName }}</h4>
+            <h4 class="mb-1">{{ recipe.name }}</h4>
           </div>
         </div>
       </ng-template>

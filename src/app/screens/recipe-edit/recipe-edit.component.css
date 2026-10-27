@@ -1,0 +1,26 @@
+.coverImageContainer {
+  position: relative;
+  .coverImageButton {
+    visibility: hidden;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 71%;
+    transform: translate(-50%, -30%);
+    transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
+    opacity: 0;
+
+  }
+  &:hover {
+    .coverImageButton {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, -30%);
+    }
+  }
+}
+
+.description {
+  height: 100%;
+  display: block;
+}

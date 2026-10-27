@@ -1,21 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Ingredient, RestService } from '../../lib/rest/rest.service';
+import { IngredientService, Ingredient } from '../../lib/api-client';
+import { fetchAllPages } from '../../lib/pagination';
 import { MessageService } from 'primeng/api';
+import { CreateIngredientComponent } from 'src/app/components/create-ingredient/create-ingredient.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import {Button} from "primeng/button";
+import { CommonModule } from '@angular/common';
+import {InputText} from "primeng/inputtext";
 
 @Component({
-  selector: 'app-ingredients',
-  templateUrl: './ingredients.component.html',
+    selector: 'app-ingredients',
+    standalone: true,
+    templateUrl: './ingredients.component.html',
+  imports: [
+    CreateIngredientComponent,
+    TableModule,
+    DialogModule,
+    CommonModule,
+    InputText,
+    Button,
+  ]
 })
 export class IngredientsComponent implements OnInit {
-  ingredient: Ingredient = new Ingredient();
+  ingredient = {} as Ingredient;
   ingredients: Ingredient[] = [];
-  loading: boolean = true;
+  loading = true;
   filters: object = {};
-  deleteIngredientDialog: boolean = false;
-  deleteIngredientsDialog: boolean = false;
+  deleteIngredientDialog = false;
+  deleteIngredientsDialog = false;
   selectedIngredients: Ingredient[] = [];
 
-  constructor(private restService: RestService, public messageService: MessageService) { }
+  constructor(private readonly ingredientService: IngredientService, public messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getIngredients()
@@ -23,10 +39,13 @@ export class IngredientsComponent implements OnInit {
 
   getEventValue($event: any): string {
     return $event.target.value;
-  } 
+  }
 
   getIngredients() {
-    this.restService.GetAllIngredients().then((data) => { this.ingredients = data; this.loading = false })
+    fetchAllPages<Ingredient>((page, limit) => this.ingredientService.getAllIngredient(page, limit)).subscribe((ingredients) => {
+      this.ingredients = ingredients;
+      this.loading = false;
+    });
   }
 
   clearFilter(table: any) {
@@ -42,13 +61,30 @@ export class IngredientsComponent implements OnInit {
     this.deleteIngredientsDialog = true;
   }
   deleteIngredient() {
-    this.restService.DeleteIngredient(this.ingredient).then(() => this.updateSuccess()).catch(() => this.updateFailed());
-    this.deleteIngredientDialog = false;
-    this.getIngredients()
+    this.ingredientService.deleteIngredient(this.ingredient.id).subscribe({
+      next: () => {
+        this.updateSuccess()
+        this.deleteIngredientDialog = false;
+        this.getIngredients()
+      },
+      error: () => {
+        this.updateFailed()
+      }
+    });
   }
+
   deleteIngredients() {
-    for (let ingredient of this.selectedIngredients) {
-      this.restService.DeleteIngredient(ingredient).then(() => this.updateSuccess()).catch(() => this.updateFailed());
+    for (const ingredient of this.selectedIngredients) {
+      this.ingredientService.deleteIngredient(ingredient.id).subscribe({
+        next: () => {
+          this.updateSuccess()
+          this.deleteIngredientDialog = false;
+          this.getIngredients()
+        },
+        error: () => {
+          this.updateFailed()
+        }
+      });
     }
     this.deleteIngredientsDialog = false;
     this.getIngredients()

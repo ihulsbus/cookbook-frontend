@@ -5,22 +5,40 @@
         <img src={{logo}} alt="Logo Image" class="p-2 logo">
       </div>
       <div class="flex align-self-center mobileMenu">
-        <button type="button" class="p-button-text" pButton icon="pi pi-bars" label="Menu" (click)="mobileMenu.toggle($event)" aria-haspopup="true" aria-controls="overlay_menu" style="margin-top: -5px;"></button>
+        <p-button type="button" class="mt-5"  icon="pi pi-bars" label="Menu" (click)="mobileMenu.toggle($event)" aria-haspopup="true" aria-controls="overlay_menu">Menu</p-button>
         <p-menu #mobileMenu [popup]="true" id="overlay_menu" [model]="mobileMenuOptions"></p-menu>
       </div>
     </div>
   </div>
+
   <div class="hide-mobile">
     <div class="flex">
       <div class="flex" [routerLink]="['/app/home']">
         <img src={{logo}} alt="Logo Image" class=" p-2 logo">
       </div>
       <div class="flex align-items-end menu">
-        <p-tabMenu [scrollable]="true" [model]="bigMenuOptions" class="tabmenu"></p-tabMenu>
+        <p-tabs>
+          <p-tablist>
+            @for(tab of bigMenuOptions; track tab.routerLink){
+              <p-tab [value]="tab.routerLink" [routerLink]="tab.routerLink">
+                <span>{{ tab.label }}</span>
+              </p-tab>
+            }
+          </p-tablist>
+        </p-tabs>
       </div>
-      <div *ngIf="authenticationService.user$ | async as profile" class="flex align-items-center userMenu">
-        <p-avatar class="avatar" image="{{profile.picture}}" styleClass="mr-2" size="large" shape="circle" aria-haspopup="true"
-          aria-controls="user_menu" (click)="userMenu.toggle($event)"></p-avatar>
+      <div *ngIf="user$ | async as profile" class="flex align-items-center userMenu">
+        <p-avatar
+          class="avatar"
+          label="{{profile['given_name']?.charAt(0)?.toUpperCase()}}{{profile['family_name']?.charAt(0)?.toUpperCase()}}"
+          [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }"
+          image="{{profile.picture}}"
+          size="large"
+          shape="circle"
+          aria-haspopup="true"
+          aria-controls="user_menu"
+          (click)="userMenu.toggle($event)">
+        </p-avatar>
         <p-tieredMenu #userMenu id="user_menu" [model]="userMenuItems" [popup]="true"></p-tieredMenu>
       </div>
     </div>

@@ -1,0 +1,36 @@
+.input {
+  margin-top: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .show-mobile {
+    display: block;
+    width: 100%;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .show-mobile {
+    display: none;
+  }
+
+  .hide-mobile {
+    display: block;
+    z-index: 5;
+    height: 100%;
+    width: 250px;
+    box-shadow: 2px 0px 5px 0px;
+    padding-left: 1rem;
+    padding-right: 5px;
+    padding-top: 1.5rem;
+    /* background-color: white; */
+  }
+
+  .dropdown {
+    width: 75px;
+  }
+}

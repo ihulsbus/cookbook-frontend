@@ -1,12 +1,10 @@
 export const environment = {
   baseURL: 'http://localhost:4200',
-  backend: 'http://localhost:8080',
-  cdn: 'https://cbhbe.ams3.cdn.digitaloceanspaces.com',
+  backend: 'https://api.gourmedy.com',
+  cdn: 'https://s3.gourmedy.com/cbhbe',
   production: false,
-  auth0: {
-    domain: 'cbhbe-dev.eu.auth0.com',
-    clientId: 'c7eQwqHQJRjdkX0QXjEav5XP6ILGhuIy',
-    redirectUri: window.location.origin,
-    audience: 'cbbhbeapi',
+  oidc: {
+    domain: 'https://auth.gourmedy.com/realms/gourmedy',
+    clientId: 'gourmedyfr',
   },
 };

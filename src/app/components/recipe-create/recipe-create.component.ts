@@ -1,25 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { RestService, Recipe, Instruction } from '../../lib/rest/rest.service';
-import { Router } from '@angular/router';
+import {Component, inject} from '@angular/core';
+import { RecipeService, Recipe} from '../../lib/api-client/';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import {Button} from "primeng/button";
+import {Textarea} from "primeng/textarea";
 
 @Component({
-  selector: 'app-recipe-create',
-  templateUrl: './recipe-create.component.html',
+    selector: 'app-recipe-create',
+    standalone: true,
+    templateUrl: './recipe-create.component.html',
+  imports: [
+    CommonModule,
+    DialogModule,
+    FormsModule,
+    InputNumberModule,
+    Textarea,
+    Button,
+  ]
 })
-export class RecipeCreateComponent implements OnInit {
+export class RecipeCreateComponent {
+  private readonly route = inject(ActivatedRoute);
 
-  visible: boolean = false;
-  submitted: boolean = false;
-  recipe: Recipe = new Recipe();
-  validationErrors: {} = {};
-  InstructionTemplate: Instruction = new(Instruction);
+  visible = false;
+  recipe = {} as Recipe;
 
-  constructor(private restService: RestService, private router: Router, private messageService: MessageService) { }
-
-  ngOnInit(): void {
-    // This is intentionally empty
-  }
+  constructor(
+    private readonly recipeService: RecipeService,
+    private readonly router: Router,
+    private readonly messageService: MessageService) {}
 
   openDialog() {
     this.visible = true
@@ -28,27 +40,22 @@ export class RecipeCreateComponent implements OnInit {
     this.visible = false
   }
   createRecipe() {
-    let id: number = 0
-    console.log(this.recipe)
-    this.restService.CreateRecipe(this.recipe).then(
-      (data: Recipe) => {
-        this.InstructionTemplate.RecipeID = data.ID;
-        this.restService.CreateInstructions(data.ID, this.InstructionTemplate);
-        this.onUploadSuccess(data.ID);
-      }, this.onUploadError)
+    this.recipeService.createRecipe(this.recipe).subscribe({
+      next: (v) => this.onUploadSuccess(v.id),
+      error: (e) => this.onUploadError(e)
+    })
   }
 
-  onUploadSuccess(id: number) {
-   
+  onUploadSuccess(id: string) {
     this.messageService.add({
       severity: 'success', summary: 'Success', detail: 'Recipe created', life: 3000,
     });
-    this.router.navigate(['app', 'recipes', id, 'edit'])
+    this.router.navigate([id, 'edit'], {relativeTo: this.route})
   }
 
-  onUploadError() {
+  onUploadError(e: any) {
     this.messageService.add({
-      severity: 'error', summary: 'Error', detail: 'Recipe creation failed', life: 3000,
+      severity: 'error', summary: 'Error', detail: 'Recipe creation failed:' + e, life: 3000,
     });
   }
 
