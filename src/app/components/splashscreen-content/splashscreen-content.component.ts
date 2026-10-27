@@ -9,7 +9,7 @@ import { TooltipModule } from 'primeng/tooltip';
   selector: 'app-splashscreen-content',
   standalone: true,
   templateUrl: './splashscreen-content.component.html',
-  styleUrls: ['./splashscreen-content.component.scss'],
+  styleUrls: ['./splashscreen-content.component.css'],
   imports: [
     LoginButtonComponent,
     Card,

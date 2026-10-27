@@ -6,7 +6,7 @@ import { MultiSelectModule  } from 'primeng/multiselect';
 import { SidebarModule } from 'primeng/sidebar';
 import { FormsModule } from '@angular/forms';
 import {InputText} from "primeng/inputtext";
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button"
+import { Button } from "primeng/button"
 
 export type FullRecipe = Recipe & RecipeMetadata;
 
@@ -14,15 +14,12 @@ export type FullRecipe = Recipe & RecipeMetadata;
     selector: 'app-filtering-sidebar',
     standalone: true,
     templateUrl: './filtering-sidebar.component.html',
-    styleUrls: ['./filtering-sidebar.component.scss'],
+    styleUrls: ['./filtering-sidebar.component.css'],
   imports: [
     MultiSelectModule,
     FormsModule,
     SidebarModule,
     InputText,
-    ButtonDirective,
-    ButtonIcon,
-    ButtonLabel,
     Button,
   ]
 })

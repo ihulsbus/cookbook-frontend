@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-logoff',
   standalone: true,
   templateUrl: './logoff.component.html',
-  styleUrls: ['./logoff.component.scss']
+  styleUrls: ['./logoff.component.css']
 })
 export class LogoffComponent implements OnInit {
   baseURL: string = environment.baseURL

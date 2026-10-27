@@ -6,7 +6,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
     selector: 'app-login-button',
     standalone: true,
     templateUrl: './login-button.component.html',
-    styleUrls: ['./login-button.component.scss'],
+    styleUrls: ['./login-button.component.css'],
     imports: [
         ButtonModule,
     ]

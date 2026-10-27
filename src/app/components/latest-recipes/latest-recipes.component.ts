@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterLink } from '@angular/router';
-import { JsonPipe } from '@angular/common';
 import { ImageService, Recipe, ImageData } from 'src/app/lib/api-client';
 import {map} from "rxjs/operators";
 import {forkJoin} from "rxjs";
@@ -11,11 +10,10 @@ import {forkJoin} from "rxjs";
     selector: 'app-latest-recipes',
     standalone: true,
     templateUrl: './latest-recipes.component.html',
-    styleUrls: ['./latest-recipes.component.scss'],
+    styleUrls: ['./latest-recipes.component.css'],
     imports: [
       CarouselModule,
       RouterLink,
-      JsonPipe,
     ]
 })
 export class LatestRecipesComponent implements OnChanges {

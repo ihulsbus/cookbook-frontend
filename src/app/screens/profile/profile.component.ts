@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-profile',
     standalone: true,
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
+    styleUrls: ['./profile.component.css'],
     imports: [
         CardModule,
         CommonModule,

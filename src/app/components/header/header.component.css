@@ -26,7 +26,7 @@
   box-shadow: 0px 1px 5px 0px;
   padding-left: 5px;
   padding-right: 5px;
-  // background-color: white;
+  /* background-color: white; */
 }
 
 .mobileMenu {
@@ -53,10 +53,10 @@
   a {
     margin-left: 5px;
     font-weight: bold;
-    // color: #2c3e50;
+    /* color: #2c3e50; */
 
-    // &.router-link-exact-active {
-    //   color: #42b983;
-    // }
+    /* &.router-link-exact-active { */
+    /*   color: #42b983; */
+    /* } */
   }
 }

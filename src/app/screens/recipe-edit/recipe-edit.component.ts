@@ -28,7 +28,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterLink } from '@angular/router';
 import { EditorModule} from "primeng/editor";
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button} from "primeng/button";
 import {InputText} from "primeng/inputtext";
 import {Textarea} from "primeng/textarea";
 
@@ -36,7 +36,7 @@ import {Textarea} from "primeng/textarea";
     selector: 'app-recipe-edit',
     standalone: true,
     templateUrl: './recipe-edit.component.html',
-    styleUrls: ['./recipe-edit.component.scss'],
+    styleUrls: ['./recipe-edit.component.css'],
   imports: [
     CommonModule,
     DialogModule,
@@ -48,11 +48,8 @@ import {Textarea} from "primeng/textarea";
     RouterLink,
     SelectModule,
     MultiSelectModule,
-    ButtonDirective,
-    ButtonIcon,
     InputText,
     Textarea,
-    ButtonLabel,
     Button,
   ]
 })
@@ -74,17 +71,17 @@ export class RecipeEditComponent implements OnInit {
 
 
   constructor(
-    private recipeService: RecipeService,
-    private instructionService: InstructionService,
-    private amountService: AmountService,
-    private tagService: TagService,
-    private categoryService: CategoryService,
-    private metadataService: MetadataService,
-    private cuisineTypeService: CuisinetypeService,
-    private imageService: ImageService,
-    private messageService: MessageService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private readonly recipeService: RecipeService,
+    private readonly instructionService: InstructionService,
+    private readonly amountService: AmountService,
+    private readonly tagService: TagService,
+    private readonly categoryService: CategoryService,
+    private readonly metadataService: MetadataService,
+    private readonly cuisineTypeService: CuisinetypeService,
+    private readonly imageService: ImageService,
+    private readonly messageService: MessageService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +95,7 @@ export class RecipeEditComponent implements OnInit {
       })
 
       this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
-        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`;
+        this.imgUrl = `${environment.cdn}/img/${data.id}.jpg`;
       });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
@@ -124,7 +121,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   getImgURL() {
-    // this.imgUrl = `${environment.cdn}/img/${this.recipe.ImageName}.jpg?d=${(new Date()).getTime()}`;
+    this.imgUrl = `${environment.cdn}/img/${this.recipe.id}.jpg?d=${Date.now()}`;
   }
 
 
@@ -144,11 +141,11 @@ export class RecipeEditComponent implements OnInit {
     this.fileUpload = !this.fileUpload;
   }
   saveRecipeUpdate() {
-    // if (this.amounts.length == 0 || this.instructions.description.length == 0) {
-    //   this.confirmPopup = true;
-    // } else {
-    //   this.uploadRecipe();
-    // }
+    if (this.amounts.length == 0 || this.instructions.length == 0) {
+      this.confirmPopup = true;
+    } else {
+      this.uploadRecipe();
+    }
   }
 
   uploadRecipe() {

@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router'
 @Component({
     selector: 'app-cookbook',
     templateUrl: './cookbook.component.html',
-    styleUrls: ['./cookbook.component.scss'],
+    styleUrls: ['./cookbook.component.css'],
     providers: [MessageService],
     imports: [
         HeaderComponent,

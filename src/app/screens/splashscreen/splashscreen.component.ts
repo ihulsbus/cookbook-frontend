@@ -12,7 +12,7 @@ interface SplashFiles {
     selector: 'app-splashscreen',
     standalone: true,
     templateUrl: './splashscreen.component.html',
-    styleUrls: ['./splashscreen.component.scss'],
+    styleUrls: ['./splashscreen.component.css'],
     encapsulation: ViewEncapsulation.None,
     imports: [
         CommonModule,

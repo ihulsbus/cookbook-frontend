@@ -19,7 +19,7 @@ export type FullRecipe = Recipe & RecipeMetadata;
     selector: 'app-recipe-grid',
     standalone: true,
     templateUrl: './recipe-grid.component.html',
-    styleUrls: ['./recipe-grid.component.scss'],
+    styleUrls: ['./recipe-grid.component.css'],
   imports: [
     CardModule,
     ChipModule,

@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+    styleUrls: ['./home.component.css'],
     imports: [
         CommonModule,
         LatestRecipesComponent,

@@ -36,7 +36,7 @@ import { Configuration }                                     from '../configurat
 })
 export class MetadataService {
 
-    protected basePath = 'https://api-staging.gourmedy.com/api/v2';
+    protected basePath = 'https://api.gourmedy.com/api/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

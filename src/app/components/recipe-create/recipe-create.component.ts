@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { RecipeService, Recipe} from '../../lib/api-client/';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
@@ -23,6 +23,7 @@ import {Textarea} from "primeng/textarea";
   ]
 })
 export class RecipeCreateComponent {
+  private readonly route = inject(ActivatedRoute);
 
   visible = false;
   recipe = {} as Recipe;
@@ -49,7 +50,7 @@ export class RecipeCreateComponent {
     this.messageService.add({
       severity: 'success', summary: 'Success', detail: 'Recipe created', life: 3000,
     });
-    this.router.navigate(['app', 'recipes', id, 'edit'])
+    this.router.navigate([id, 'edit'], {relativeTo: this.route})
   }
 
   onUploadError(e: any) {

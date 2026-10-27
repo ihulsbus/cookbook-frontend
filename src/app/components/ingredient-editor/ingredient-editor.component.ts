@@ -9,7 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import { Button } from "primeng/button";
 
 // class IngredientAmount {
 //   RecipeID: string = "";
@@ -31,9 +31,6 @@ import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     DropdownModule,
     InputNumberModule,
     CreateIngredientComponent,
-    ButtonDirective,
-    ButtonLabel,
-    ButtonIcon,
     Button,
   ]
 })

@@ -7,7 +7,7 @@
       <ng-template let-recipe pTemplate="item">
         <div class="m-2 text-center py-1 px-1" routerLink="/app/recipes/{{recipe.ID}}">
           <div class="mb-3">
-            <img [src]="cdn + '/img/' + imageMap[recipe.id]?.id" [alt]="recipe.name" class="w-6 shadow-2">
+            <img [src]="cdn + '/img/' + imageMap[recipe.id].id" [alt]="recipe.name" class="w-6 shadow-2">
           </div>
           <div>
             <h4 class="mb-1">{{ recipe.name }}</h4>

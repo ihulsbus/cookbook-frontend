@@ -11,13 +11,12 @@ import {
   MetadataService,
   RecipeMetadata
 } from '../../lib/api-client';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { IngredientListComponent } from 'src/app/components/ingredient-list/ingredient-list.component';
-import { TagModule } from 'primeng/tag';
-import { ChipModule } from 'primeng/chip';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink} from '@angular/router';
+import {environment} from 'src/environments/environment';
+import {IngredientListComponent} from 'src/app/components/ingredient-list/ingredient-list.component';
+import {TagModule} from 'primeng/tag';
+import {ChipModule} from 'primeng/chip';
+import {CommonModule} from '@angular/common';
 import {Button, ButtonModule} from "primeng/button";
 import { ButtonGroupModule } from 'primeng/buttongroup';
 
@@ -25,7 +24,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
     selector: 'app-recipe-detail',
     standalone: true,
     templateUrl: './recipe-detail.component.html',
-    styleUrls: ['./recipe-detail.component.scss'],
+    styleUrls: ['./recipe-detail.component.css'],
   imports: [
     CommonModule,
     RouterLink,
@@ -47,12 +46,12 @@ export class RecipeDetailComponent implements OnInit {
   metadata = {} as RecipeMetadata;
 
   constructor(
-    private recipeService: RecipeService,
-    private amountService: AmountService,
-    private instructionService: InstructionService,
-    private imageService: ImageService,
-    private metadataService: MetadataService,
-    private activatedRoute: ActivatedRoute
+    private readonly recipeService: RecipeService,
+    private readonly amountService: AmountService,
+    private readonly instructionService: InstructionService,
+    private readonly imageService: ImageService,
+    private readonly metadataService: MetadataService,
+    private readonly activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +65,7 @@ export class RecipeDetailComponent implements OnInit {
       })
 
       this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
-        this.imgUrl = `https://cbhbe.ams3.cdn.digitaloceanspaces.com/img/${data.id}.jpg`;
+        this.imgUrl = `${environment.cdn}/img/${data.id}.jpg`;
       });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {

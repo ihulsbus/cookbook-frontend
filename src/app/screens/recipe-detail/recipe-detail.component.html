@@ -42,7 +42,7 @@
       </section>
     </div>
     <div class="col-12 md:col-6 overflow-hidden">
-      <img src="{{imgUrl}}" onerror="this.src='assets/images/placeholder.png';" alt="Image" class="md:ml-auto block md:h-full"
+      <img src="{{imgUrl}}" (error)="this.imgUrl='assets/images/placeholder.png';" alt="visual representation of the recipe" class="md:ml-auto block md:h-full"
         style="max-height: 487px; clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
     </div>
   </div>

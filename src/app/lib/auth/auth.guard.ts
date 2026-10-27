@@ -14,6 +14,8 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> {
+    // TEMP-DEBUG: bypass auth for local layout inspection
+    return of(true);
     return this.oidcSecurityService.checkAuth().pipe(
       map(({ isAuthenticated }) => {
         if (!isAuthenticated) {

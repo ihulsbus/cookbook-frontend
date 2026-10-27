@@ -18,7 +18,7 @@ export type FullRecipe = Recipe & RecipeMetadata;
     selector: 'app-recipe-browser',
     standalone: true,
     templateUrl: './recipe-browser.component.html',
-    styleUrls: ['./recipe-browser.component.scss'],
+    styleUrls: ['./recipe-browser.component.css'],
   imports: [
     RecipesGridComponent,
     FilteringSidebarComponent,
@@ -32,7 +32,7 @@ export class RecipeBrowserComponent implements OnInit {
   api: string = environment.backend
   cdn: string = environment.cdn
 
-  constructor(public router: Router, private recipeService: RecipeService, private metadataService: MetadataService) { }
+  constructor(public router: Router, private readonly recipeService: RecipeService, private readonly metadataService: MetadataService) { }
 
   ngOnInit(): void {
     forkJoin({
@@ -48,11 +48,4 @@ export class RecipeBrowserComponent implements OnInit {
       }));
     });
   }
-
-
-  passRecipes(r: FullRecipe[]) {
-    this.filteredRecipes.length = 0
-    this.filteredRecipes = [...r]
-  }
-
 }

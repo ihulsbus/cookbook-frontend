@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { CreateIngredientComponent } from 'src/app/components/create-ingredient/create-ingredient.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button} from "primeng/button";
 import { CommonModule } from '@angular/common';
 import {InputText} from "primeng/inputtext";
 
@@ -18,9 +18,6 @@ import {InputText} from "primeng/inputtext";
     TableModule,
     DialogModule,
     CommonModule,
-    ButtonDirective,
-    ButtonLabel,
-    ButtonIcon,
     InputText,
     Button,
   ]
@@ -34,7 +31,7 @@ export class IngredientsComponent implements OnInit {
   deleteIngredientsDialog = false;
   selectedIngredients: Ingredient[] = [];
 
-  constructor(private ingredientService: IngredientService, public messageService: MessageService) { }
+  constructor(private readonly ingredientService: IngredientService, public messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getIngredients()
@@ -64,7 +61,7 @@ export class IngredientsComponent implements OnInit {
     this.deleteIngredientsDialog = true;
   }
   deleteIngredient() {
-    this.ingredientService.deleteIngredient(this.ingredient.id!).subscribe({
+    this.ingredientService.deleteIngredient(this.ingredient.id).subscribe({
       next: () => {
         this.updateSuccess()
         this.deleteIngredientDialog = false;
@@ -77,8 +74,8 @@ export class IngredientsComponent implements OnInit {
   }
 
   deleteIngredients() {
-    for (let ingredient of this.selectedIngredients) {
-      this.ingredientService.deleteIngredient(ingredient.id!).subscribe({
+    for (const ingredient of this.selectedIngredients) {
+      this.ingredientService.deleteIngredient(ingredient.id).subscribe({
         next: () => {
           this.updateSuccess()
           this.deleteIngredientDialog = false;

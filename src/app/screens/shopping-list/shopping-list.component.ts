@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-shopping-list',
   standalone: true,
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
 

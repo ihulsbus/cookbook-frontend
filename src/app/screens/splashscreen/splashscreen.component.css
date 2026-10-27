@@ -7,30 +7,30 @@
 
 .attribute {
     text-align: center;
-    // color: gray;
+    /* color: gray; */
     position: fixed;
     top: 97%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-// a:link {
-//     color: gray;
-//     text-decoration: none;
-// }
+/* a:link { */
+/*     color: gray; */
+/*     text-decoration: none; */
+/* } */
 
-// a:visited {
-//     color: gray;
-//     text-decoration: none;
-// }
+/* a:visited { */
+/*     color: gray; */
+/*     text-decoration: none; */
+/* } */
 
-// a:hover {
-//     text-decoration: underline;
-// }
+/* a:hover { */
+/*     text-decoration: underline; */
+/* } */
 
-// a:active {
-//     text-decoration: underline;
-// }
+/* a:active { */
+/*     text-decoration: underline; */
+/* } */
 
 .background {
     width: 100%;

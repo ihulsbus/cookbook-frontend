@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 })
 export class AmountService {
 
-    protected basePath = 'https://api-staging.gourmedy.com/api/v2';
+    protected basePath = 'https://api.gourmedy.com/api/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

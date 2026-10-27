@@ -12,7 +12,7 @@
     <div class="grid" *ngIf="recipes.length; else noThings">
       <p-card *ngFor="let recipe of recipes" header="{{recipe.name}}" routerLink="/app/recipes/{{recipe.id}}" class="card">
         <ng-template pTemplate="header">
-          <img alt="Header" [src]="cdn + '/img/' + imageMap[recipe.id]?.id + '.jpg'" onerror="this.src='assets/images/placeholder.png';" style="height: 228.17px; object-fit: cover;">
+          <img #img alt="Header" [src]="cdn + '/img/' + imageMap[recipe.id].id + '.jpg'" (error)="img.src='assets/images/placeholder.png'" style="height: 228.17px; object-fit: cover;">
         </ng-template>
         <ng-template pTemplate="subtitle">
           <span class="p-row-1">

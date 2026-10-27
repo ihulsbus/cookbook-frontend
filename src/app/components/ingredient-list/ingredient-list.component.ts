@@ -16,7 +16,7 @@ interface HydratedIngredientAmount {
     selector: 'app-ingredient-list',
     standalone: true,
     templateUrl: './ingredient-list.component.html',
-    styleUrls: ['./ingredient-list.component.scss'],
+    styleUrls: ['./ingredient-list.component.css'],
     imports: [
         CommonModule,
         SkeletonModule,

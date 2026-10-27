@@ -12,13 +12,13 @@ import { CommonModule } from '@angular/common';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { TabsModule } from 'primeng/tabs';
 import { Router, NavigationEnd } from '@angular/router';
-import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
+import {Button} from "primeng/button";
 
 @Component({
     selector: 'app-header',
     standalone: true,
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
+    styleUrls: ['./header.component.css'],
   imports: [
     CommonModule,
     RouterLink,
@@ -26,9 +26,6 @@ import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
     TabsModule,
     AvatarModule,
     TieredMenuModule,
-    ButtonDirective,
-    ButtonIcon,
-    ButtonLabel,
     Button,
   ]
 })
@@ -36,8 +33,8 @@ import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from "primeng/button";
 export class HeaderComponent implements OnInit {
   user$!: Observable<User | null>;
 
-  admin: boolean = true
-  logo: string = `${environment.cdn}/logo/logo_blk.svg`
+  admin = true
+  logo = `${environment.cdn}/logo/logo_blk.svg`
 
   mobileMenuOptions: MenuItem[] = [
     { label: 'Recipes', routerLink: ['/app/recipes'] },
