@@ -42,7 +42,7 @@ export const appConfig: ApplicationConfig = {
                     secureRoutes: [env.backend],
                     postLogoutRedirectUri: '/loggedout',
                     clientId: `${env.oidc.clientId}`,
-                    scope: 'openid profile email offline_access',
+                    scope: 'openid profile email groups offline_access',
                     responseType: 'code',
                     silentRenew: true,
                     silentRenewUrl: `${env.baseURL}/oidc/silent-renew`,

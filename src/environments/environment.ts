@@ -4,7 +4,7 @@ export const environment = {
   cdn: 'https://s3.gourmedy.com/cbhbe',
   production: false,
   oidc: {
-    domain: 'https://auth.gourmedy.com/realms/gourmedy',
-    clientId: 'gourmedyfr',
+    domain: 'https://auth.gourmedy.com/application/o/cookbook-web/',
+    clientId: 'cookbook-web',
   },
 };
