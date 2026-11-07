@@ -33,5 +33,9 @@ export interface ImageData {
      * type of media
      */
     type: string;
+    /**
+     * Short-lived signed URL (KIT-72) for reading this image\'s bytes directly from storage, valid for about 15 minutes. Only present when the caller\'s access to the owning recipe has already been checked - absent from a bulk admin listing.
+     */
+    url?: string;
 }
 

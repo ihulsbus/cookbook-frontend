@@ -12,7 +12,6 @@ import {
   RecipeMetadata
 } from '../../lib/api-client';
 import { ActivatedRoute, RouterLink} from '@angular/router';
-import {environment} from 'src/environments/environment';
 import {IngredientListComponent} from 'src/app/components/ingredient-list/ingredient-list.component';
 import {TagModule} from 'primeng/tag';
 import {ChipModule} from 'primeng/chip';
@@ -65,7 +64,7 @@ export class RecipeDetailComponent implements OnInit {
       })
 
       this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
-        this.imgUrl = `${environment.cdn}/img/${data.id}.jpg`;
+        this.imgUrl = data.url ?? "";
       });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
@@ -80,6 +79,9 @@ export class RecipeDetailComponent implements OnInit {
 
 
   getImgURL() {
-    this.imageService.searchImage("Recipe", this.recipe.id).subscribe((data) => this.imgUrl = `${environment.cdn}/img/${data.id}.jpg?d=${(new Date()).getTime()}`)
+    // A presigned URL (KIT-72) is signed server-side and can't be built
+    // here, and it already changes on every fetch (fresh signature), so
+    // no manual cache-busting param is needed either.
+    this.imageService.searchImage("Recipe", this.recipe.id).subscribe((data) => this.imgUrl = data.url ?? "")
   }
 }

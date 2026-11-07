@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterLink } from '@angular/router';
 import { ImageService, Recipe, ImageData } from 'src/app/lib/api-client';
@@ -37,7 +36,6 @@ export class LatestRecipesComponent implements OnChanges {
       numScroll: 2
     }
   ];
-  cdn = environment.cdn
   loading = false;
   imageMap: Record<string, ImageData> = {};
 

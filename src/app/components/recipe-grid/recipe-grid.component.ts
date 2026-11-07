@@ -36,7 +36,6 @@ export class RecipesGridComponent implements OnChanges {
 
   @Input() recipes: FullRecipe[] = []
   api = environment.backend
-  cdn = environment.cdn
   loading = false;
   imageMap: Record<string, ImageData> = {};
 

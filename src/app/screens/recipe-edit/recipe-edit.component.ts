@@ -95,7 +95,7 @@ export class RecipeEditComponent implements OnInit {
       })
 
       this.imageService.searchImage("recipe", params['id']).subscribe((data) => {
-        this.imgUrl = `${environment.cdn}/img/${data.id}.jpg`;
+        this.imgUrl = data.url ?? "";
       });
 
       this.instructionService.getInstruction(params['id']).subscribe((data) => {
@@ -121,7 +121,13 @@ export class RecipeEditComponent implements OnInit {
   }
 
   getImgURL() {
-    this.imgUrl = `${environment.cdn}/img/${this.recipe.id}.jpg?d=${Date.now()}`;
+    // Re-fetch rather than build a URL client-side: a presigned URL
+    // (KIT-72) is signed server-side and can't be constructed here, and
+    // a fresh fetch gets a new signature each time anyway, so there's no
+    // need for a manual cache-busting param either.
+    this.imageService.searchImage("recipe", this.recipe.id!).subscribe((data) => {
+      this.imgUrl = data.url ?? "";
+    });
   }
 
 
