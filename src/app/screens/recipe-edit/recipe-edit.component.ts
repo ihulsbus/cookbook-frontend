@@ -13,11 +13,12 @@ import {
   CuisinetypeService,
   MetadataService,
   ImageService,
+  ImageData,
   InstructionService, RecipeMetadata, CuisineType,
 } from '../../lib/api-client';
 import { fetchAllPages } from '../../lib/pagination';
 import { MessageService } from 'primeng/api';
-import { environment } from 'src/environments/environment';
+import { FileUploadHandlerEvent } from 'primeng/fileupload';
 import { IngredientEditorComponent } from 'src/app/components/ingredient-editor/ingredient-editor.component';
 import { CommonModule } from '@angular/common';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -59,7 +60,6 @@ export class RecipeEditComponent implements OnInit {
   cancelPopup = false;
   confirmPopup = false;
   fileUpload = false;
-  api = environment.backend;
   imgUrl = "";
   amounts: IngredientAmounts[] = [];
   instructions = [] as Instruction[];
@@ -120,17 +120,6 @@ export class RecipeEditComponent implements OnInit {
     })
   }
 
-  getImgURL() {
-    // Re-fetch rather than build a URL client-side: a presigned URL
-    // (KIT-72) is signed server-side and can't be constructed here, and
-    // a fresh fetch gets a new signature each time anyway, so there's no
-    // need for a manual cache-busting param either.
-    this.imageService.searchImage("recipe", this.recipe.id!).subscribe((data) => {
-      this.imgUrl = data.url ?? "";
-    });
-  }
-
-
   updateIngredientAmounts(ingredientAmounts: IngredientAmounts[]) {
     this.amounts = ingredientAmounts;
   }
@@ -166,8 +155,15 @@ export class RecipeEditComponent implements OnInit {
       });
   }
 
-  onUploadSuccess() {
-    this.getImgURL()
+  onUploadHandler(event: FileUploadHandlerEvent) {
+    this.imageService.createImage('recipe', this.recipe.id!, event.files[0]).subscribe({
+      next: (data) => this.onUploadSuccess(data),
+      error: () => this.onUploadError(),
+    });
+  }
+
+  onUploadSuccess(data: ImageData) {
+    this.imgUrl = data.url ?? this.imgUrl;
     this.fileUploadToggle()
     this.messageService.add({
       severity: 'success', summary: 'Success', detail: 'Cover image uploaded', life: 3000,

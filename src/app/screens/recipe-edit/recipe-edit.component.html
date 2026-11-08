@@ -91,7 +91,7 @@
 <p-dialog [(visible)]="fileUpload" [style]="{width: '450px'}" header="Confirm" [modal]="true">
   <p class="font-medium text-900">Caution!</p>
   <p>Uploading a new cover is applied immediately!</p>
-  <p-fileUpload name="file" url="{{api}}/api/v1/recipe/{{recipe.id}}/cover" accept="image/*" [maxFileSize]="10000000" (onUpload)="onUploadSuccess()" (onError)="onUploadError()">
+  <p-fileUpload [customUpload]="true" accept="image/*" [maxFileSize]="10000000" (uploadHandler)="onUploadHandler($event)">
   </p-fileUpload>
 </p-dialog>
 
