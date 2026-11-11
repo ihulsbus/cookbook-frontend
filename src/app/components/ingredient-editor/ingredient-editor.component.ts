@@ -46,6 +46,12 @@ export class IngredientEditorComponent implements OnInit {
   submitted = false;
 
   newIngredient = {} as IngredientAmounts;
+  // newIngredient.quantity (KIT-36) is an exact decimal string over the
+  // wire - p-inputNumber needs a plain number, so this is the editor's
+  // own numeric staging field, converted to/from the string on
+  // edit/save. Precision loss here is an accepted limit of using a
+  // numeric spinner widget at all, not a calculation on the string.
+  quantityInput: number | null = null;
   ingredients: Ingredient[] = [];
   selectedIngredients: IngredientAmounts[] = [];
   units: Unit[] = [];
@@ -84,6 +90,7 @@ export class IngredientEditorComponent implements OnInit {
 
   clearNewIngredient() {
     this.newIngredient = {} as IngredientAmounts;
+    this.quantityInput = null;
   }
 
   openNew() {
@@ -109,10 +116,13 @@ export class IngredientEditorComponent implements OnInit {
 
   editIngredient(ingredient: IngredientAmounts) {
     this.newIngredient = { ...ingredient };
+    this.quantityInput = ingredient.quantity ? Number(ingredient.quantity) : null;
     this.ingredientDialog = true;
   }
 
   saveIngredient() {
+    this.newIngredient.quantity = (this.quantityInput ?? 0).toString();
+
     const i = this.ingredientAmounts.findIndex(
       (x: IngredientAmounts) => x.ingredientID === this.newIngredient.ingredientID,
       );

@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Visibility } from './visibility';
 
 
 /**
@@ -29,5 +30,13 @@ export interface Recipe {
      * amount of servings a recipe makes
      */
     serving_count: number;
+    /**
+     * ID of the recipe\'s owner. Set from the authenticated caller on create; read-only otherwise.
+     */
+    owner_id?: string;
+    visibility?: Visibility;
 }
+export namespace Recipe {
+}
+
 

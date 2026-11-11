@@ -20,6 +20,10 @@ import { Observable }                                        from 'rxjs';
 import { PaginatedRecipeResponse } from '../model/paginatedRecipeResponse';
 // @ts-ignore
 import { Recipe } from '../model/recipe';
+// @ts-ignore
+import { RecipeShare } from '../model/recipeShare';
+// @ts-ignore
+import { UpdateRecipeVisibilityRequest } from '../model/updateRecipeVisibilityRequest';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -243,18 +247,104 @@ export class RecipeService {
     }
 
     /**
-     * Get all recipes
-     * Retrieves recipes from the API in a paginated format
-     * @param page Page number (1-indexed)
-     * @param limit Number of items per page (max 100)
+     * Delete a recipe share
+     * Removes one explicit share from a recipe. Owner only. 404 covers both a recipe the caller doesn\&#39;t own and a share that doesn\&#39;t exist.
+     * @param recipeID UUID of a recipe
+     * @param targetType Whether TargetID identifies a single user or a group
+     * @param targetID A user ID (UUID) when TargetType is \&quot;user\&quot;, or a group name when TargetType is \&quot;group\&quot;
      * @param body No request body required
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllRecipes(page?: number, limit?: number, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PaginatedRecipeResponse>;
-    public getAllRecipes(page?: number, limit?: number, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PaginatedRecipeResponse>>;
-    public getAllRecipes(page?: number, limit?: number, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PaginatedRecipeResponse>>;
-    public getAllRecipes(page?: number, limit?: number, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+    public deleteRecipeShare(recipeID: string, targetType: 'user' | 'group', targetID: string, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any>;
+    public deleteRecipeShare(recipeID: string, targetType: 'user' | 'group', targetID: string, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deleteRecipeShare(recipeID: string, targetType: 'user' | 'group', targetID: string, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deleteRecipeShare(recipeID: string, targetType: 'user' | 'group', targetID: string, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling deleteRecipeShare.');
+        }
+        if (targetType === null || targetType === undefined) {
+            throw new Error('Required parameter targetType was null or undefined when calling deleteRecipeShare.');
+        }
+        if (targetID === null || targetID === undefined) {
+            throw new Error('Required parameter targetID was null or undefined when calling deleteRecipeShare.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (apiKey_1) required
+        localVarCredential = this.configuration.lookupCredential('apiKey_1');
+        if (localVarCredential) {
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'text/plain'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/recipe/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}/shares/${this.configuration.encodeParam({name: "targetType", value: targetType, in: "path", style: "simple", explode: false, dataType: "'user' | 'group'", dataFormat: undefined})}/${this.configuration.encodeParam({name: "targetID", value: targetID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: body,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get all recipes
+     * Retrieves recipes from the API in a paginated format
+     * @param page Page number (1-indexed)
+     * @param limit Number of items per page (max 100)
+     * @param scope Narrows the result to recipes the caller owns (\&quot;mine\&quot;), recipes explicitly shared with the caller directly or via a group (\&quot;shared\&quot;), or owned-plus-public, the default behavior (\&quot;all\&quot;)
+     * @param body No request body required
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllRecipes(page?: number, limit?: number, scope?: 'mine' | 'shared' | 'all', body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<PaginatedRecipeResponse>;
+    public getAllRecipes(page?: number, limit?: number, scope?: 'mine' | 'shared' | 'all', body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<PaginatedRecipeResponse>>;
+    public getAllRecipes(page?: number, limit?: number, scope?: 'mine' | 'shared' | 'all', body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<PaginatedRecipeResponse>>;
+    public getAllRecipes(page?: number, limit?: number, scope?: 'mine' | 'shared' | 'all', body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (page !== undefined && page !== null) {
@@ -264,6 +354,10 @@ export class RecipeService {
         if (limit !== undefined && limit !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>limit, 'limit');
+        }
+        if (scope !== undefined && scope !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>scope, 'scope');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -406,6 +500,83 @@ export class RecipeService {
     }
 
     /**
+     * List a recipe\&#39;s shares
+     * List every explicit share on a recipe. Owner only - a non-owner gets 404, not 403, so a recipe\&#39;s existence isn\&#39;t leaked (same as GET /recipe/{RecipeID}).
+     * @param recipeID UUID of a recipe
+     * @param body No request body required
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRecipeShares(recipeID: string, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Array<RecipeShare>>;
+    public getRecipeShares(recipeID: string, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Array<RecipeShare>>>;
+    public getRecipeShares(recipeID: string, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Array<RecipeShare>>>;
+    public getRecipeShares(recipeID: string, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling getRecipeShares.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (apiKey_1) required
+        localVarCredential = this.configuration.lookupCredential('apiKey_1');
+        if (localVarCredential) {
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'text/plain'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/recipe/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}/shares`;
+        return this.httpClient.request<Array<RecipeShare>>('get', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: body,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Update recipe
      * Update a recipe
      * @param recipeID UUID of a recipe
@@ -473,6 +644,160 @@ export class RecipeService {
             {
                 context: localVarHttpContext,
                 body: recipe,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update recipe visibility
+     * A lighter-weight alternative to PUT /recipe/{RecipeID} when only the visibility needs to change. Owner only.
+     * @param recipeID UUID of a recipe
+     * @param updateRecipeVisibilityRequest 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateRecipeVisibility(recipeID: string, updateRecipeVisibilityRequest?: UpdateRecipeVisibilityRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<Recipe>;
+    public updateRecipeVisibility(recipeID: string, updateRecipeVisibilityRequest?: UpdateRecipeVisibilityRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<Recipe>>;
+    public updateRecipeVisibility(recipeID: string, updateRecipeVisibilityRequest?: UpdateRecipeVisibilityRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<Recipe>>;
+    public updateRecipeVisibility(recipeID: string, updateRecipeVisibilityRequest?: UpdateRecipeVisibilityRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling updateRecipeVisibility.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (apiKey_1) required
+        localVarCredential = this.configuration.lookupCredential('apiKey_1');
+        if (localVarCredential) {
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/recipe/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}/visibility`;
+        return this.httpClient.request<Recipe>('put', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: updateRecipeVisibilityRequest,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Create or update a recipe share
+     * Creates a share, or updates its permission if one already exists for the same (target_type, target_id). Owner only. A write share does not grant re-sharing: only the owner can call this endpoint.
+     * @param recipeID UUID of a recipe
+     * @param recipeShare created_by and created_at, if present, are ignored - the server always sets created_by to the caller and created_at to now.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public upsertRecipeShare(recipeID: string, recipeShare?: RecipeShare, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<RecipeShare>;
+    public upsertRecipeShare(recipeID: string, recipeShare?: RecipeShare, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpResponse<RecipeShare>>;
+    public upsertRecipeShare(recipeID: string, recipeShare?: RecipeShare, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<HttpEvent<RecipeShare>>;
+    public upsertRecipeShare(recipeID: string, recipeShare?: RecipeShare, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext}): Observable<any> {
+        if (recipeID === null || recipeID === undefined) {
+            throw new Error('Required parameter recipeID was null or undefined when calling upsertRecipeShare.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (apiKey_1) required
+        localVarCredential = this.configuration.lookupCredential('apiKey_1');
+        if (localVarCredential) {
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/recipe/${this.configuration.encodeParam({name: "recipeID", value: recipeID, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}/shares`;
+        return this.httpClient.request<RecipeShare>('put', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: recipeShare,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

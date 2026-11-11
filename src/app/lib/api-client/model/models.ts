@@ -25,5 +25,8 @@ export * from './paginationMetadata';
 export * from './preparationTime';
 export * from './recipe';
 export * from './recipeMetadata';
+export * from './recipeShare';
 export * from './tag';
 export * from './unit';
+export * from './updateRecipeVisibilityRequest';
+export * from './visibility';

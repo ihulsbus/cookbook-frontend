@@ -47,7 +47,10 @@ model/paginationMetadata.ts
 model/preparationTime.ts
 model/recipe.ts
 model/recipeMetadata.ts
+model/recipeShare.ts
 model/tag.ts
 model/unit.ts
+model/updateRecipeVisibilityRequest.ts
+model/visibility.ts
 param.ts
 variables.ts

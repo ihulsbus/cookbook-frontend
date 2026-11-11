@@ -25,5 +25,22 @@ export interface Unit {
      * Abbreviation of the unit
      */
     short_name: string;
+    /**
+     * The kind of quantity this unit measures (KIT-37). Converting between units of different dimensions needs the ingredient\'s density and/or grams-per-piece (KIT-38).
+     */
+    dimension: Unit.DimensionEnum;
+    /**
+     * Conversion factor to this dimension\'s base unit - grams for mass, milliliters for volume, pieces for count (KIT-37).
+     */
+    to_base: string;
 }
+export namespace Unit {
+    export type DimensionEnum = 'mass' | 'volume' | 'count';
+    export const DimensionEnum = {
+        Mass: 'mass' as DimensionEnum,
+        Volume: 'volume' as DimensionEnum,
+        Count: 'count' as DimensionEnum
+    };
+}
+
 

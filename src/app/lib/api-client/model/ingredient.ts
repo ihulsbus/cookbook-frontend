@@ -21,5 +21,13 @@ export interface Ingredient {
      * Name of the ingredient
      */
     name: string;
+    /**
+     * Grams per milliliter (KIT-38), used to convert this ingredient between mass and volume units. Null when unknown - conversions across dimensions then report no result rather than guess.
+     */
+    density_g_per_ml?: string | null;
+    /**
+     * Grams per piece (KIT-38), used to convert this ingredient between mass/volume and count units. Null when unknown.
+     */
+    grams_per_piece?: string | null;
 }
 

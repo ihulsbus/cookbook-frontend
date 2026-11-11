@@ -43,7 +43,7 @@
     </div>
 
     <label for="amount">Amount</label>
-    <p-inputNumber id="amount" [showButtons]="true" [(ngModel)]="newIngredient.quantity" class="form-control" #amount="ngModel"></p-inputNumber>
+    <p-inputNumber id="amount" [showButtons]="true" [(ngModel)]="quantityInput" class="form-control" #amount="ngModel"></p-inputNumber>
     <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert">
 
       <div *ngIf="amount.errors?.['required']">

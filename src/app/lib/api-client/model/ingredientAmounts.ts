@@ -12,6 +12,21 @@
 export interface IngredientAmounts { 
     ingredientID: string;
     unitID: string;
-    quantity: number;
+    /**
+     * An exact decimal (KIT-36), e.g. \"0.0025\" - never a JSON number, to avoid float rounding. Parse with a decimal library (decimal.js, big.js), never Number().
+     */
+    quantity: string;
+    /**
+     * Free-text aside, e.g. \"finely chopped\" (KIT-36).
+     */
+    note?: string;
+    /**
+     * Display order within the recipe\'s ingredient list (KIT-36).
+     */
+    position?: number;
+    /**
+     * Whether this ingredient can be skipped (KIT-36).
+     */
+    optional?: boolean;
 }
 
