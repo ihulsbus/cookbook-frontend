@@ -30,9 +30,6 @@ export class HomeComponent implements OnInit {
     this.restService.getAllRecipes(1, 6).subscribe((response) => {
       this.allRecipes = response.data ?? [];
     });
-    // , () => {
-    //   this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Unable to retrieve recipes' });
-    // });
     this.welcome();
   }
 

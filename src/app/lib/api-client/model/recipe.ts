@@ -35,6 +35,14 @@ export interface Recipe {
      */
     owner_id?: string;
     visibility?: Visibility;
+    /**
+     * When the recipe was created (KIT-39). Read-only.
+     */
+    created_at?: string;
+    /**
+     * When the recipe was last updated (KIT-39). Read-only.
+     */
+    updated_at?: string;
 }
 export namespace Recipe {
 }

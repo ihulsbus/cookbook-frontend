@@ -77,7 +77,6 @@ export class HeaderComponent implements OnInit {
 
   setActiveTabFromUrl(url: string): void {
     const matchingIndex = this.bigMenuOptions.findIndex(tab => url.startsWith(tab.routerLink));
-    // If no matching tab is found, you can default to the first tab (index 0)
     this.activeTabIndex = matchingIndex !== -1 ? matchingIndex : 0;
   }
 

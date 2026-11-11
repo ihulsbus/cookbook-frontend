@@ -11,14 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { CreateIngredientComponent } from '../create-ingredient/create-ingredient.component';
 import { Button } from "primeng/button";
 
-// class IngredientAmount {
-//   RecipeID: string = "";
-//   IngredientID: string = "";
-//   Quantity: number = 0;
-//   UnitID = "";
-//   Unit?: Unit;
-// }
-
 @Component({
     selector: 'app-ingredient-editor',
     standalone: true,
@@ -39,18 +31,14 @@ export class IngredientEditorComponent implements OnInit {
   @Input() ingredientAmounts: IngredientAmounts[] = []
   @Output() updateIngredientAmounts = new EventEmitter<IngredientAmounts[]>();
 
-  // dialog states
   ingredientDialog = false;
   deleteIngredientDialog = false;
   deleteIngredientsDialog = false;
   submitted = false;
 
   newIngredient = {} as IngredientAmounts;
-  // newIngredient.quantity (KIT-36) is an exact decimal string over the
-  // wire - p-inputNumber needs a plain number, so this is the editor's
-  // own numeric staging field, converted to/from the string on
-  // edit/save. Precision loss here is an accepted limit of using a
-  // numeric spinner widget at all, not a calculation on the string.
+  // quantity is an exact decimal string over the wire, but p-inputNumber needs a plain
+  // number, so this field stages the numeric value and converts to/from the string on edit/save.
   quantityInput: number | null = null;
   ingredients: Ingredient[] = [];
   selectedIngredients: IngredientAmounts[] = [];

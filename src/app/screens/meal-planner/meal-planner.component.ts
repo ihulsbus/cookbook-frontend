@@ -9,11 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class MealPlannerComponent implements OnInit {
 
   constructor() {
-    // This is intentionally empty
   }
 
   ngOnInit(): void {
-    // This is intentionally empty
   }
 
 }

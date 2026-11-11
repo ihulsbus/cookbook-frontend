@@ -2,27 +2,17 @@ import { EMPTY, Observable } from 'rxjs';
 import { expand, reduce } from 'rxjs/operators';
 import { PaginationMetadata } from './api-client';
 
-/**
- * Shape shared by every generated `PaginatedXResponse`: a page of `data`
- * plus the `pagination` metadata describing where we are in the result set.
- */
+/** Shape shared by every generated `PaginatedXResponse`. */
 interface PaginatedResponse<T> {
   data?: Array<T>;
   pagination?: PaginationMetadata;
 }
 
-/**
- * Default page size. Matches the backend maximum (100 items per page), so we
- * make the fewest possible requests.
- */
+/** Matches the backend's max page size, to minimize the number of requests. */
 const DEFAULT_PAGE_SIZE = 100;
 
 /**
- * Walk every page of a paginated endpoint and emit a single combined array.
- *
- * `fetchPage` is a closure that requests one page, e.g.
- *   fetchAllPages((page, limit) => this.tagService.getAllTags(page, limit))
- *
+ * Walks every page of a paginated endpoint and emits one combined array.
  * Pages are fetched sequentially until `pagination.has_next` is false.
  */
 export function fetchAllPages<T>(

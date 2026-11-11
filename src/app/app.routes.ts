@@ -8,7 +8,6 @@ import { IngredientsComponent } from './screens/ingredients/ingredients.componen
 import { ShoppingListComponent } from './screens/shopping-list/shopping-list.component';
 import { MealPlannerComponent } from './screens/meal-planner/meal-planner.component';
 import { HomeComponent } from './screens/home/home.component';
-// import { LogoffComponent } from '../../screens/logoff/logoff.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { RecipeBrowserComponent } from 'src/app/screens/recipe-browser/recipe-browser.component';
 import { AuthGuard } from './lib/auth/auth.guard';

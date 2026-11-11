@@ -29,5 +29,13 @@ export interface Ingredient {
      * Grams per piece (KIT-38), used to convert this ingredient between mass/volume and count units. Null when unknown.
      */
     grams_per_piece?: string | null;
+    /**
+     * When the ingredient was created (KIT-39). Read-only.
+     */
+    created_at?: string;
+    /**
+     * When the ingredient was last updated (KIT-39). Read-only.
+     */
+    updated_at?: string;
 }
 

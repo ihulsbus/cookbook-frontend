@@ -79,9 +79,8 @@ export class RecipeDetailComponent implements OnInit {
 
 
   getImgURL() {
-    // A presigned URL (KIT-72) is signed server-side and can't be built
-    // here, and it already changes on every fetch (fresh signature), so
-    // no manual cache-busting param is needed either.
+    // URL is a presigned, server-signed link that already changes on every fetch,
+    // so no manual cache-busting param is needed.
     this.imageService.searchImage("Recipe", this.recipe.id).subscribe((data) => this.imgUrl = data.url ?? "")
   }
 }

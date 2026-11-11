@@ -10,9 +10,8 @@ import { User } from '../../models/user';
 export class AuthService {
   constructor(private oidcSecurityService: OidcSecurityService) {}
 
-  // Retrieve user data (display name and group membership come from the
-  // ID token's `name`/`groups` claims - see cookbook/authentik/README.md
-  // for how the Authentik provider is configured to include them).
+  // name/groups come from the ID token claims; see cookbook/authentik/README.md
+  // for how the Authentik provider is configured to include them.
   getUserData(): Observable<User | null> {
     return this.oidcSecurityService.userData$.pipe(
       map((userData: any) => {
@@ -31,14 +30,12 @@ export class AuthService {
     );
   }
 
-  // Convenience check for role-gated UI (e.g. hiding admin-only actions).
   hasGroup(group: string): Observable<boolean> {
     return this.getUserData().pipe(
       map((user) => !!user?.groups?.includes(group))
     );
   }
 
-  // Retrieve access token
   getAccessToken(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
   }

@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
     return this.oidcSecurityService.checkAuth().pipe(
       map(({ isAuthenticated }) => {
         if (!isAuthenticated) {
-          // Redirect to the home page or show an appropriate message
           this.router.navigate(['/']);
         }
         return isAuthenticated;

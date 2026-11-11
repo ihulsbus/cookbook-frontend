@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.oidcSecurityService.getAccessToken().pipe(
       switchMap((token: string) => {
         if (token) {
-          // Clone the request and add the Authorization header
           request = request.clone({
             setHeaders: {
               Authorization: `Bearer ${token}`,

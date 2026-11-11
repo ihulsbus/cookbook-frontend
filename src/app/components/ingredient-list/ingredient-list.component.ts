@@ -8,9 +8,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 interface HydratedIngredientAmount {
   ingredient: Ingredient;
-  // An exact decimal string (KIT-36), not a number - never parse this
-  // with Number()/parseFloat for display; only a decimal library would
-  // be safe if this ever needs arithmetic.
+  // Exact decimal string, not a number - never parse with Number()/parseFloat for display.
   quantity: string;
   unit: Unit;
 }

@@ -50,8 +50,8 @@ export class LatestRecipesComponent implements OnChanges {
     }
   }
 
-  sortByDateDesc(a: any, b: any) {
-    return new Date(b.CreatedAt).valueOf() - new Date(a.CreatedAt).valueOf();
+  sortByDateDesc(a: Recipe, b: Recipe) {
+    return new Date(b.created_at ?? 0).valueOf() - new Date(a.created_at ?? 0).valueOf();
   }
 
   loadImages(): void {

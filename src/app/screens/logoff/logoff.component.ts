@@ -11,11 +11,9 @@ export class LogoffComponent implements OnInit {
   baseURL: string = environment.baseURL
 
   constructor() {
-    // This is intentionally empty
   }
 
   ngOnInit(): void {
-    // This is intentionally empty
   }
 
 }

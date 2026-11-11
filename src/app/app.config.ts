@@ -56,6 +56,6 @@ export const appConfig: ApplicationConfig = {
         ),
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: BASE_PATH, useValue: `${env.backend}/api/v2` },
-        provideHttpClient(), // Provides HttpClient globally
+        provideHttpClient(),
     ]
 };

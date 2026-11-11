@@ -124,14 +124,6 @@ export class RecipeEditComponent implements OnInit {
     this.amounts = ingredientAmounts;
   }
 
-  // updateCategories(categories: Category[]) {
-  //
-  // }
-
-  // cancelRecipeUpdate() {
-  //   this.cancelPopup = true;
-  // }
-
   fileUploadToggle() {
     this.fileUpload = !this.fileUpload;
   }
@@ -190,10 +182,8 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addInstruction(): void {
-    // Determine the next sequence
     const nextSequence = this.instructions.length + 1;
 
-    // Push a new instruction step with default values
     this.instructions.push({
       sequence: nextSequence,
       description: '',
@@ -201,10 +191,8 @@ export class RecipeEditComponent implements OnInit {
   }
 
   deleteInstruction(index: number): void {
-    // Remove the step from the array
     this.instructions.splice(index, 1);
 
-    // Recalculate sequences
     this.instructions.forEach((step, i) => {
       step.sequence = i + 1;
     });
